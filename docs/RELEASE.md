@@ -1,0 +1,57 @@
+# Called It release evidence
+
+Recorded: 2026-10-18T20:04:22.040158+00:00
+Status: IN_PROGRESS
+
+App: Deployment pending
+Repository: Publication pending
+Source commit: `not recorded`
+
+## Contracts
+
+- [Takes](https://explorer-studio.genlayer.com/address/0xef56B11720Ba637ff8dEE658D8dEd9FE832A8D9C)
+- [TakeEscrow](https://explorer-studio.genlayer.com/address/0xEFBAe9460366108bEB0DaB2129eFd163c105f509)
+- [TakeResolver](https://explorer-studio.genlayer.com/address/0x9bcC094c1d5e34fb18D0AaBA29E55Be6dE53A7a8)
+- [CalledItRecord](https://explorer-studio.genlayer.com/address/0x61381Db582ae0921dB73e743170e4Aa430ad3384)
+
+## Takes and outcomes
+
+### take-1 — official-yes
+
+Apple officially announces Apple Vision Pro.
+
+Historical replay · COMPILED · verdict pending · outcome pending · escrow unfunded
+
+- [compile-official-yes](https://explorer-studio.genlayer.com/tx/0x71d3797b1ad5432815bf22005887bcedf02d29480ea92c8cbbf3805a21b93c0e)
+- [compile-official-yes-child-0](https://explorer-studio.genlayer.com/tx/0x55f4fa4f43e46cd0c93aa7a5829ce20acde47029a3803e172036f3204494589f)
+
+## All transaction receipts
+
+- [probe-deploy](https://explorer-studio.genlayer.com/tx/0x65fe067b2e68f3ca71a1c6225e3fe60a37466eac239c272172ea987cd2bfc9a6)
+- [probe-0](https://explorer-studio.genlayer.com/tx/0xa0de906be6f98a72f25ab27c63511cd06c8221587b1b822383aec0c0544ce0a4)
+- [probe-1](https://explorer-studio.genlayer.com/tx/0x2d1dfd5910ec7be68067960a58861c1a7599c16a12b194884df29b082a42a716)
+- [probe-2](https://explorer-studio.genlayer.com/tx/0xea888a08bd04bbeae33272dac5e2ee40eb65f6e97c7f6778d6995608143fe84f)
+- [probe-3](https://explorer-studio.genlayer.com/tx/0x26d2f79a6f0ad54033444c8e21a09518d40b645725a823e3f705d142b2d711f1)
+- [probe-4](https://explorer-studio.genlayer.com/tx/0x27e2a35c0702c9e3b8bc13061d202fd47e46e99254b3b4ed07d9d8beacdf3d25)
+- [probe-5](https://explorer-studio.genlayer.com/tx/0x7efc9048d5c80d9268baf9d0f8120e9b02a6a0959aedcd2ac31d2e38dd7e7ad1)
+- [probe-6](https://explorer-studio.genlayer.com/tx/0xcba5455b499582503a216a43b840645d40ed35126594896c1b5ca728529d5d53)
+- [probe-7](https://explorer-studio.genlayer.com/tx/0xfb5160763f3092149ba2ef27c58de83174f3b8d0b6ed857356b3b46077f007e0)
+- [probe-8](https://explorer-studio.genlayer.com/tx/0xe769c7407ee933d6f5f7496216ebf10ef9c87afd67a483045c458b30f41465c3)
+- [probe-9](https://explorer-studio.genlayer.com/tx/0x0a4f75517423f19af8f9e9785aced526ccf443918877bd4e3ea41c8f31d50f7f)
+- [deploy-Takes](https://explorer-studio.genlayer.com/tx/0xba5d47853682db8788f9b58d845f01378a6ab64a2a61e9604cc9a154d6872501)
+- [deploy-TakeEscrow](https://explorer-studio.genlayer.com/tx/0x10436686b32a9d3529df8bddb8d09a62bb9ca516484f0f23970496287315d334)
+- [deploy-TakeResolver](https://explorer-studio.genlayer.com/tx/0x42cd63b9ce9081c66545d156841d66d09040c3d67e36ffea08bbef5f391c6df8)
+- [deploy-CalledItRecord](https://explorer-studio.genlayer.com/tx/0xb172050da8c1f45e7e53021bf905a36652cb94d9f28d97c78b949167d52a54a1)
+- [configure](https://explorer-studio.genlayer.com/tx/0x07400a22cf6e5405addfa153f0332c6da5170510be5f5db64170329b091d8a17)
+- [r2-deploy-Takes](https://explorer-studio.genlayer.com/tx/0xe165a446a9a39d1ec88663159ed3b15fc5ec2446fff4004be6cd960dc011451f)
+- [r2-deploy-TakeEscrow](https://explorer-studio.genlayer.com/tx/0x0ab37408e6394ab4f89b1798e63f004387956d9b9753c19e6e4a4d202f95b8f6)
+- [r2-deploy-TakeResolver](https://explorer-studio.genlayer.com/tx/0x0f963fee4531cecbb77355dfc080f3b51fd6ab807ed1311efda113c3fdf0273d)
+- [r2-deploy-CalledItRecord](https://explorer-studio.genlayer.com/tx/0x80e02a56c99a72ad614c27cb28dec6198f04150bedb9019dd3ea2be68b8e5a02)
+- [r2-configure](https://explorer-studio.genlayer.com/tx/0xcf5ae7952daff9dc29c68965aacb7c353f14b0c29362b4875e70ae6d228ecb81)
+- [compile-official-yes](https://explorer-studio.genlayer.com/tx/0x71d3797b1ad5432815bf22005887bcedf02d29480ea92c8cbbf3805a21b93c0e)
+- [compile-official-yes-child-0](https://explorer-studio.genlayer.com/tx/0x55f4fa4f43e46cd0c93aa7a5829ce20acde47029a3803e172036f3204494589f)
+- [compile-rumours-no](https://explorer-studio.genlayer.com/tx/0x4bd40e50d12913306e32e57f3c5357267155e8c4736d1df1dd7f5764a7f273a6)
+- [compile-rumours-no-child-0](https://explorer-studio.genlayer.com/tx/0xa903c116e011b52eae00ecb17fc1b05e278a4daa26b0eb1738deac89a100ae53)
+
+## Blockers
+
