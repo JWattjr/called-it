@@ -116,7 +116,25 @@ export async function preview(
     capture > rule.deadline + 72 * 3600
   )
     throw Error("Capture is outside the frozen evidence window.");
-  const main = text(await bounded(url));
+  let raw: string;
+  try {
+    raw = await bounded(url);
+  } catch (error) {
+    return {
+      capture,
+      text: "",
+      boundedLength: 0,
+      status: "UNAVAILABLE",
+      error: error instanceof Error ? error.message : "Article fetch failed",
+    };
+  }
+  const main = text(raw);
   if (main.length < 30) throw Error("No usable main text found.");
-  return { capture, text: main.slice(0, 2000), boundedLength: main.length };
+  return {
+    capture,
+    text: main.slice(0, 2000),
+    boundedLength: main.length,
+    status: "FETCHED",
+    error: "",
+  };
 }

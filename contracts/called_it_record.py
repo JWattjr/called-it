@@ -28,7 +28,7 @@ class CalledItRecord(gl.Contract):
         require(t.get('status')=='COMPILED' and b.get('status')=='SETTLED' and b.get('counterparty'),'finalized matched settlement required')
         require(t['rule_hash']==b['rule_hash'] and b.get('outcome') in ('YES','NO','VOID'),'rule or outcome mismatch')
         self.recorded[key]=True
-        payload={'id':key,'category':t['category'],'historical':t['historical'],'outcome':b['outcome'],'author':b['author'],'counterparty':b['counterparty'],'rule_hash':t['rule_hash']}
+        payload={'id':key,'category':t['category'],'historical':t['historical'],'outcome':b['outcome'],'author':b['author'],'counterparty':b['counterparty'],'rule_hash':t['rule_hash'],'resolution_case':b.get('resolution_case','LEGACY')}
         gl.get_contract_at(gl.message.contract_address).emit(on='finalized').finalize_record(json.dumps(payload))
 
     @gl.public.write
@@ -46,7 +46,7 @@ class CalledItRecord(gl.Contract):
             if result!='VOID':p['streak']=max(0,p['streak'])+1 if win else min(0,p['streak'])-1
             category=p['categories'].setdefault(t['category'],{'wins':0,'losses':0,'voids':0})
             category[stat]+=1
-            p['history'].append({'id':t['id'],'result':result,'historical':t['historical'],'category':t['category']})
+            p['history'].append({'id':t['id'],'result':result,'historical':t['historical'],'category':t['category'],'resolution_case':t.get('resolution_case','LEGACY')})
             self.profiles[wallet]=json.dumps(p)
 
     @gl.public.view

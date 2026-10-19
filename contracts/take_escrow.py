@@ -126,11 +126,13 @@ class TakeEscrow(gl.Contract):
                 winner=r['author'] if outcome=='YES' else r['counterparty']
                 r['payouts']=r['deposits'].copy() if outcome=='VOID' else {winner:r['total']}
                 r['reason']=resolution['reason']
+                r['resolution_case']=resolution.get('resolution_case','LEGACY')
             else:
                 require(now()>=r['refund_deadline'],'wait for finalized result or refund deadline')
                 r['outcome']='VOID'
                 r['payouts']=r['deposits'].copy()
                 r['reason']='Resolution timeout; both stakes refundable.'
+                r['resolution_case']='VOID_TIMEOUT'
         require(sum(int(v) for v in r['payouts'].values())==int(r['total']),'wei conservation')
         r['status']='SETTLING'
         self.bets[key]=json.dumps(r)

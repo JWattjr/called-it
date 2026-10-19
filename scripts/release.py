@@ -19,6 +19,10 @@ CASES=[
 ]
 
 p=load()
+if p.get('releaseAttempt')==3:
+    import runpy
+    runpy.run_path(str(ROOT/'scripts/fairness_release.py'),run_name='__main__')
+    raise SystemExit(0)
 stage=sys.argv[1] if len(sys.argv)>1 else 'record'
 def address(name):return p['contracts'][name]['address']
 def write(label,contract,method,args,index=0,value=0,wait=True):return tx(p,label,address(contract),method,args,index=index,value=value,wait=wait)

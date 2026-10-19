@@ -12,6 +12,7 @@ for e in p.get('takes',[]):
     t=e['take'];r=e['resolution'];b=e['bet']
     lines.extend([f"### {t['id']} — {e.get('label','')}",'',t['text'],'',f"{'Historical replay' if t['historical'] else 'Live'} · {t['status']} · verdict {r.get('verdict','pending')} · outcome {r.get('outcome','pending')} · escrow {b.get('status','unfunded')}",''])
     lines.append('Event deadline: '+datetime.fromtimestamp(t['rule']['deadline'],timezone.utc).isoformat())
+    if r.get('resolution_case'):lines.append('Resolution case: '+r['resolution_case'])
     if r.get('reason'):lines.append('Ruling: '+r['reason'])
     if t['status']=='REJECTED':lines.append('Compiler decision: '+t['decision']+' — '+t['reason'])
     if b.get('claims'):lines.append('Native claims: '+json.dumps(b['claims'],ensure_ascii=False))
@@ -26,7 +27,7 @@ lines+=['','## Blockers','']+[('- '+b) for b in p.get('blockers',[])]
 portal={
  'contributionType':'Projects','projectName':'Called It','primaryTag':'Gaming','tag1':'Outcome Verification','tag2':'Prediction Markets',
  'oneLiner':'Put GEN on your hot take. GenLayer validators decide who called it.',
- 'description':'Called It turns a public hot take into a head-to-head bet. GenLayer validators compile one claim into a frozen, hashed official-announcement rule before staking, then independently judge immutable archive or Wikipedia evidence. Consensus checks both the verdict and every decisive quote against each validator’s fetched copy. Four contracts separate compilation, escrow, resolution and public records. Code owns odds, deposits, deadlines, defaults, pull payouts and refunds. The app exposes rules, evidence, quotes, finalized receipts and a public called-it record without requiring a wallet. Historical replays are clearly labelled. StudioNet uses simulated GEN. See the release report for verified live outcomes and remaining limitations.',
+ 'description':'Called It turns a public hot take into a head-to-head bet. GenLayer validators compile one claim into a frozen, hashed official-announcement rule before staking, then independently judge immutable archive or Wikipedia evidence. Consensus checks both the verdict and every decisive quote against each validator’s fetched copy. Four contracts separate compilation, escrow, resolution and public records. Code owns odds, deposits, deadlines and verified pull payouts. Only absent evidence applies the default; source failure or consensus timeout voids and refunds both stakes. The app exposes rules, evidence, quotes, finalized receipts and a public called-it record without requiring a wallet. Historical replays are clearly labelled. StudioNet uses simulated GEN. See the release report for verified live outcomes and remaining limitations.',
  'howTo':[
   {'heading':'Inspect a take','instruction':'Open the feed without a wallet. Read the frozen rule, hash, deadline and default. Historical replays are labelled; Read live queries finalized state.'},
   {'heading':'Compile before staking','instruction':'Connect a StudioNet wallet, post one public claim and review its finalized rule or rejection. Prepare and fund the author stake only after reading the complete rule.'},
@@ -34,7 +35,7 @@ portal={
   {'heading':'Resolve from receipts','instruction':'After the deadline, preflight and submit up to two immutable links per party. Seal both sides or wait for the evidence deadline, then request one narrow ruling.'},
   {'heading':'Settle and verify','instruction':'Settle a finalized result, pull the payout, verify its native child receipt and sync the public record. Review all receipts and run npm run verify:proof.'}
  ],
- 'expectedOutcome':'An accepted compilation freezes a precise rule before stakes. A matched bet resolves YES, NO or the frozen default; settlement conserves wei and the winner pulls a receipt-verified payout. Unaccepted and timed-out takes expose refunds. Only finalized matched settlements update profiles. The read-only proof verifier checks deployed code, actual outcomes, payouts and canonical explorer records.',
+ 'expectedOutcome':'An accepted compilation freezes a precise rule before stakes. Absent evidence applies the default; source failure or consensus timeout refunds both sides. A judged bet resolves YES or NO; settlement conserves wei and the winner pulls a receipt-verified payout. Unaccepted and timed-out takes expose refunds. Only finalized matched settlements update profiles. The read-only proof verifier checks deployed code, actual outcomes, payouts and canonical explorer records.',
  'contractLinks':list(links.get('contracts',{}).values()),'website':p.get('website',''),'github':p.get('github',''),'demoVideo':'',
  'evidence':[p['github']+'/blob/main/'+path for path in ('deploy/proof.json','deploy/proof-verification.json','docs/VERIFICATION.md','docs/RELEASE.md','docs/TUTORIAL.md')] if p.get('github') else []
 }

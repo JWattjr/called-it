@@ -1,0 +1,15 @@
+# Fairness revision work record
+
+This revision is implemented locally and has not been deployed or proven on-chain. The existing release proof and addresses describe the earlier deployment, not these changed sources. Revision 3 is initialized and zero-value deployment is the next stage; all write hashes will be journalled before polling.
+
+The frozen default now applies only to absent submitted evidence (`DEFAULT_NO_EVIDENCE`). When all admitted source fetches fail, the resolver returns `VOID_SOURCES_UNREACHABLE`. An unfinalized resolution becomes `VOID_TIMEOUT` 48 hours after the evidence deadline, including a resolution already waiting in RESOLVING. Readable but inconclusive submitted evidence becomes `VOID_INSUFFICIENT_EVIDENCE`, rather than paying the default side. Escrow copies the case into the settlement and returns the original deposits on VOID; the public record retains the case without awarding a win.
+
+Reuters and AP archive origins are rejected before a web request. Successful admission preflight status, extracted length and time are stored alongside evidence and shown before the submitter can acknowledge the results and seal. The existing source metadata and quote checks remain in place.
+
+The requested real demo required clarification, now answered: a known-blocked host cannot both be rejected before fetch and admitted as the evidence that later produces an unreachable-sources resolution. Failed or rejected attempts must not silently count as admitted evidence; otherwise either party could force a VOID by submitting a deliberately blocked link. The owner approved using an unlisted source with a visibly failed preflight. The implementation requires verified immutable capture metadata, retains the article preflight status, and re-fetches at resolution. A failed preflight alone never guarantees the technical VOID case; the real resolution fetches must all fail. Unit tests demonstrate an admitted source becoming unreachable at resolution with mocked HTTP 401/403 responses. This is not claimed as a real network demonstration.
+
+The cumulative approval remains 20 wei and the prior release consumed 18. Only two wei remains. A new 1+1 wei matched refund demonstration can fit that remainder. The earlier live takes, with deadlines 29 October and 4 November 2026, remain funded on the prior deployment; no migration or reopening has occurred.
+
+The Portal draft generator measures 67 / 839 / 467 characters for the one-liner, description and expected outcome. It has not regenerated the published draft against new addresses because no new deployment exists. Nothing has been submitted to the Portal.
+
+Local checks: 47 contract tests, four release tests, six app tests, all four GenVM lints, TypeScript, ESLint and a production build passed. An initial combined test invocation hit a sandbox temporary-directory setup error in three release tests; rerunning those tests with an explicit project-local temporary directory passed all four. No network failure has been hidden or retried as a new transaction.

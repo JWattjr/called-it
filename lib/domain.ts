@@ -6,6 +6,7 @@ export type Rule = {
   deadline: number;
   default: "NO" | "VOID";
   domains: string[];
+  technical_failure_policy?: string;
 };
 export type Take = {
   id: string;
@@ -53,8 +54,19 @@ export type Resolution = {
   quotes?: { index: number; text: string }[];
   reason?: string;
   default_applied?: boolean;
+  resolution_case?: string;
   sealed?: string[];
-  evidence?: { party: string; url: string; argument: string }[];
+  evidence?: {
+    party: string;
+    url: string;
+    argument: string;
+    preflight?: {
+      status: string;
+      length?: number;
+      checked_at: number;
+      error?: string;
+    };
+  }[];
   rule_hash?: string;
 };
 export type Profile = {
@@ -67,6 +79,7 @@ export type Profile = {
   history: {
     id: string;
     result: string;
+    resolution_case?: string;
     historical: boolean;
     category: string;
   }[];
@@ -180,6 +193,12 @@ export function evidenceShape(url: string, rule: Rule) {
   if (p.hostname !== "web.archive.org" || !m || p.search)
     throw Error("Use an archive.org id_ capture or Wikipedia oldid revision.");
   const host = new URL(m[2]).hostname.replace(/^www\./, "");
+  if (["reuters.com", "apnews.com", "oscars.org"].includes(host))
+    throw Error(
+      "Known blocked evidence host: " +
+        host +
+        ". Choose another permanent source.",
+    );
   if (!rule.domains.includes(host))
     throw Error("The original source domain is outside this frozen rule.");
   return "Archive snapshot; chain preflight will verify the exact capture in CDX.";

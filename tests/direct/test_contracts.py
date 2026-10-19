@@ -168,6 +168,7 @@ def test_no_evidence_default_finality(env,default):
     selfcall(vm,c.finalize_resolution,'take-1')
     r=json.loads(c.get_resolution('take-1'))
     assert r['status']=='FINAL' and r['outcome']==default and r['default_applied']
+    assert r['resolution_case']=='DEFAULT_NO_EVIDENCE'
     with vm.expect_revert('already started'):c.resolve('take-1')
 
 def funded(env,alice):
@@ -341,3 +342,122 @@ def test_resolver_all_evidence_limits_and_validator_quotes(env):
     assert not vm.run_validator(leader_result={'verdict':'YES','quotes':[{'index':0,'text':'This quote does not exist.'}],'reason':'Invented'})
     selfcall(vm,c.finalize_resolution,'take-1')
     assert json.loads(c.get_resolution('take-1'))['outcome']=='YES'
+
+
+@pytest.mark.parametrize('http_status',[401,403])
+def test_submitted_sources_become_unreachable_void(env,http_status):
+    vm,deploy,state,take,*_=env
+    take['rule']={**RULE,'as_of':1685836800,'deadline':1686095999}
+    state['get_take']=json.dumps(take)
+    c=deploy('contracts/take_resolver.py',A[0])
+    url='https://web.archive.org/web/20230605190503id_/https://www.apple.com/newsroom/2023/06/introducing-apple-vision-pro/'
+    vm.mock_web(r'.*/cdx/.*',{'status':200,'body':json.dumps([['timestamp','original'],['20230605190503','https://www.apple.com/newsroom/2023/06/introducing-apple-vision-pro/']])})
+    vm.mock_web(r'.*/web/.*',{'status':200,'body':'<main>June 5, 2023 Apple introduces Apple Vision Pro.</main>'})
+    c.submit_evidence('take-1',url,'Official announcement.')
+    c.seal_evidence('take-1')
+    vm.clear_mocks()
+    vm.mock_web(r'.*',{'status':http_status,'body':'Source unavailable'})
+    c.resolve('take-1')
+    assert vm.run_validator()
+    selfcall(vm,c.finalize_resolution,'take-1')
+    r=json.loads(c.get_resolution('take-1'))
+    assert r['resolution_case']=='VOID_SOURCES_UNREACHABLE' and r['outcome']=='VOID'
+    assert not r['default_applied']
+
+
+def test_consensus_timeout_overrides_unfinalized_resolution(env):
+    vm,deploy,state,take,*_=env
+    c=deploy('contracts/take_resolver.py',A[0])
+    c.seal_evidence('take-1');c.resolve('take-1')
+    assert json.loads(c.get_resolution('take-1'))['status']=='RESOLVING'
+    warp(vm,take['evidence_deadline']+48*3600)
+    c.resolve('take-1');selfcall(vm,c.finalize_resolution,'take-1')
+    r=json.loads(c.get_resolution('take-1'))
+    assert r['resolution_case']=='VOID_TIMEOUT' and r['outcome']=='VOID' and not r['default_applied']
+    with vm.expect_revert('already started'):c.resolve('take-1')
+
+
+@pytest.mark.parametrize('host',['reuters.com','apnews.com','oscars.org'])
+def test_known_blocked_rejected_before_fetch(env,monkeypatch,host):
+    vm,deploy,state,take,*_=env
+    take['rule']={**RULE,'as_of':1685836800,'deadline':1686095999,'domains':[host]}
+    state['get_take']=json.dumps(take)
+    c=deploy('contracts/take_resolver.py',A[0])
+    import genlayer.gl as gl
+    def forbidden(*args,**kwargs):raise AssertionError('Blocked host must never be fetched')
+    monkeypatch.setattr(gl.nondet.web,'get',forbidden)
+    with vm.expect_revert('known blocked'):
+        c.submit_evidence('take-1','https://web.archive.org/web/20230605190503id_/https://'+host+'/real-article','')
+
+
+@pytest.mark.parametrize('case',['VOID_SOURCES_UNREACHABLE','VOID_TIMEOUT'])
+def test_technical_void_full_verified_refunds_exactly_once(env,direct_alice,monkeypatch,case):
+    vm,deploy,state,take,author,other=env
+    owner=vm.sender
+    c=funded(env,direct_alice)
+    state['get_resolution']=json.dumps({'status':'FINAL','rule_hash':'frozen','outcome':'VOID','resolution_case':case,'reason':'Technical failure; both refunded.'})
+    c.settle('take-1');selfcall(vm,c.finalize_settlement,'take-1')
+    b=json.loads(c.get_bet('take-1'))
+    assert b['payouts']=={author:'2',other:'8'} and b['total']=='10' and b['resolution_case']==case
+    with vm.expect_revert('already settled'):c.settle('take-1')
+    for wallet,sender,amount in [(author,owner,2),(other,direct_alice,8)]:
+        vm.sender=sender;vm.deal(vm._contract_address,amount)
+        c.claim('take-1',1)
+        with vm.expect_revert('pending'):c.claim('take-1',2)
+        parent,child=mock_claim_receipts(vm,monkeypatch,wallet,True,alter=lambda p,ch:ch.update(value=amount))
+        c.verify_claim('take-1',wallet,1,parent,child)
+        assert json.loads(c.get_bet('take-1'))['claims'][wallet]['status']=='PAID'
+        with vm.expect_revert('no unclaimed'):c.claim('take-1',2)
+    b=json.loads(c.get_bet('take-1'))
+    assert sum(int(x['amount']) for x in b['claims'].values() if x['status']=='PAID')==10
+
+
+def test_void_case_persists_in_record_without_wins(env):
+    vm,deploy,state,take,author,other=env
+    c=deploy('contracts/called_it_record.py',A[0])
+    state['get_bet']=json.dumps({'status':'SETTLED','author':author,'counterparty':other,'rule_hash':'frozen','outcome':'VOID','resolution_case':'VOID_TIMEOUT'})
+    c.sync('take-1')
+    payload=json.dumps({'id':'take-1','category':'tech','historical':True,'outcome':'VOID','author':author,'counterparty':other,'rule_hash':'frozen','resolution_case':'VOID_TIMEOUT'})
+    selfcall(vm,c.finalize_record,payload)
+    selfcall(vm,c.finalize_record,payload)
+    for wallet in (author,other):
+        profile=json.loads(c.get_profile(wallet))
+        assert profile['voids']==1 and profile['wins']==profile['losses']==0
+        assert profile['history'][0]['resolution_case']=='VOID_TIMEOUT' and len(profile['history'])==1
+
+
+def test_inconclusive_submitted_evidence_is_void_not_default(env):
+    vm,deploy,state,take,*_=env
+    take['rule']={**RULE,'as_of':1685836800,'deadline':1686095999}
+    state['get_take']=json.dumps(take)
+    c=deploy('contracts/take_resolver.py',A[0])
+    url='https://web.archive.org/web/20230605190503id_/https://www.apple.com/newsroom/2023/06/introducing-apple-vision-pro/'
+    vm.mock_web(r'.*/cdx/.*',{'status':200,'body':json.dumps([['timestamp','original'],['20230605190503','https://www.apple.com/newsroom/2023/06/introducing-apple-vision-pro/']])})
+    vm.mock_web(r'.*/web/.*',{'status':200,'body':'<main>The organization did not provide a conclusive dated announcement.</main>'})
+    vm.mock_llm(r'.*CALLED_IT_RESOLVE.*',json.dumps({'verdict':'INSUFFICIENT_EVIDENCE','quotes':[],'reason':'No decisive official announcement.'}))
+    c.submit_evidence('take-1',url,'')
+    assert json.loads(c.get_resolution('take-1'))['evidence'][0]['preflight']['status']=='FETCHED'
+    c.seal_evidence('take-1');c.resolve('take-1')
+    assert vm.run_validator()
+    selfcall(vm,c.finalize_resolution,'take-1')
+    r=json.loads(c.get_resolution('take-1'))
+    assert r['resolution_case']=='VOID_INSUFFICIENT_EVIDENCE' and r['outcome']=='VOID' and not r['default_applied']
+
+
+@pytest.mark.parametrize('status',[401,403])
+def test_unlisted_source_failed_preflight_is_retained(env,status):
+    vm,deploy,state,take,*_=env
+    take['rule']={**RULE,'as_of':1685836800,'deadline':1686095999}
+    state['get_take']=json.dumps(take)
+    c=deploy('contracts/take_resolver.py',A[0])
+    url='https://web.archive.org/web/20230605190503id_/https://www.apple.com/newsroom/2023/06/introducing-apple-vision-pro/'
+    vm.mock_web(r'.*/cdx/.*',{'status':200,'body':json.dumps([['timestamp','original'],['20230605190503','https://www.apple.com/newsroom/2023/06/introducing-apple-vision-pro/']])})
+    vm.mock_web(r'.*/web/.*',{'status':status,'body':'Blocked'})
+    c.submit_evidence('take-1',url,'')
+    assert vm.run_validator()
+    r=json.loads(c.get_resolution('take-1'))
+    assert r['evidence'][0]['preflight']['status']=='UNAVAILABLE'
+    c.seal_evidence('take-1');c.resolve('take-1')
+    assert vm.run_validator()
+    selfcall(vm,c.finalize_resolution,'take-1')
+    assert json.loads(c.get_resolution('take-1'))['resolution_case']=='VOID_SOURCES_UNREACHABLE'

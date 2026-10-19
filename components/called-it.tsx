@@ -842,6 +842,7 @@ export default function CalledIt({
                             {h.id} ·{" "}
                             {h.historical ? "Historical replay" : "Live take"} ·{" "}
                             {h.category}
+                            {h.resolution_case ? " · " + h.resolution_case : ""}
                           </small>
                         </span>
                         <span
@@ -1243,7 +1244,8 @@ function ReceiptDetail({
   const [url, setUrl] = useState(""),
     [argument, setArgument] = useState(""),
     [preview, setPreview] = useState(""),
-    [checking, setChecking] = useState(false);
+    [checking, setChecking] = useState(false),
+    [reviewedPreflight, setReviewedPreflight] = useState("");
   const [clock, setClock] = useState(0);
   useEffect(() => {
     const tick = () => setClock(Date.now() / 1000);
@@ -1260,6 +1262,9 @@ function ReceiptDetail({
   const expired = clock >= t.accept_deadline;
   const eventClosed = t.historical || clock > t.rule.deadline;
   const sealed = r.sealed?.includes(account);
+  const ownPreflightKey = JSON.stringify(
+    r.evidence?.filter((e) => e.party === account) ?? [],
+  );
   const claim = b.claims?.[account];
   const available =
     BigInt(b.payouts?.[account] ?? "0") > 0n &&
@@ -1279,6 +1284,9 @@ function ReceiptDetail({
         shape +
           " " +
           p.message +
+          " Preflight: " +
+          p.status +
+          (p.error ? " · " + p.error : "") +
           " Capture: " +
           datetime(p.capture) +
           " Extracted main text (" +
@@ -1332,8 +1340,10 @@ function ReceiptDetail({
               </dd>
               <dt>Default</dt>
               <dd>
-                {t.rule.default} if no qualifying evidence or the result is
-                insufficient.
+                {t.rule.default}{" "}
+                {t.rule.technical_failure_policy
+                  ? "only if nobody submits evidence. Source failures, inconclusive evidence and consensus timeout resolve VOID."
+                  : "under this legacy rule, including its original technical-failure fallbacks."}
               </dd>
               <dt>Allowed sources</dt>
               <dd className="domains">{t.rule.domains.join(" · ")}</dd>
@@ -1527,7 +1537,14 @@ function ReceiptDetail({
                 <span>{r.status ?? "AWAITING EVIDENCE"}</span>
               )}
             </div>
+            {r.resolution_case && <p className="notice">{r.resolution_case}</p>}
             {r.reason && <p>{r.reason}</p>}
+            {t.rule.technical_failure_policy && (
+              <p className="muted">
+                Technical failure policy: {t.rule.technical_failure_policy}.
+                VOID refunds each original stake in full.
+              </p>
+            )}
             {r.default_applied && (
               <p className="notice">
                 Code applied the rule’s {t.rule.default} default. This is not a
@@ -1555,6 +1572,16 @@ function ReceiptDetail({
                     </strong>
                     <External href={e.url}>Open immutable evidence</External>
                     {e.argument && <p>Party argument: {e.argument}</p>}
+                    {e.preflight && (
+                      <p className="notice">
+                        Submission preflight: {e.preflight.status} ·{" "}
+                        {e.preflight.length ?? 0} characters ·{" "}
+                        {datetime(e.preflight.checked_at)}
+                        {e.preflight.error ? " · " + e.preflight.error : ""}.
+                        Resolution fetches the source again; technical failure
+                        refunds both stakes.
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
@@ -1618,6 +1645,21 @@ function ReceiptDetail({
                         {preview}
                       </p>
                     )}
+                    {party && r.evidence?.some((e) => e.party === account) && (
+                      <label className="notice">
+                        <input
+                          type="checkbox"
+                          checked={reviewedPreflight === ownPreflightKey}
+                          onChange={(e) =>
+                            setReviewedPreflight(
+                              e.target.checked ? ownPreflightKey : "",
+                            )
+                          }
+                        />{" "}
+                        I reviewed my submitted evidence preflight results above
+                        before sealing.
+                      </label>
+                    )}
                     {party &&
                       !sealed &&
                       action(
@@ -1625,7 +1667,10 @@ function ReceiptDetail({
                         "TakeResolver",
                         "seal_evidence",
                         [t.id],
-                        !!busy,
+                        !!busy ||
+                          (r.evidence?.some((e) => e.party === account) ===
+                            true &&
+                            reviewedPreflight !== ownPreflightKey),
                       )}
                   </div>
                 )}
@@ -1838,7 +1883,7 @@ function PostForm({
             </select>
           </label>
           <label className="field">
-            If no qualifying evidence
+            If nobody submits evidence
             <select
               value={fallback}
               onChange={(e) => setFallback(e.target.value)}

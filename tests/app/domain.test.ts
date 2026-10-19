@@ -110,3 +110,18 @@ test("canonical explorer links validate identifiers", () => {
   assert.throws(() => explorer("address", hash));
   assert.throws(() => explorer("tx", "javascript:alert(1)"));
 });
+
+test("known blocked source hosts are rejected before preview fetching", () => {
+  for (const host of ["reuters.com", "apnews.com"]) {
+    assert.throws(
+      () =>
+        evidenceShape(
+          "https://web.archive.org/web/20230605190503id_/https://www." +
+            host +
+            "/article",
+          { domains: [host] } as Rule,
+        ),
+      /blocked/,
+    );
+  }
+});

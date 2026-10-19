@@ -78,7 +78,7 @@ class Takes(gl.Contract):
             except Exception:return False
         answer=gl.vm.run_nondet_unsafe(leader,validate)
         key='take-'+str(len(self.ids)+1)
-        rule={'proposition':answer['proposition'],'yes':YES,'does_not_count':EXCLUDES,'as_of':as_of,'deadline':deadline,'default':default,'domains':DOMAINS[category]}
+        rule={'proposition':answer['proposition'],'yes':YES,'does_not_count':EXCLUDES,'as_of':as_of,'deadline':deadline,'default':default,'domains':DOMAINS[category],'technical_failure_policy':'VOID; default only when no evidence is submitted; insufficient evidence also VOID'}
         encoded=json.dumps(rule,sort_keys=True,separators=(',',':'))
         take={'id':key,'author':str(gl.message.sender_address).lower(),'text':text,'category':category,'created_at':created,'historical':replay,'rule':rule,'rule_hash':hashlib.sha256(encoded.encode()).hexdigest(),'stake_wei':str(stake_wei),'ratio':ratio,'accept_deadline':created+86400 if replay else min(created+7*86400,deadline-3600),'evidence_deadline':created+2*86400 if replay else deadline+72*3600,'status':'COMPILING','decision':answer['decision'],'reason':answer['reason']}
         self.items[key]=json.dumps(take)
