@@ -23,7 +23,9 @@ export async function POST(req: Request) {
       info,
       ...source,
       message:
-        "URL shape and allowlist verified by contract read. Capture metadata and source text were fetched for this non-authoritative preview. Validators repeat these checks on submission. This preview does not decide the verdict.",
+        source.status === "UNAVAILABLE"
+          ? "URL shape and allowlist verified by contract read. Immutable capture metadata verified; the article fetch failed. You may submit this visible failed preflight. Validators fetch independently on submission and resolution; only actual failure of every resolution fetch produces technical VOID."
+          : "URL shape and allowlist verified by contract read. Capture metadata and source text were fetched for this non-authoritative preview. Validators repeat these checks on submission. This preview does not decide the verdict.",
     });
   } catch (e) {
     return NextResponse.json(

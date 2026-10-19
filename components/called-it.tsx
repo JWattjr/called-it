@@ -518,6 +518,28 @@ export default function CalledIt({
           </button>
         </header>
         <main id="main">
+          {!!proof.legacyLiveTakes?.length &&
+            (view === "feed" || view === "proof") && (
+              <div className="notice">
+                <strong>
+                  Two earlier live takes remain on the previous contracts.
+                </strong>
+                <p>
+                  The fairness policy below applies to this deployment. The
+                  funded October 29 and November 4 takes retain their original
+                  immutable rules and refund deadlines.{" "}
+                  <External
+                    href={
+                      (proof.github ?? "https://github.com/JWattjr/called-it") +
+                      "/blob/main/deploy/releases/v2-proof.json"
+                    }
+                  >
+                    Read the previous deployment and live-take receipts
+                  </External>
+                  .
+                </p>
+              </div>
+            )}
           <div className="heading">
             <div>
               <h1>{title}</h1>
@@ -1346,7 +1368,15 @@ function ReceiptDetail({
                   : "under this legacy rule, including its original technical-failure fallbacks."}
               </dd>
               <dt>Allowed sources</dt>
-              <dd className="domains">{t.rule.domains.join(" · ")}</dd>
+              <dd className="domains">
+                {t.rule.domains.join(" · ")}
+                {t.rule.technical_failure_policy && (
+                  <p>
+                    Known blocked origins are rejected before fetch:
+                    reuters.com, apnews.com, oscars.org.
+                  </p>
+                )}
+              </dd>
               <dt>Rule SHA-256</dt>
               <dd className="hash">{t.rule_hash}</dd>
             </dl>
@@ -1588,6 +1618,19 @@ function ReceiptDetail({
             ) : (
               <p className="muted">No evidence links submitted.</p>
             )}
+            {r.status === "RESOLVING" && (
+              <div className="notice">
+                <p>
+                  If consensus has not finalized by{" "}
+                  {datetime(t.evidence_deadline + 48 * 3600)}, resolve the
+                  timeout as VOID and refund both original stakes.
+                </p>
+                {clock >= t.evidence_deadline + 48 * 3600 &&
+                  action("Resolve timeout as VOID", "TakeResolver", "resolve", [
+                    t.id,
+                  ])}
+              </div>
+            )}
             {r.status !== "FINAL" && r.status !== "RESOLVING" && (
               <>
                 <p className="muted">
@@ -1676,7 +1719,9 @@ function ReceiptDetail({
                 )}
                 {eventClosed &&
                   action(
-                    "Request the ruling",
+                    clock >= t.evidence_deadline + 48 * 3600
+                      ? "Resolve timeout as VOID"
+                      : "Request the ruling",
                     "TakeResolver",
                     "resolve",
                     [t.id],

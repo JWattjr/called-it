@@ -127,13 +127,35 @@ check(labels.get('subjective-rejection',{}).get('take',{}).get('status')=='REJEC
 check(any(e.get('bet',{}).get('counterparty') and e['bet'].get('status')=='SETTLED' and any(v.get('status')=='PAID' for v in e['bet'].get('claims',{}).values()) for e in p.get('takes',[])),'second-wallet acceptance, settlement and verified claim')
 check(any(profile['wins']+profile['losses']+profile['voids']>0 for profile in p.get('profiles',[])),'public record updated')
 refund=p.get('refundDemo',{})
-check(int(refund.get('after',{}).get('claim',{}).get('amount',0))==2 and refund.get('after',{}).get('claim',{}).get('status')=='PAID' and int(refund.get('after',{}).get('available_wei',-1))==0,'invalid and failed payable deposits recovered and pulled')
-if refund.get('nativeChild'):
-    child=c.provider.make_request('eth_getTransactionByHash',[refund['nativeChild']])['result']
-    check(child.get('value_credited') is True and int(child.get('value',0))==2 and str(child.get('to_address','')).lower()==refund['wallet'].lower(),'refund native child credits both wei to original sender')
+if p.get('releaseAttempt')!=3:
+    check(int(refund.get('after',{}).get('claim',{}).get('amount',0))==2 and refund.get('after',{}).get('claim',{}).get('status')=='PAID' and int(refund.get('after',{}).get('available_wei',-1))==0,'invalid and failed payable deposits recovered and pulled')
+    if refund.get('nativeChild'):
+        child=c.provider.make_request('eth_getTransactionByHash',[refund['nativeChild']])['result']
+        check(child.get('value_credited') is True and int(child.get('value',0))==2 and str(child.get('to_address','')).lower()==refund['wallet'].lower(),'refund native child credits both wei to original sender')
+    check(len([e for e in p.get('takes',[]) if not e['take']['historical'] and e['bet'].get('status')=='OPEN' and e['take']['rule']['deadline']>time.time()])>=2,'two funded live open takes')
+else:
+    check(labels['no-evidence-default']['resolution'].get('resolution_case')=='DEFAULT_NO_EVIDENCE','only no submitted evidence applies default')
+    for entry in p['takes']:
+        r=entry['resolution'];b=entry['bet']
+        if r.get('resolution_case') in ('VOID_SOURCES_UNREACHABLE','VOID_TIMEOUT','VOID_INSUFFICIENT_EVIDENCE'):
+            check(r.get('outcome')=='VOID' and not r.get('default_applied'),entry['take']['id']+' technical or inconclusive outcome refunds, never default')
+            if b.get('status')=='SETTLED':check(b['payouts']==b['deposits'],entry['take']['id']+' VOID refunds original deposits exactly')
+    old=p.get('legacyLiveTakes',[])
+    check(len(old)==2 and all(e['take']['rule']['deadline']>time.time() for e in old),'two pending live takes retained on explicitly documented earlier deployment')
+    for e in old:
+        value=c.read_contract(e['contracts']['TakeEscrow']['address'],'get_bet',args=[e['take']['id']],transaction_hash_variant=TransactionHashVariant.LATEST_FINAL)
+        value=json.loads(value) if isinstance(value,str) else value
+        check(value==e['bet'],e['take']['id']+' old funded live take readback');time.sleep(2.2)
+    for name,url in links.get('legacyContracts',{}).items():
+        check(re.fullmatch(r'https://explorer-studio\.genlayer\.com/address/0x[0-9a-fA-F]{40}',url) is not None,name+' canonical legacy contract URL')
+        check(get_json(url.replace('/address/','/api/address/')).get('type')=='CONTRACT',name+' actual legacy contract record type CONTRACT')
+    for url in links.get('other',[]):
+        response=get_evidence(url);check(response.status_code==200,'published non-explorer URL HTTP 200: '+url)
 check(sum(p.get('deposits',{}).values())<=20,'cumulative simulated deposits within approved 20 wei')
-check(len([e for e in p.get('takes',[]) if not e['take']['historical'] and e['bet'].get('status')=='OPEN' and e['take']['rule']['deadline']>time.time()])>=2,'two funded live open takes')
-report={'checkedAt':datetime.now(timezone.utc).isoformat(),'passed':not failures,'checks':checks,'failures':failures,'readOnly':True,'sourceCommit':p.get('sourceCommit'),'contractHashes':{name:contract['sha256'] for name,contract in p['contracts'].items()},'receiptVerification':'Live Explorer fields, leader output and quorum bound to saved RPC receipts; direct RPC for native credits, expected failures and missing quorum. Contract source and finalized state are read directly by RPC.'}
+unproven=[]
+if p.get('releaseAttempt')==3 and not p.get('unreachableProof',{}).get('proven'):
+    unproven.append('The full real blocked-host VOID proof is unproven; actual case: '+p.get('unreachableProof',{}).get('actualCase','pending')+'. Source preflights and the additional access probe are retained. Mocked 401/403 coverage is not live proof.')
+report={'checkedAt':datetime.now(timezone.utc).isoformat(),'passed':not failures,'checks':checks,'failures':failures,'readOnly':True,'unproven':unproven,'sourceCommit':p.get('sourceCommit'),'contractHashes':{name:contract['sha256'] for name,contract in p['contracts'].items()},'receiptVerification':'Live Explorer fields, leader output and quorum bound to saved RPC receipts; direct RPC for native credits, expected failures and missing quorum. Contract source and finalized state are read directly by RPC.'}
 (ROOT/'deploy/proof-verification.json').write_text(json.dumps(report,indent=2),encoding='utf8')
 print(len(checks),'checks;',len(failures),'failures')
 sys.exit(1 if failures else 0)

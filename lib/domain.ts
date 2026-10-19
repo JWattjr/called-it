@@ -109,6 +109,10 @@ export type Proof = {
   blockers?: string[];
   limitations?: string[];
   demoWallets?: string[];
+  legacyLiveTakes?: {
+    take: Take;
+    contracts: Record<string, { address: string }>;
+  }[];
 };
 export type TxState =
   | "SUBMITTED"

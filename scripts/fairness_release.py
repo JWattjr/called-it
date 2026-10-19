@@ -25,6 +25,11 @@ def record():
     p['takes']=entries;p['profiles']=[read(address('CalledItRecord'),'get_profile',[signer(i).address]) for i in range(2)]
     p['recordedAt']=datetime.now(timezone.utc).isoformat();save(p)
     return {e['label']:e for e in entries}
+def entries():
+    at=p.get('recordedAt')
+    if p.get('takes') and at and (datetime.now(timezone.utc)-datetime.fromisoformat(at)).total_seconds()<30:return {e['label']:e for e in p['takes']}
+    return record()
+
 def initialize():
     if p.get('releaseAttempt')==3:return
     folder=ROOT/'deploy/releases';folder.mkdir(exist_ok=True)
@@ -66,18 +71,18 @@ elif stage=='compile':
         assert t['status']==('REJECTED' if case['label']=='subjective-rejection' else 'COMPILED'), 'Unexpected compiler result; STOP'
     record()
 elif stage=='fund':
-    e=record()['sources-unreachable'];key=e['take']['id']
+    e=entries()['sources-unreachable'];key=e['take']['id']
     write('prepare-'+key,'TakeEscrow','prepare_open',[key]);write('deposit-author-'+key,'TakeEscrow','deposit',[key],value=1)
     write('accept-'+key,'TakeEscrow','prepare_accept',[key],index=1);write('deposit-counter-'+key,'TakeEscrow','deposit',[key],index=1,value=1)
     b=read(address('TakeEscrow'),'get_bet',[key]);assert b['status']=='MATCHED' and b['total']=='2'
     record()
 elif stage=='evidence':
-    items=record()
+    items=entries()
     for case in CASES:
         if case.get('evidence'):write('evidence-'+items[case['label']]['take']['id'],'TakeResolver','submit_evidence',[items[case['label']]['take']['id'],case['evidence'],'Apply the frozen rule. Treat source access failure as technical VOID, never as a default-side win.'])
     record()
 elif stage=='resolve':
-    items=record()
+    items=entries()
     for label,e in items.items():
         if e['take']['status']!='COMPILED':continue
         key=e['take']['id']
@@ -88,10 +93,12 @@ elif stage=='resolve':
         if label in ('official-yes','rumours-no'):assert r['verdict']==('YES' if label=='official-yes' else 'NO'), 'Unexpected ruling; STOP'
         if label=='no-evidence-default':assert r['resolution_case']=='DEFAULT_NO_EVIDENCE'
         if label=='sources-unreachable':
-            p['unreachableProof']={'proven':r['resolution_case']=='VOID_SOURCES_UNREACHABLE','actualCase':r['resolution_case'],'take':key,'note':'Actual validators decide; no fetch status was mocked or forced.'};save(p)
+            preflights=[v.get('preflight',{}) for v in r.get('evidence',[])]
+            blocked=any(v.get('status')=='UNAVAILABLE' and 'HTTP ' in v.get('error','') for v in preflights)
+            p['unreachableProof']={'proven':r['resolution_case']=='VOID_SOURCES_UNREACHABLE' and blocked,'actualCase':r['resolution_case'],'take':key,'preflights':preflights,'note':'Actual validators decide; no fetch status was mocked or forced. A blocked-host proof also requires a recorded failed HTTP preflight.'};save(p)
     record()
 elif stage=='settle':
-    items=record()
+    items=entries()
     for e in items.values():
         key=e['take']['id'];b=e['bet'];r=e['resolution']
         if not b or r.get('status')!='FINAL':continue
