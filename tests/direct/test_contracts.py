@@ -156,6 +156,87 @@ def test_missing_quote_rejected(env):
     vm.mock_llm(r'.*CALLED_IT_RESOLVE.*',json.dumps({'verdict':'YES','quotes':[{'index':0,'text':'A made-up official announcement.'}],'reason':'Claimed YES'}))
     with pytest.raises(Exception):h['judge'](RULE,[{'text':'Only rumours exist.'}],[])
 
+@pytest.mark.parametrize('wrapper',['object','json','fenced'])
+def test_resolution_parser_keeps_only_verified_fields(env,wrapper):
+    h=helpers('contracts/take_resolver.py')
+    passage='June 5, 2023 Apple introduces Apple Vision Pro.'
+    answer={'verdict':'YES','quotes':[{'index':0,'text':passage,'confidence':0.9}],
+            'reason':'Official dated announcement.','outcome':'VOID','payouts':{'attacker':'100'},'resolution_case':'VOID_TIMEOUT'}
+    raw=answer if wrapper=='object' else json.dumps(answer)
+    if wrapper=='fenced':raw='```json\n'+raw+'\n```'
+    parsed=h['parse_resolution'](raw,[{'text':passage}])
+    assert parsed=={'verdict':'YES','quotes':[{'index':0,'text':passage}],'reason':'Official dated announcement.'}
+
+@pytest.mark.parametrize('bad',[
+    {},[],None,'not JSON',
+    {'verdict':'MAYBE','quotes':[],'reason':'No.'},
+    {'verdict':'YES','quotes':[],'reason':'No actual quote.'},
+    {'verdict':'YES','quotes':[{'index':True,'text':'A real quoted passage.'}],'reason':'Boolean index is invalid.'},
+    {'verdict':'YES','quotes':[{'index':-1,'text':'A real quoted passage.'}],'reason':'Negative index is invalid.'},
+    {'verdict':'YES','quotes':[{'index':0,'text':'A real ... quoted passage.'}],'reason':'Stitched quote is invalid.'},
+    {'verdict':'YES','quotes':[{'index':0,'text':'A real quoted passage.'}],'reason':'x'*801},
+])
+def test_resolution_parser_refuses_invalid_or_fabricated_output(env,bad):
+    h=helpers('contracts/take_resolver.py')
+    with pytest.raises(Exception,match='LLM_ERROR'):
+        h['parse_resolution'](bad,[{'text':'A real quoted passage.'}])
+
+@pytest.mark.parametrize('first',[
+    {'verdict':'YES'},
+    {'verdict':'YES','quotes':[{'index':0,'text':'Invented date and paraphrased announcement.'}],'reason':'Unverified first answer.'},
+    'malformed JSON',
+])
+def test_judgment_corrects_once_without_weakening_evidence(env,monkeypatch,first):
+    import genlayer.gl as gl
+    h=helpers('contracts/take_resolver.py')
+    passage='June 5, 2023 Apple introduces Apple Vision Pro.'
+    valid={'verdict':'YES','quotes':[{'index':0,'text':passage}],'reason':'Dated official announcement.'}
+    replies=iter([first,valid]);prompts=[]
+    def respond(prompt,**kwargs):
+        prompts.append(prompt)
+        return next(replies)
+    monkeypatch.setattr(gl.nondet,'exec_prompt',respond)
+    result=h['judge'](RULE,[{'text':passage}],[])
+    assert result==valid and len(prompts)==2
+    assert 'CORRECTION:' not in prompts[0] and 'CORRECTION:' in prompts[1]
+    assert prompts[1].startswith(prompts[0]) and passage in prompts[1]
+    assert h['quotes_match'](result['quotes'],[{'text':passage}])
+    assert not h['agrees'](result,{**result,'verdict':'NO'},[{'text':passage}])
+    assert not h['agrees'](result,result,[{'text':'A different independently fetched article.'}])
+
+def test_repeated_model_errors_stop_without_default_or_void(env,monkeypatch):
+    import genlayer.gl as gl
+    h=helpers('contracts/take_resolver.py');calls=[]
+    def respond(prompt,**kwargs):
+        calls.append(prompt)
+        return {'verdict':'YES','quotes':[{'index':0,'text':'Fabricated announcement and date.'}],'reason':'Invalid.'}
+    monkeypatch.setattr(gl.nondet,'exec_prompt',respond)
+    with pytest.raises(Exception,match='LLM_ERROR.*quote missing'):
+        h['judge'](RULE,[{'text':'Only rumours exist.'}],[])
+    assert len(calls)==2
+
+@pytest.mark.parametrize('validator_verdict',['YES','NO'])
+def test_repaired_resolution_still_requires_independent_validator_agreement(env,monkeypatch,validator_verdict):
+    import genlayer.gl as gl
+    vm,deploy,state,take,*_=env
+    take['rule']={**RULE,'as_of':1685750400,'deadline':1686095999}
+    state['get_take']=json.dumps(take)
+    c=deploy('contracts/take_resolver.py',A[0])
+    url='https://web.archive.org/web/20230605190503id_/https://www.apple.com/newsroom/2023/06/introducing-apple-vision-pro/'
+    passage='June 5, 2023 Apple introduces Apple Vision Pro.'
+    vm.mock_web(r'.*/cdx/.*',{'status':200,'body':json.dumps([['timestamp','original'],['20230605190503','https://www.apple.com/newsroom/2023/06/introducing-apple-vision-pro/']])})
+    vm.mock_web(r'.*/web/.*',{'status':200,'body':'<main>'+passage+'</main>'})
+    c.submit_evidence('take-1',url,'Apply the frozen rule.');c.seal_evidence('take-1')
+    valid={'verdict':'YES','quotes':[{'index':0,'text':passage}],'reason':'Dated announcement.'}
+    responses=iter([{},valid,{},dict(valid,verdict=validator_verdict)]);calls=[]
+    def respond(prompt,**kwargs):
+        calls.append(prompt)
+        return next(responses)
+    monkeypatch.setattr(gl.nondet,'exec_prompt',respond)
+    c.resolve('take-1')
+    assert vm.run_validator()==(validator_verdict=='YES')
+    assert len(calls)==4 and sum('CORRECTION:' in p for p in calls)==2
+
 @pytest.mark.parametrize('default',['NO','VOID'])
 def test_no_evidence_default_finality(env,default):
     vm,deploy,state,take,*_=env
