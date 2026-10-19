@@ -1,5 +1,6 @@
 """Generate documentation and a Portal draft from real recorded proof; never submit."""
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
 p=json.loads((ROOT/'deploy/proof.json').read_text(encoding='utf8'))
@@ -10,6 +11,11 @@ lines+=['','## Takes and outcomes','']
 for e in p.get('takes',[]):
     t=e['take'];r=e['resolution'];b=e['bet']
     lines.extend([f"### {t['id']} — {e.get('label','')}",'',t['text'],'',f"{'Historical replay' if t['historical'] else 'Live'} · {t['status']} · verdict {r.get('verdict','pending')} · outcome {r.get('outcome','pending')} · escrow {b.get('status','unfunded')}",''])
+    lines.append('Event deadline: '+datetime.fromtimestamp(t['rule']['deadline'],timezone.utc).isoformat())
+    if r.get('reason'):lines.append('Ruling: '+r['reason'])
+    if t['status']=='REJECTED':lines.append('Compiler decision: '+t['decision']+' — '+t['reason'])
+    if b.get('claims'):lines.append('Native claims: '+json.dumps(b['claims'],ensure_ascii=False))
+    lines.append('')
     for evidence in r.get('evidence',[]):lines.append(f"- [Immutable evidence]({evidence['url']})")
     for name,url in links.get('transactions',{}).items():
         if t['id'] in name or e.get('label','__none__') in name:lines.append(f'- [{name}]({url})')
@@ -29,7 +35,8 @@ portal={
   {'heading':'Settle and verify','instruction':'Settle a finalized result, pull the payout, verify its native child receipt and sync the public record. Review all receipts and run npm run verify:proof.'}
  ],
  'expectedOutcome':'An accepted compilation freezes a precise rule before stakes. A matched bet resolves YES, NO or the frozen default; settlement conserves wei and the winner pulls a receipt-verified payout. Unaccepted and timed-out takes expose refunds. Only finalized matched settlements update profiles. The read-only proof verifier checks deployed code, actual outcomes, payouts and canonical explorer records.',
- 'contractLinks':list(links.get('contracts',{}).values()),'website':p.get('website',''),'github':p.get('github',''),'demoVideo':'','evidence':[]
+ 'contractLinks':list(links.get('contracts',{}).values()),'website':p.get('website',''),'github':p.get('github',''),'demoVideo':'',
+ 'evidence':[p['github']+'/blob/main/'+path for path in ('deploy/proof.json','deploy/proof-verification.json','docs/VERIFICATION.md','docs/RELEASE.md','docs/TUTORIAL.md')] if p.get('github') else []
 }
 assert len(portal['oneLiner'])<=180 and len(portal['description'])<=1000 and len(portal['expectedOutcome'])<=500
 (ROOT/'docs/submission/portal-fields.json').write_text(json.dumps(portal,indent=2)+'\n',encoding='utf8')
