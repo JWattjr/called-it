@@ -2,6 +2,8 @@
 
 **Put GEN on your hot take. GenLayer validators decide who called it.**
 
+[Open Called It](https://called-it-genlayer.vercel.app) · [Public repository](https://github.com/JWattjr/called-it) · [Verification record](docs/VERIFICATION.md)
+
 Called It is a one-on-one wager on a public announcement. An independently verified compilation freezes the proposition, official-evidence standard, event window, default and source domains before either side deposits. A second judgment resolves immutable evidence. Plain Python handles stakes, odds, deadlines, refunds, payouts and records.
 
 The live release URL, repository, canonical contract links and finalized transaction receipts are generated into [RELEASE.md](docs/RELEASE.md). The authoritative machine-readable record is [deploy/proof.json](deploy/proof.json). A deployment or screenshot alone does not establish demo completion; inspect `releaseStatus`, the verification report and documented blockers.

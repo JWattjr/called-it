@@ -1,11 +1,11 @@
 # Called It release evidence
 
-Recorded: 2026-10-18T20:04:22.040158+00:00
-Status: IN_PROGRESS
+Recorded: 2026-10-19T03:31:11.928264+00:00
+Status: VERIFIED
 
-App: Deployment pending
-Repository: Publication pending
-Source commit: `not recorded`
+App: https://called-it-genlayer.vercel.app
+Repository: https://github.com/JWattjr/called-it
+Source commit: `5c2d4494adc96ae3036be4249171001767d6c61e`
 
 ## Contracts
 
@@ -20,10 +20,144 @@ Source commit: `not recorded`
 
 Apple officially announces Apple Vision Pro.
 
-Historical replay · COMPILED · verdict pending · outcome pending · escrow unfunded
+Historical replay · COMPILED · verdict YES · outcome YES · escrow SETTLED
 
+Event deadline: 2023-06-06T23:59:59+00:00
+Ruling: Apple officially announced Apple Vision Pro in an Apple Newsroom press release dated June 5, 2023, which falls within the event window.
+Native claims: {"0x4106c978789a6e28f4c6044bf252f2667939e5a7": {"amount": "4", "attempt": 1, "status": "PAID", "requested_at": 1792378505, "parent": "0x635d286cc1af2c87c32215d4790186ac37c1374b8c7205d14f71cdffddc9b1e2", "child": "0xe62c5ecf64001dd0ea95a5bfc1ff78d6fa89a9fe8a0ff654a0738d3a519bfe0a"}}
+
+- [Immutable evidence](https://web.archive.org/web/20230605190503id_/https://www.apple.com/newsroom/2023/06/introducing-apple-vision-pro/)
 - [compile-official-yes](https://explorer-studio.genlayer.com/tx/0x71d3797b1ad5432815bf22005887bcedf02d29480ea92c8cbbf3805a21b93c0e)
 - [compile-official-yes-child-0](https://explorer-studio.genlayer.com/tx/0x55f4fa4f43e46cd0c93aa7a5829ce20acde47029a3803e172036f3204494589f)
+- [prepare-take-1](https://explorer-studio.genlayer.com/tx/0x5487846f666a01bb38846525779e37aaa9db1bd27eea261372cb0d823fdce689)
+- [deposit-author-take-1](https://explorer-studio.genlayer.com/tx/0x79b47675d6f16ee08d74a05a4bb4b1aa7776e7e1dcbb08741045b760ba850cfc)
+- [deposit-author-take-1-child-0](https://explorer-studio.genlayer.com/tx/0xa53aad222609a3882bf1c12f51aabd4f4e93f611b5d9a13f12c62bf2622ccbe6)
+- [evidence-take-1](https://explorer-studio.genlayer.com/tx/0xbbadcc63a141534e6cf64d41aa0172ed5b245a14f6e56852cb72023edeacce71)
+- [accept-take-1](https://explorer-studio.genlayer.com/tx/0x63c6e97503d5502aa688a7f0528a8ba6cc3e05cd80f9e15cd882d0ff7a1b5e3d)
+- [accept-renew-take-1-1792356047](https://explorer-studio.genlayer.com/tx/0xf0d55d5bc291ddb81ef9bbf3781009935b47efe03f815873cea49517f7126287)
+- [deposit-counter-take-1](https://explorer-studio.genlayer.com/tx/0x593124030a3fcfb80446eb131c2c79168c3d992faeccae24bfc1790baed98006)
+- [deposit-counter-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x641b3321cf6f5f1832daee6c8237f0176017babafc7d6b91e68dade1445727a8)
+- [seal-author-take-1](https://explorer-studio.genlayer.com/tx/0x5e48fbbe9bdcf698dadf1d4399c2db09e2ff6122ea0e8e260ae425e2b18efdf1)
+- [seal-counter-take-1](https://explorer-studio.genlayer.com/tx/0x0a76f60821aed0cac0c6faca049a8d1127b5c8a2bca43c209d03e7e661f2a9db)
+- [resolve-take-1](https://explorer-studio.genlayer.com/tx/0x93950a4161d77eb9d62eebc5ffb757b57943a17c6ab422c15b683cc505a82e55)
+- [resolve-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x6f00e5c1e9c573b77cf1b48f8ad0fe10b4f9e3497dfeb642f6654ca05bccefc0)
+- [settle-take-1](https://explorer-studio.genlayer.com/tx/0x844134d6e08c199fa98f4fa9a58b89537fc8d9fc2bca618d137c2c28f7b4d657)
+- [settle-take-1-child-0](https://explorer-studio.genlayer.com/tx/0xb3002301415e8872cc61b0939397c917f56316bfae833b2fe41cd48551bd006b)
+- [claim-take-1-0-1](https://explorer-studio.genlayer.com/tx/0x635d286cc1af2c87c32215d4790186ac37c1374b8c7205d14f71cdffddc9b1e2)
+- [claim-take-1-0-1-child-0](https://explorer-studio.genlayer.com/tx/0xe62c5ecf64001dd0ea95a5bfc1ff78d6fa89a9fe8a0ff654a0738d3a519bfe0a)
+- [verify-take-1-0-1](https://explorer-studio.genlayer.com/tx/0x53dfedeb1cb667fefdd5ad75d1e4ea43c66271a775f86398eb729880cf8b4e98)
+- [record-take-1](https://explorer-studio.genlayer.com/tx/0x2ecf12149894897974e54feb32a51d96d11ee9b2580396a324184283a8e0dd29)
+- [record-take-1-child-0](https://explorer-studio.genlayer.com/tx/0xff41844b32987ed20f5f72661fb8bb044854ffbcca2904735745f7aecc78e397)
+### take-2 — rumours-no
+
+Nintendo officially reveals its next console under the retail name Nintendo Switch 2.
+
+Historical replay · COMPILED · verdict NO · outcome NO · escrow SETTLED
+
+Event deadline: 2025-01-09T23:59:59+00:00
+Ruling: The only provided allowlisted evidence mentions official acknowledgment before the window and uses 'Nintendo Switch's successor,' not an official reveal under the retail name 'Nintendo Switch 2' between 2025-01-01 and 2025-01-09. No qualifying official announcement within the window is shown.
+Native claims: {"0x3fbb8bc6f0c35cb8989cef4575c03284e3fa1f8f": {"amount": "4", "attempt": 1, "status": "PAID", "requested_at": 1792378511, "parent": "0xe96eb70c7097e0f0f9a7858afb9634f448d558b2ab4bbb15c7c819c65a10fc30", "child": "0x3ea14654507f9af98f92aac6ddf662e0fc34639f095ede9d1dc4395a6d632d0f"}}
+
+- [Immutable evidence](https://en.wikipedia.org/w/index.php?title=Nintendo_Switch_2&oldid=1268215322)
+- [compile-rumours-no](https://explorer-studio.genlayer.com/tx/0x4bd40e50d12913306e32e57f3c5357267155e8c4736d1df1dd7f5764a7f273a6)
+- [compile-rumours-no-child-0](https://explorer-studio.genlayer.com/tx/0xa903c116e011b52eae00ecb17fc1b05e278a4daa26b0eb1738deac89a100ae53)
+- [evidence-take-2](https://explorer-studio.genlayer.com/tx/0xc779857a94685d634bedc87633eab483a8cf1a976c5e5e9c93552cbf182151cb)
+- [prepare-take-2](https://explorer-studio.genlayer.com/tx/0xe1a375f4d5b688cb85d7d289740bd3b368cbbe587c391b9da4c221acee8d6722)
+- [deposit-author-take-2](https://explorer-studio.genlayer.com/tx/0x93751fec8ab76a272c44cdeddae76dd85550a3e8ec527c5daff429c927d41d11)
+- [deposit-author-take-2-child-0](https://explorer-studio.genlayer.com/tx/0x9223b825e494647a4c1fff6f7ae60abe315e2cd6a7cba0bca0cec49034917e82)
+- [accept-take-2](https://explorer-studio.genlayer.com/tx/0x0ef6415716603675d9f3423a1be558e59b6600e94ec61fa361d01398bbb5106d)
+- [deposit-counter-take-2](https://explorer-studio.genlayer.com/tx/0xae1d227632a857b6f106008e1b2044edb7a1de39df8de26356c0e46154f1a996)
+- [deposit-counter-take-2-child-0](https://explorer-studio.genlayer.com/tx/0xdbf8b365ee845015c38ad8fd69ead0b20cd37536da54c9aa6d150634b7441037)
+- [seal-author-take-2](https://explorer-studio.genlayer.com/tx/0xe729dcef1587b3aaf7fe4e494d9471479b7d3efac0454da0bf392059e4b4a71c)
+- [seal-counter-take-2](https://explorer-studio.genlayer.com/tx/0x22a4f92b46af570bbab36908024275c981f696abd3d5743f2f63572e2578e75c)
+- [resolve-take-2](https://explorer-studio.genlayer.com/tx/0x072e90a5c2c570c46cd9740b72877bc6d6e64a6c84dd0e90b0927d31bd77ee6d)
+- [resolve-retry-take-2-2](https://explorer-studio.genlayer.com/tx/0x69574e0611d350c79878a1d9fbf99652ec0d1048ebbf96bbc74c39fb0aa5d6ad)
+- [resolve-retry-take-2-3](https://explorer-studio.genlayer.com/tx/0x341a4df16ef7ec6b03b6684bc1006e6c6e08252e893ebbcdb46fbce3f2b0929e)
+- [resolve-retry-take-2-3-child-0](https://explorer-studio.genlayer.com/tx/0x9928b4e16836d8648cbc75817fb90cfb9d9f807bff004efb1c497316343c755b)
+- [settle-take-2](https://explorer-studio.genlayer.com/tx/0x482fa4d99b23ea7e590df2ada2fe5ca84dbb9a74590eba887c7166222cef0cd1)
+- [settle-take-2-child-0](https://explorer-studio.genlayer.com/tx/0xa90082f9ec5087499ddf150e1512f3fcd59cb13ab39163f4e9b9a0a6a548eb7c)
+- [claim-take-2-1-1](https://explorer-studio.genlayer.com/tx/0xe96eb70c7097e0f0f9a7858afb9634f448d558b2ab4bbb15c7c819c65a10fc30)
+- [claim-take-2-1-1-child-0](https://explorer-studio.genlayer.com/tx/0x3ea14654507f9af98f92aac6ddf662e0fc34639f095ede9d1dc4395a6d632d0f)
+- [verify-take-2-1-1](https://explorer-studio.genlayer.com/tx/0xef3bdf0733431c114d6ad6c577679386d575b8de4531d51ffca907e2e559382d)
+- [record-take-2](https://explorer-studio.genlayer.com/tx/0x9d97f6cd1f9488ee013a1dc074a4e408c0ffddb33139e794f283213a4ebbe3af)
+- [record-take-2-child-0](https://explorer-studio.genlayer.com/tx/0x50e2c9f9c578f67e6052d71e0131ed70fe1f3c808bb29c3a844ed672085fa4ed)
+### take-3 — no-evidence-default
+
+Apple officially announces a foldable iPhone.
+
+Historical replay · COMPILED · verdict INSUFFICIENT_EVIDENCE · outcome NO · escrow SETTLED
+
+Event deadline: 2025-01-09T23:59:59+00:00
+Ruling: No evidence submitted; code applied the frozen default.
+Native claims: {"0x3fbb8bc6f0c35cb8989cef4575c03284e3fa1f8f": {"amount": "4", "attempt": 1, "status": "PAID", "requested_at": 1792378536, "parent": "0x36c33e284d0486f7a6c26bf6a98f3db67fe662ba7e0c02d13477d7f6ef84abb1", "child": "0x6379c72abd445f26145a85a9de3efa1018df7a519fec62937da992970f74f5f4"}}
+
+- [compile-no-evidence-default](https://explorer-studio.genlayer.com/tx/0x3a80b858354696baee1e7b5de35f0ef0765f5bf3033c6efe74d1740ba9bd4e43)
+- [compile-no-evidence-default-child-0](https://explorer-studio.genlayer.com/tx/0x052b2b4d8623dc6a0098ca981bf5edd3baa97c6d92df17297df2c586dcbc84c0)
+- [prepare-take-3](https://explorer-studio.genlayer.com/tx/0x83983e3e7162dc546bde685a393fe223f30b4f6a09cf4e0d32d901fdef0d19c0)
+- [deposit-author-take-3](https://explorer-studio.genlayer.com/tx/0xe14f98c5e9dcbcb5dae6394d1cdf16b75f2ae2d2309f9916e2fa0e7d0f838758)
+- [deposit-author-take-3-child-0](https://explorer-studio.genlayer.com/tx/0xb1899215c1871be49877f564e7db549a288f7f14a8d4a72f30783a778b65a5b2)
+- [accept-take-3](https://explorer-studio.genlayer.com/tx/0xc1c4c3a324575a98b74825fb6675f37f60309ac8f33052b8b299abe7a4af38ac)
+- [deposit-counter-take-3](https://explorer-studio.genlayer.com/tx/0x47b6abc01e05656a620a94a8f282a3a5750ac5a41cedb1f72da738fa1157e75f)
+- [deposit-counter-take-3-child-0](https://explorer-studio.genlayer.com/tx/0x52c3ca579dc84a086251b5916008f42a4c3a4eeea720a8ac6fb364abe5ee1049)
+- [seal-author-take-3](https://explorer-studio.genlayer.com/tx/0xd0fc96b01b697449ae52c56a13deb9e1db3a9154194a5e72f84fcad4880903c6)
+- [seal-counter-take-3](https://explorer-studio.genlayer.com/tx/0xf50b7041d2aee13e20d2709d88cb692ea1f59d346b55df330c57e2c152bb0367)
+- [resolve-take-3](https://explorer-studio.genlayer.com/tx/0x2227cc33ef275de4eff11c394c28a97f16430fc7edbf12f5bdeeefdfdcb02d98)
+- [settle-take-3](https://explorer-studio.genlayer.com/tx/0x5bbaed63c61387a635f4b5b297c8d51ebc36b87c89fcaa7543eda6bb6ba17fc4)
+- [settle-take-3-child-0](https://explorer-studio.genlayer.com/tx/0x4f157acb67efc68452c3f24af7493d9636752601d11cae15d24e4974c0698872)
+- [claim-take-3-1-1](https://explorer-studio.genlayer.com/tx/0x36c33e284d0486f7a6c26bf6a98f3db67fe662ba7e0c02d13477d7f6ef84abb1)
+- [claim-take-3-1-1-child-0](https://explorer-studio.genlayer.com/tx/0x6379c72abd445f26145a85a9de3efa1018df7a519fec62937da992970f74f5f4)
+- [verify-take-3-1-1](https://explorer-studio.genlayer.com/tx/0xcf3c78850bd0a1d15f9ac8d607a1dc47122194cc0e3a34b8af5cac8a8aa50458)
+- [record-take-3](https://explorer-studio.genlayer.com/tx/0xa8d2e910dc7ed9ea6c4e998a63705e9669d80e1a3f6aba3d568da4004f0a0823)
+- [record-take-3-child-0](https://explorer-studio.genlayer.com/tx/0xe5e670bae1847b7bb46dd90b26e51f6ddf944b45532287560e0972faf8eef782)
+- [resolve-take-3-child-0](https://explorer-studio.genlayer.com/tx/0x44318d68e82bf592f9272c539e432b668f61ca1fa827faf3114dae7a2fc79845)
+### take-4 — subjective-rejection
+
+Apple's next headset will be a flop.
+
+Historical replay · REJECTED · verdict pending · outcome pending · escrow unfunded
+
+Event deadline: 2025-01-09T23:59:59+00:00
+Compiler decision: SUBJECTIVE — “会失败”属于主观评价，无法由官方公告客观判定。
+
+- [compile-subjective-rejection](https://explorer-studio.genlayer.com/tx/0x7542486b5085dd4f230357a41eb8e74a5b73cd83ca759478358890b4e35037a8)
+- [compile-subjective-rejection-child-0](https://explorer-studio.genlayer.com/tx/0x2628241c80d876513e50282b9685cab57153d0783b79eb7c5bac79990792c19c)
+### take-5 — live-apple-results
+
+Apple publishes its fiscal fourth-quarter 2026 results in an official announcement.
+
+Live · COMPILED · verdict pending · outcome pending · escrow OPEN
+
+Event deadline: 2026-11-04T23:59:59+00:00
+
+- [compile-live-apple-results](https://explorer-studio.genlayer.com/tx/0x11c4ba8c5b927e98c7f86aa983560dd4ba96a2fa7575bd9e07840cfdf48cce6f)
+- [compile-live-apple-results-child-0](https://explorer-studio.genlayer.com/tx/0xc96051970f8067471664d7166c32003b11e3b7ecb641ee54903f6e6d42d7c853)
+- [prepare-take-5](https://explorer-studio.genlayer.com/tx/0xb405c2c5c847fa81e26adf5f42b9eac1513f8d0062aba7fbab7de6ea14076d91)
+- [deposit-author-take-5](https://explorer-studio.genlayer.com/tx/0xbe85c1f61bb6b9be4d9b6a3c2fe848b47d78c37e756868b815729881ab5a0c53)
+- [deposit-author-take-5-child-0](https://explorer-studio.genlayer.com/tx/0x9b7969c84d96dd34c5cbf8c3f6a2182f6dfa6cfde4d4852cc83dd95bde8eb764)
+### take-6 — live-disney-results
+
+The Walt Disney Company publishes its fiscal full-year 2026 results in an official announcement.
+
+Live · REJECTED · verdict pending · outcome pending · escrow unfunded
+
+Event deadline: 2026-11-18T23:59:59+00:00
+Compiler decision: UNRESOLVABLE — Take specifies FY2026 results, which cannot be published within the given event window.
+
+- [compile-live-disney-results](https://explorer-studio.genlayer.com/tx/0x731c0e6a8f97b3e2698c6bbd4fadb8f382e9b5c38620b73aa8dacb5f4922e6fd)
+- [compile-live-disney-results-child-0](https://explorer-studio.genlayer.com/tx/0x0d6db7722308b2ba8fd8701c377595f8158178b0d370d911f81b5d03a4706d7e)
+### take-7 — live-nintendo-delay
+
+Nintendo officially announces a delay to the Australian Nintendo Switch 2 + Mario Kart World bundle launch.
+
+Live · COMPILED · verdict pending · outcome pending · escrow OPEN
+
+Event deadline: 2026-10-29T23:59:59+00:00
+
+- [compile-live-nintendo-delay](https://explorer-studio.genlayer.com/tx/0x9be7df3e50a9f218b45f3935862ef11318a039baae8a000f2bc078b140b2188e)
+- [compile-live-nintendo-delay-child-0](https://explorer-studio.genlayer.com/tx/0x239fef539816834576222f9e7b19b9c20b9cbc7d554f907350a6b3552ee74474)
+- [prepare-take-7](https://explorer-studio.genlayer.com/tx/0xbc04710c805d9d8adbc3d076ebbbc192869e3fbf0a78d2163a0820fb31d273d8)
+- [deposit-author-take-7](https://explorer-studio.genlayer.com/tx/0x9acef2ea193dcfec12362a2680cb43260539538102d3d4ae159abf0caf3472d7)
+- [deposit-author-take-7-child-0](https://explorer-studio.genlayer.com/tx/0xc69a02637cc7391f48ae4cc1051cf43d9a4ea8ff67eb3cfe1d14c4accdf25d6c)
 
 ## All transaction receipts
 
@@ -52,6 +186,88 @@ Historical replay · COMPILED · verdict pending · outcome pending · escrow un
 - [compile-official-yes-child-0](https://explorer-studio.genlayer.com/tx/0x55f4fa4f43e46cd0c93aa7a5829ce20acde47029a3803e172036f3204494589f)
 - [compile-rumours-no](https://explorer-studio.genlayer.com/tx/0x4bd40e50d12913306e32e57f3c5357267155e8c4736d1df1dd7f5764a7f273a6)
 - [compile-rumours-no-child-0](https://explorer-studio.genlayer.com/tx/0xa903c116e011b52eae00ecb17fc1b05e278a4daa26b0eb1738deac89a100ae53)
+- [compile-no-evidence-default](https://explorer-studio.genlayer.com/tx/0x3a80b858354696baee1e7b5de35f0ef0765f5bf3033c6efe74d1740ba9bd4e43)
+- [compile-no-evidence-default-child-0](https://explorer-studio.genlayer.com/tx/0x052b2b4d8623dc6a0098ca981bf5edd3baa97c6d92df17297df2c586dcbc84c0)
+- [compile-subjective-rejection](https://explorer-studio.genlayer.com/tx/0x7542486b5085dd4f230357a41eb8e74a5b73cd83ca759478358890b4e35037a8)
+- [prepare-take-1](https://explorer-studio.genlayer.com/tx/0x5487846f666a01bb38846525779e37aaa9db1bd27eea261372cb0d823fdce689)
+- [fund-wallet-0](https://explorer-studio.genlayer.com/tx/0xa6e47d8e99e82ff1fe90e38a876a52fa08f91b96760cb0ded6164b1a220782bd)
+- [fund-wallet-1](https://explorer-studio.genlayer.com/tx/0x8fda0e67009b77e908aa5c61a220864f38048d35f1224b63b4bb1cea9fb5f4e7)
+- [compile-subjective-rejection-child-0](https://explorer-studio.genlayer.com/tx/0x2628241c80d876513e50282b9685cab57153d0783b79eb7c5bac79990792c19c)
+- [compile-live-apple-results](https://explorer-studio.genlayer.com/tx/0x11c4ba8c5b927e98c7f86aa983560dd4ba96a2fa7575bd9e07840cfdf48cce6f)
+- [compile-live-apple-results-child-0](https://explorer-studio.genlayer.com/tx/0xc96051970f8067471664d7166c32003b11e3b7ecb641ee54903f6e6d42d7c853)
+- [deposit-author-take-1](https://explorer-studio.genlayer.com/tx/0x79b47675d6f16ee08d74a05a4bb4b1aa7776e7e1dcbb08741045b760ba850cfc)
+- [compile-live-disney-results](https://explorer-studio.genlayer.com/tx/0x731c0e6a8f97b3e2698c6bbd4fadb8f382e9b5c38620b73aa8dacb5f4922e6fd)
+- [deposit-author-take-1-child-0](https://explorer-studio.genlayer.com/tx/0xa53aad222609a3882bf1c12f51aabd4f4e93f611b5d9a13f12c62bf2622ccbe6)
+- [compile-live-disney-results-child-0](https://explorer-studio.genlayer.com/tx/0x0d6db7722308b2ba8fd8701c377595f8158178b0d370d911f81b5d03a4706d7e)
+- [evidence-take-1](https://explorer-studio.genlayer.com/tx/0xbbadcc63a141534e6cf64d41aa0172ed5b245a14f6e56852cb72023edeacce71)
+- [evidence-take-2](https://explorer-studio.genlayer.com/tx/0xc779857a94685d634bedc87633eab483a8cf1a976c5e5e9c93552cbf182151cb)
+- [prepare-take-2](https://explorer-studio.genlayer.com/tx/0xe1a375f4d5b688cb85d7d289740bd3b368cbbe587c391b9da4c221acee8d6722)
+- [prepare-take-3](https://explorer-studio.genlayer.com/tx/0x83983e3e7162dc546bde685a393fe223f30b4f6a09cf4e0d32d901fdef0d19c0)
+- [prepare-take-5](https://explorer-studio.genlayer.com/tx/0xb405c2c5c847fa81e26adf5f42b9eac1513f8d0062aba7fbab7de6ea14076d91)
+- [compile-live-nintendo-delay](https://explorer-studio.genlayer.com/tx/0x9be7df3e50a9f218b45f3935862ef11318a039baae8a000f2bc078b140b2188e)
+- [deposit-author-take-2](https://explorer-studio.genlayer.com/tx/0x93751fec8ab76a272c44cdeddae76dd85550a3e8ec527c5daff429c927d41d11)
+- [deposit-author-take-3](https://explorer-studio.genlayer.com/tx/0xe14f98c5e9dcbcb5dae6394d1cdf16b75f2ae2d2309f9916e2fa0e7d0f838758)
+- [compile-live-nintendo-delay-child-0](https://explorer-studio.genlayer.com/tx/0x239fef539816834576222f9e7b19b9c20b9cbc7d554f907350a6b3552ee74474)
+- [deposit-author-take-5](https://explorer-studio.genlayer.com/tx/0xbe85c1f61bb6b9be4d9b6a3c2fe848b47d78c37e756868b815729881ab5a0c53)
+- [deposit-author-take-2-child-0](https://explorer-studio.genlayer.com/tx/0x9223b825e494647a4c1fff6f7ae60abe315e2cd6a7cba0bca0cec49034917e82)
+- [deposit-author-take-3-child-0](https://explorer-studio.genlayer.com/tx/0xb1899215c1871be49877f564e7db549a288f7f14a8d4a72f30783a778b65a5b2)
+- [deposit-author-take-5-child-0](https://explorer-studio.genlayer.com/tx/0x9b7969c84d96dd34c5cbf8c3f6a2182f6dfa6cfde4d4852cc83dd95bde8eb764)
+- [accept-take-1](https://explorer-studio.genlayer.com/tx/0x63c6e97503d5502aa688a7f0528a8ba6cc3e05cd80f9e15cd882d0ff7a1b5e3d)
+- [wallet-adapter-success](https://explorer-studio.genlayer.com/tx/0xae524e71ec2ce1344e6e79be9881a451ceca8f832db71877a29be706a2c4dc0d)
+- [wallet-adapter-error](https://explorer-studio.genlayer.com/tx/0x01f57f1a556142776ebe083096307cb6cdbd5d23e7afcd4401933eeab274ed19)
+- [prepare-take-7](https://explorer-studio.genlayer.com/tx/0xbc04710c805d9d8adbc3d076ebbbc192869e3fbf0a78d2163a0820fb31d273d8)
+- [deposit-author-take-7](https://explorer-studio.genlayer.com/tx/0x9acef2ea193dcfec12362a2680cb43260539538102d3d4ae159abf0caf3472d7)
+- [deposit-author-take-7-child-0](https://explorer-studio.genlayer.com/tx/0xc69a02637cc7391f48ae4cc1051cf43d9a4ea8ff67eb3cfe1d14c4accdf25d6c)
+- [accept-take-2](https://explorer-studio.genlayer.com/tx/0x0ef6415716603675d9f3423a1be558e59b6600e94ec61fa361d01398bbb5106d)
+- [accept-take-3](https://explorer-studio.genlayer.com/tx/0xc1c4c3a324575a98b74825fb6675f37f60309ac8f33052b8b299abe7a4af38ac)
+- [accept-renew-take-1-1792356047](https://explorer-studio.genlayer.com/tx/0xf0d55d5bc291ddb81ef9bbf3781009935b47efe03f815873cea49517f7126287)
+- [deposit-counter-take-1](https://explorer-studio.genlayer.com/tx/0x593124030a3fcfb80446eb131c2c79168c3d992faeccae24bfc1790baed98006)
+- [deposit-counter-take-2](https://explorer-studio.genlayer.com/tx/0xae1d227632a857b6f106008e1b2044edb7a1de39df8de26356c0e46154f1a996)
+- [deposit-counter-take-3](https://explorer-studio.genlayer.com/tx/0x47b6abc01e05656a620a94a8f282a3a5750ac5a41cedb1f72da738fa1157e75f)
+- [deposit-counter-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x641b3321cf6f5f1832daee6c8237f0176017babafc7d6b91e68dade1445727a8)
+- [deposit-counter-take-2-child-0](https://explorer-studio.genlayer.com/tx/0xdbf8b365ee845015c38ad8fd69ead0b20cd37536da54c9aa6d150634b7441037)
+- [deposit-counter-take-3-child-0](https://explorer-studio.genlayer.com/tx/0x52c3ca579dc84a086251b5916008f42a4c3a4eeea720a8ac6fb364abe5ee1049)
+- [refund-invalid-amount](https://explorer-studio.genlayer.com/tx/0x632facbb0c358cb0ec22868faf1152bd77ded1c32db957f0524eac793c532756)
+- [refund-runtime-failure](https://explorer-studio.genlayer.com/tx/0xdd5d28f08b41ba451aa3a4e2fbfe32436a20cf5942081fd86fa8321010717e34)
+- [refund-recover-failure](https://explorer-studio.genlayer.com/tx/0xce839d9fc4e33c54f029eb828d26802c79149e588c900057dcd67beb49d2725c)
+- [refund-pull-credit](https://explorer-studio.genlayer.com/tx/0x01f566579877f57acb0ca4fb30c906e8d7044e2ecfef5f53a930a97b4abc93e1)
+- [refund-pull-credit-child-0](https://explorer-studio.genlayer.com/tx/0x998a0ec9fffebf2e1f26264ca512414236a748961bdcfc519a254515b9b3151e)
+- [seal-author-take-1](https://explorer-studio.genlayer.com/tx/0x5e48fbbe9bdcf698dadf1d4399c2db09e2ff6122ea0e8e260ae425e2b18efdf1)
+- [seal-author-take-2](https://explorer-studio.genlayer.com/tx/0xe729dcef1587b3aaf7fe4e494d9471479b7d3efac0454da0bf392059e4b4a71c)
+- [seal-author-take-3](https://explorer-studio.genlayer.com/tx/0xd0fc96b01b697449ae52c56a13deb9e1db3a9154194a5e72f84fcad4880903c6)
+- [seal-counter-take-1](https://explorer-studio.genlayer.com/tx/0x0a76f60821aed0cac0c6faca049a8d1127b5c8a2bca43c209d03e7e661f2a9db)
+- [seal-counter-take-2](https://explorer-studio.genlayer.com/tx/0x22a4f92b46af570bbab36908024275c981f696abd3d5743f2f63572e2578e75c)
+- [seal-counter-take-3](https://explorer-studio.genlayer.com/tx/0xf50b7041d2aee13e20d2709d88cb692ea1f59d346b55df330c57e2c152bb0367)
+- [refund-verify-credit](https://explorer-studio.genlayer.com/tx/0x4d3a91715b26e5481f1641a331fa2f83108c581351d499866e6d3d3ff936459c)
+- [resolve-take-1](https://explorer-studio.genlayer.com/tx/0x93950a4161d77eb9d62eebc5ffb757b57943a17c6ab422c15b683cc505a82e55)
+- [resolve-take-2](https://explorer-studio.genlayer.com/tx/0x072e90a5c2c570c46cd9740b72877bc6d6e64a6c84dd0e90b0927d31bd77ee6d)
+- [resolve-take-3](https://explorer-studio.genlayer.com/tx/0x2227cc33ef275de4eff11c394c28a97f16430fc7edbf12f5bdeeefdfdcb02d98)
+- [resolve-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x6f00e5c1e9c573b77cf1b48f8ad0fe10b4f9e3497dfeb642f6654ca05bccefc0)
+- [resolve-retry-take-2-2](https://explorer-studio.genlayer.com/tx/0x69574e0611d350c79878a1d9fbf99652ec0d1048ebbf96bbc74c39fb0aa5d6ad)
+- [resolve-retry-take-2-3](https://explorer-studio.genlayer.com/tx/0x341a4df16ef7ec6b03b6684bc1006e6c6e08252e893ebbcdb46fbce3f2b0929e)
+- [resolve-retry-take-2-3-child-0](https://explorer-studio.genlayer.com/tx/0x9928b4e16836d8648cbc75817fb90cfb9d9f807bff004efb1c497316343c755b)
+- [settle-take-1](https://explorer-studio.genlayer.com/tx/0x844134d6e08c199fa98f4fa9a58b89537fc8d9fc2bca618d137c2c28f7b4d657)
+- [settle-take-2](https://explorer-studio.genlayer.com/tx/0x482fa4d99b23ea7e590df2ada2fe5ca84dbb9a74590eba887c7166222cef0cd1)
+- [settle-take-3](https://explorer-studio.genlayer.com/tx/0x5bbaed63c61387a635f4b5b297c8d51ebc36b87c89fcaa7543eda6bb6ba17fc4)
+- [settle-take-1-child-0](https://explorer-studio.genlayer.com/tx/0xb3002301415e8872cc61b0939397c917f56316bfae833b2fe41cd48551bd006b)
+- [settle-take-2-child-0](https://explorer-studio.genlayer.com/tx/0xa90082f9ec5087499ddf150e1512f3fcd59cb13ab39163f4e9b9a0a6a548eb7c)
+- [settle-take-3-child-0](https://explorer-studio.genlayer.com/tx/0x4f157acb67efc68452c3f24af7493d9636752601d11cae15d24e4974c0698872)
+- [claim-take-1-0-1](https://explorer-studio.genlayer.com/tx/0x635d286cc1af2c87c32215d4790186ac37c1374b8c7205d14f71cdffddc9b1e2)
+- [claim-take-2-1-1](https://explorer-studio.genlayer.com/tx/0xe96eb70c7097e0f0f9a7858afb9634f448d558b2ab4bbb15c7c819c65a10fc30)
+- [claim-take-3-1-1](https://explorer-studio.genlayer.com/tx/0x36c33e284d0486f7a6c26bf6a98f3db67fe662ba7e0c02d13477d7f6ef84abb1)
+- [claim-take-1-0-1-child-0](https://explorer-studio.genlayer.com/tx/0xe62c5ecf64001dd0ea95a5bfc1ff78d6fa89a9fe8a0ff654a0738d3a519bfe0a)
+- [claim-take-2-1-1-child-0](https://explorer-studio.genlayer.com/tx/0x3ea14654507f9af98f92aac6ddf662e0fc34639f095ede9d1dc4395a6d632d0f)
+- [claim-take-3-1-1-child-0](https://explorer-studio.genlayer.com/tx/0x6379c72abd445f26145a85a9de3efa1018df7a519fec62937da992970f74f5f4)
+- [verify-take-1-0-1](https://explorer-studio.genlayer.com/tx/0x53dfedeb1cb667fefdd5ad75d1e4ea43c66271a775f86398eb729880cf8b4e98)
+- [verify-take-2-1-1](https://explorer-studio.genlayer.com/tx/0xef3bdf0733431c114d6ad6c577679386d575b8de4531d51ffca907e2e559382d)
+- [verify-take-3-1-1](https://explorer-studio.genlayer.com/tx/0xcf3c78850bd0a1d15f9ac8d607a1dc47122194cc0e3a34b8af5cac8a8aa50458)
+- [record-take-1](https://explorer-studio.genlayer.com/tx/0x2ecf12149894897974e54feb32a51d96d11ee9b2580396a324184283a8e0dd29)
+- [record-take-2](https://explorer-studio.genlayer.com/tx/0x9d97f6cd1f9488ee013a1dc074a4e408c0ffddb33139e794f283213a4ebbe3af)
+- [record-take-3](https://explorer-studio.genlayer.com/tx/0xa8d2e910dc7ed9ea6c4e998a63705e9669d80e1a3f6aba3d568da4004f0a0823)
+- [record-take-1-child-0](https://explorer-studio.genlayer.com/tx/0xff41844b32987ed20f5f72661fb8bb044854ffbcca2904735745f7aecc78e397)
+- [record-take-2-child-0](https://explorer-studio.genlayer.com/tx/0x50e2c9f9c578f67e6052d71e0131ed70fe1f3c808bb29c3a844ed672085fa4ed)
+- [record-take-3-child-0](https://explorer-studio.genlayer.com/tx/0xe5e670bae1847b7bb46dd90b26e51f6ddf944b45532287560e0972faf8eef782)
+- [resolve-take-3-child-0](https://explorer-studio.genlayer.com/tx/0x44318d68e82bf592f9272c539e432b668f61ca1fa827faf3114dae7a2fc79845)
 
 ## Blockers
 

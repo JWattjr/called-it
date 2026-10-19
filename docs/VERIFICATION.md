@@ -14,6 +14,8 @@ This report describes the real StudioNet release and the checks performed on its
 
 Every flow was inspected at 1440 × 960 and 390 × 844: feed and filters, post form and compilation review, opposite-side stake review, evidence preflight, YES/NO/default receipts, rejection, profile, proof ledger and transaction tracker. Captures and viewport/overflow measurements are retained locally under `.impeccable/review/`.
 
+A fresh visual reviewer inspected 25 required captures. Its four material findings were fixed and rescored as resolved: wallet connection at the stake point, Share in normal header flow, meaningful profile-history titles, and recovery guidance alongside raw transaction diagnostics. The final visual disposition was `ship`, with no remaining material findings from that batch. This is a visual verdict, not a substitute for chain or wallet verification.
+
 The evidence preview fetched the exact Apple archive capture, verified its CDX record and displayed extracted text before the evidence window was sealed. The final receipts now correctly close evidence submission. Shares preserve the selected take, and profile reads do not substitute another wallet's record.
 
 Real receipts exercised the tracker: a successful contract call, an unauthorized call, a native payout and a runtime-failed payable call. The native payout displays finalized success; native credit on the failed contract call does not turn that call into success. A submitted hash survived reload and resumed polling to its finalized error. Successful finality triggered a fresh contract-state read.
@@ -31,6 +33,8 @@ The Nintendo NO required two failed zero-value resolution attempts before the th
 ## Independent network audit
 
 The read-only verifier checks each deployed source hash, every canonical contract and transaction URL against its actual Explorer API record, finalized take/escrow/resolution/profile state, frozen rule hashes, evidence URL accessibility, payout conservation and exact native credits. It also verifies the failed payable recovery and the two funded future open takes.
+
+The first complete audit passed 595 of 596 checks; the Apple archive availability request returned HTTP 429. That report is retained as `deploy/audit-first-attempt.json`. The exact immutable URL subsequently opened in the browser and returned HTTP 200 to the verifier's HTTP client after backoff. Evidence availability checks now retry transient 429/5xx responses up to three times, without changing the URL or accepting an exhausted error as success. Local retry checks covered recovery, exhaustion and a permanent 404. The final report records a new complete audit rather than editing the failed result.
 
 Finalized agreeing consensus receipts are bound to live Explorer fields, votes and leader output. Native credits, expected errors and missing quorums are reread directly from RPC. The verifier does not load signing keys or send transactions. Its final timestamp, count and failures are in `deploy/proof-verification.json`; a started but incomplete audit is explicitly marked failed.
 
