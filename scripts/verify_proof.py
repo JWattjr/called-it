@@ -31,6 +31,24 @@ def get_json(url):
         except Exception:
             if attempt==2:raise
             time.sleep(10)
+
+def get_evidence(url):
+    # Archive availability can briefly return 429 even while the immutable
+    # capture remains available. Retry bounded transient failures, preserving
+    # the exact URL and reporting failure if availability does not recover.
+    for attempt in range(3):
+        try:
+            response=requests.get(url,headers=headers,timeout=60)
+        except requests.RequestException:
+            if attempt==2:raise
+            time.sleep(10)
+            continue
+        if response.status_code not in (429,500,502,503,504) or attempt==2:return response
+        retry=response.headers.get('Retry-After','')
+        delay=max(30,int(retry)) if retry.isdigit() else 30
+        print('Transient evidence HTTP',response.status_code,'retrying after',delay,'seconds',flush=True)
+        while delay>0:
+            pause=min(delay,30);time.sleep(pause);delay-=pause
 def read(name,method,args):
     v=c.read_contract(p['contracts'][name]['address'],method,args=args,transaction_hash_variant=TransactionHashVariant.LATEST_FINAL)
     time.sleep(2.2)
@@ -90,7 +108,7 @@ for entry in p.get('takes',[]):
     resolution=read('TakeResolver','get_resolution',[key]);bet=read('TakeEscrow','get_bet',[key])
     check(resolution==entry['resolution'] and bet==entry['bet'],key+' resolution and escrow readback')
     for evidence in resolution.get('evidence',[]):
-        response=requests.get(evidence['url'],headers=headers,timeout=60)
+        response=get_evidence(evidence['url'])
         check(response.status_code==200,key+' reviewer evidence URL opens')
     if bet.get('status')=='SETTLED':
         check(sum(map(int,bet['payouts'].values()))==int(bet['total']),key+' settlement conserves wei')
