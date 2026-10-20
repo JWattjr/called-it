@@ -10,7 +10,7 @@ for name,url in links.get('contracts',{}).items():lines.append(f'- [{name}]({url
 lines+=['','## Takes and outcomes','']
 for e in p.get('takes',[]):
     t=e['take'];r=e['resolution'];b=e['bet']
-    lines.extend([f"### {t['id']} — {e.get('label','')}",'',t['text'],'',f"{'Historical replay' if t['historical'] else 'Live'} · {t['status']} · verdict {r.get('verdict','pending')} · outcome {r.get('outcome','pending')} · escrow {b.get('status','unfunded')}",''])
+    lines.extend([f"### {t['id']} — {e.get('label','')}",'',t['text'],'',f"{'Historical replay' if t['historical'] else 'Live'} · {t['status']} · verdict {r.get('verdict') or 'pending'} · outcome {r.get('outcome') or 'pending'} · escrow {b.get('status','unfunded')}",''])
     lines.append('Event deadline: '+datetime.fromtimestamp(t['rule']['deadline'],timezone.utc).isoformat())
     if r.get('resolution_case'):lines.append('Resolution case: '+r['resolution_case'])
     if r.get('reason'):lines.append('Ruling: '+r['reason'])
@@ -24,6 +24,11 @@ if p.get('legacyLiveTakes'):
     lines+=['','## Pending live takes remain on the previous deployment','', 'These funded takes retain the earlier immutable default policy. They were not migrated or reopened. See [the archived release](../deploy/releases/v2-proof.json).','']
     for e in p['legacyLiveTakes']:
         t=e['take'];lines.append('- '+t['text']+' Deadline: '+datetime.fromtimestamp(t['rule']['deadline'],timezone.utc).isoformat()+'. Earlier Takes contract: '+e['contracts']['Takes']['address'])
+if p.get('previousUnsettledBets'):
+    lines+=['','## Earlier matched bets remain on their original escrow','']
+    for e in p['previousUnsettledBets']:
+        b=e['entry']['bet']
+        lines.append('- Revision '+str(e['attempt'])+' '+b['id']+': '+b['status']+', '+b['total']+' wei held. Escrow '+e['contracts']['TakeEscrow']['address']+'. Refund deadline '+datetime.fromtimestamp(b['refund_deadline'],timezone.utc).isoformat()+'. The new deployment did not migrate or pay this bet.')
 if p.get('unreachableProof'):lines+=['','## Honest unreachable-source proof status','',json.dumps(p['unreachableProof'],ensure_ascii=False),'']
 lines+=['','## All transaction receipts','']
 for name,url in links.get('transactions',{}).items():lines.append(f'- [{name}]({url})')
@@ -44,8 +49,12 @@ portal={
  'contractLinks':list(links.get('contracts',{}).values()),'website':p.get('website',''),'github':p.get('github',''),'demoVideo':'',
  'evidence':[p['github']+'/blob/main/'+path for path in ('deploy/proof.json','deploy/proof-verification.json','docs/VERIFICATION.md','docs/RELEASE.md','docs/TUTORIAL.md')] if p.get('github') else []
 }
-if p.get('releaseAttempt')==3 and not p.get('unreachableProof',{}).get('proven'):
+if p.get('releaseAttempt',0)>=3 and not p.get('unreachableProof',{}).get('proven'):
  portal['description']+=' Real blocked-source VOID is unproven in this run.'
+if p.get('releaseStatus','').startswith('STOPPED'):
+ portal['description']+=' Live proof stopped on model-output errors.'
+if p.get('releaseStatus','').startswith('AWAITING_DEPOSIT'):
+ portal['description']+=' Matched settlement awaits deposit approval.'
 assert len(portal['oneLiner'])<=180 and len(portal['description'])<=1000 and len(portal['expectedOutcome'])<=500
 (ROOT/'docs/submission/portal-fields.json').write_text(json.dumps(portal,indent=2)+'\n',encoding='utf8')
 print('Generated release report and Portal draft from recorded proof; no Portal submission made.')

@@ -1,11 +1,12 @@
-"""Revision 3: resumable, no failure retries, cumulative existing approval only."""
+"""Resumable fairness releases; immutable prior attempts and deposit approval retained."""
 import hashlib,json,sys,time
 from pathlib import Path
 from datetime import datetime,timezone
 from chain import ROOT,load,save,tx,read,signer,journal_lock
 
 FILES={'Takes':'takes.py','TakeEscrow':'take_escrow.py','TakeResolver':'take_resolver.py','CalledItRecord':'called_it_record.py'}
-PREFIX='r3-'
+ATTEMPT=4 if '--revision-4' in sys.argv else 3
+PREFIX='r'+str(ATTEMPT)+'-'
 def stamp(s):return int(datetime.fromisoformat(s.replace('Z','+00:00')).timestamp())
 CASES=[
  {'label':'official-yes','text':'Apple officially announces Apple Vision Pro.','category':'tech','as_of':stamp('2023-06-03T00:00:00Z'),'deadline':stamp('2023-06-06T23:59:59Z'),'evidence':'https://web.archive.org/web/20230605190503id_/https://www.apple.com/newsroom/2023/06/introducing-apple-vision-pro/'},
@@ -31,20 +32,27 @@ def entries():
     return record()
 
 def initialize():
-    if p.get('releaseAttempt')==3:return
+    if p.get('releaseAttempt')==ATTEMPT:return
+    previous_attempt=p.get('releaseAttempt',2)
+    if previous_attempt!=ATTEMPT-1:raise RuntimeError('Initialize only the next consecutive release')
     folder=ROOT/'deploy/releases';folder.mkdir(exist_ok=True)
-    archived=folder/'v2-proof.json'
+    archived=folder/('v'+str(previous_attempt)+'-proof.json')
     if archived.exists():raise RuntimeError('Existing archived release; reconcile before initialization')
     archived.write_text(json.dumps(p,indent=2)+'\n',encoding='utf8')
     for name in ('proof-verification.json','production-verification.json'):
         source=ROOT/'deploy'/name
-        if source.exists():(folder/('v2-'+name)).write_bytes(source.read_bytes())
-    previous={'contracts':p['contracts'],'attempt':2,'proof':'deploy/releases/v2-proof.json','reason':'Immutable earlier release retained; fairness revision uses new contracts.'}
+        if source.exists():(folder/('v'+str(previous_attempt)+'-'+name)).write_bytes(source.read_bytes())
+    previous={'contracts':p['contracts'],'attempt':previous_attempt,'proof':str(archived.relative_to(ROOT)).replace('\\','/'),'reason':'Immutable earlier release retained; new release uses fresh contracts.'}
     p.setdefault('previousReleases',[]).append(previous)
-    p['legacyLiveTakes']=[{'take':e['take'],'bet':e['bet'],'contracts':p['contracts']} for e in p['takes'] if e['bet'].get('status')=='OPEN' and not e['take']['historical']]
-    p.update(releaseAttempt=3,deploymentPrefix=PREFIX,contracts={},takes=[],profiles=[],releaseStatus='IN_PROGRESS',blockers=['Revision 3 deployment and live proof in progress.'])
-    for key in ('refundDemo','walletAdapter','resolutionAttempts','verification','implementationChecks'):p.pop(key,None)
-    p['fairnessPolicy']={'default':'DEFAULT_NO_EVIDENCE only','technicalFailure':'VOID_SOURCES_UNREACHABLE or VOID_TIMEOUT; full original deposits refunded','blockedHosts':['reuters.com','apnews.com','oscars.org'],'failedPreflight':'Owner approved an unlisted source; immutable metadata must verify; actual resolution fetch failure required.','remainingApprovedWeiAtStart':2,'oldLiveTakes':'Remain funded on revision 2; no migration.'}
+    if not p.get('legacyLiveTakes'):p['legacyLiveTakes']=[{'take':e['take'],'bet':e['bet'],'contracts':p['contracts']} for e in p['takes'] if e['bet'].get('status')=='OPEN' and not e['take']['historical']]
+    for e in p['takes']:
+        if e['bet'].get('status')=='MATCHED':p.setdefault('previousUnsettledBets',[]).append({'attempt':previous_attempt,'contracts':p['contracts'],'entry':e})
+    for failure in p.get('failedResolutionAttempts',[]):p.setdefault('expectedFailures',{})[failure['label']]='CONSENSUS_DISAGREEMENT'
+    p.update(releaseAttempt=ATTEMPT,deploymentPrefix=PREFIX,contracts={},takes=[],profiles=[],releaseStatus='IN_PROGRESS',blockers=['Revision '+str(ATTEMPT)+' deployment and live proof in progress.'])
+    for key in ('refundDemo','walletAdapter','resolutionAttempts','verification','implementationChecks','authorizedRecovery','failedResolutionAttempts','stopFailure','unreachableProof','localRepair','recordedAt'):p.pop(key,None)
+    p['fairnessPolicy']={'default':'DEFAULT_NO_EVIDENCE only','technicalFailure':'VOID_SOURCES_UNREACHABLE or VOID_TIMEOUT; full original deposits refunded','blockedHosts':['reuters.com','apnews.com','oscars.org'],'failedPreflight':'Owner approved an unlisted source; immutable metadata must verify; actual resolution fetch failure required.','remainingApprovedWeiAtStart':20-sum(p.get('deposits',{}).values()),'oldLiveTakes':'Remain funded on revision 2; no migration.'}
+    import subprocess
+    p['sourceCommit']=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     # save() preserves concurrent journals and the original cumulative deposits.
     with journal_lock('proof'):
         target=ROOT/'deploy/proof.json';tmp=target.with_suffix('.tmp');tmp.write_text(json.dumps(p,indent=2)+'\n',encoding='utf8');tmp.replace(target)
@@ -53,7 +61,7 @@ def initialize():
 stage=sys.argv[1] if len(sys.argv)>1 else 'record'
 if stage=='init':initialize()
 elif stage=='deploy':
-    if p.get('releaseAttempt')!=3:raise RuntimeError('Initialize revision 3 first')
+    if p.get('releaseAttempt')!=ATTEMPT:raise RuntimeError('Initialize the selected revision first')
     for name,file in FILES.items():
         code=(ROOT/'contracts'/file).read_text(encoding='utf8');digest=hashlib.sha256(code.encode()).hexdigest()
         if name in p['contracts']:
@@ -81,10 +89,32 @@ elif stage=='evidence':
     for case in CASES:
         if case.get('evidence'):write('evidence-'+items[case['label']]['take']['id'],'TakeResolver','submit_evidence',[items[case['label']]['take']['id'],case['evidence'],'Apply the frozen rule. Treat source access failure as technical VOID, never as a default-side win.'])
     record()
+elif stage=='recover-apple':
+    assert ATTEMPT==3 and p.get('releaseAttempt')==3, 'Recovery stage is only for the archived revision-3 attempt'
+    # One recovery expressly authorized by the owner's "proceed" after the
+    # finalized failure. This is not a polling retry or an automatic retry loop.
+    from chain import success
+    failed=ROOT/'deploy/receipts/r3-resolve-take-1.json'
+    receipt=json.loads(failed.read_text())
+    assert receipt.get('status')=='FINALIZED' and not success(receipt)
+    key='take-1'
+    r=read(address('TakeResolver'),'get_resolution',[key])
+    if r.get('status')!='FINAL':
+        assert r.get('status')=='OPEN', 'Recovery requires unchanged OPEN state'
+        p['authorizedRecovery']={'failedHash':p['transactions']['r3-resolve-take-1'],'reason':'Owner said proceed after the quote-guard failure; one new zero-value attempt on unchanged rule and evidence.','label':'r3-resolve-take-1-owner-recovery-1','quoteGuardChanged':False}
+        save(p)
+        write('resolve-take-1-owner-recovery-1','TakeResolver','resolve',[key])
+        r=read(address('TakeResolver'),'get_resolution',[key])
+    assert r.get('status')=='FINAL' and r.get('verdict')=='YES', 'Unexpected Apple recovery result; STOP'
+    record()
 elif stage=='resolve':
     items=entries()
     for label,e in items.items():
         if e['take']['status']!='COMPILED':continue
+        if '--core-only' in sys.argv and label=='sources-unreachable':continue
+        if e['resolution'].get('status')=='FINAL':
+            if label in ('official-yes','rumours-no'):assert e['resolution']['verdict']==('YES' if label=='official-yes' else 'NO')
+            continue
         key=e['take']['id']
         write('seal-author-'+key,'TakeResolver','seal_evidence',[key])
         if e['bet'].get('counterparty'):write('seal-counter-'+key,'TakeResolver','seal_evidence',[key],index=1)
@@ -113,4 +143,4 @@ elif stage=='settle':
         write('record-'+key,'CalledItRecord','sync',[key])
     record()
 elif stage=='record':record()
-else:raise SystemExit('Stages: init deploy compile fund evidence resolve settle record')
+else:raise SystemExit('Stages: init deploy compile fund evidence recover-apple resolve settle record')

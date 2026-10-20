@@ -1,5 +1,23 @@
 # Verification record
 
+**Current attempt: revision 4, core live proofs passed; deposit approval pending.** All contracts, wiring, compilations, evidence submissions and three core rulings finalized successfully with matching state reads: Apple YES, Nintendo NO, no-evidence default NO with `DEFAULT_NO_EVIDENCE`, subjective claim rejected. The read-only [source audit](../deploy/source-verification.json) verified all four deployed hashes against local files and manifest. All four Explorer API records identify as CONTRACT. The [partial link audit](../deploy/fairness-link-audit.json) checks the current deployment's contract and transaction links; it does not certify publication or the incomplete money proof.
+
+The local suite passes 69 contract tests, five release tests and seven app tests; TypeScript, ESLint, all four GenVM lints and production build pass. The browser's Read live flow displayed Apple's final YES, its exact quotations and `JUDGED_YES`, with no warnings or errors. Screenshot capture was unavailable during this run; the accessibility-state record is retained locally. Full current mobile visual certification has not been repeated.
+
+The new take-5 is compiled with a successful real article preflight and remains OPEN and unfunded. Its matched settlement, native claims and public record remain unproven while the owner's additional 2-wei approval request is pending. The original 20-wei cumulative deposit budget is exhausted. No answer has been inferred, no extra deposit made, and no real blocked-source VOID manufactured. Full publication checks, production deployment and final push remain pending; nothing was submitted to the Portal.
+
+## Previous attempt: revision 3
+
+**Revision 3 is deployed and wired, but its live proof stopped on finalized execution errors. It is not a verified release.** Apple first failed the quote guard, then the one owner-authorized recovery failed the resolution schema check. Both receipts remain in the manifest; no further chain writes followed the recovery failure. Production remains revision 2; the new work has not been pushed or deployed to Vercel. No Portal submission occurred.
+
+The current local checks passed: 50 direct contract tests, four release tests, seven app tests, TypeScript, ESLint and a production build. All four GenVM checks passed during the fairness implementation; the unchanged resolver passed again during the recovery investigation. Mocked 401/403 and timeout refund tests are not real-network proof. The two-wallet 1+1 wei bet is still MATCHED with no verified claim. Cumulative approved deposits are 20/20 wei.
+
+See [FAIRNESS-REVISION.md](FAIRNESS-REVISION.md), [the current release record](RELEASE.md), and [the partial link audit](../deploy/fairness-link-audit.json). The full revision-3 network/source/state/publication audit remains incomplete. The historical report below applies only to revision 2, whose machine-readable proof is preserved in [the archived report](../deploy/releases/v2-proof-verification.json).
+
+## Archived revision 2 report
+
+Subsequent local work is recorded separately in [MODEL-OUTPUT-REPAIR.md](MODEL-OUTPUT-REPAIR.md): the pending resolver repair passes 69 contract tests and four release tests, plus GenVM lint. It has not been deployed or proven by real consensus and does not change the failed revision-3 release verdict.
+
 This report describes the real StudioNet release and the checks performed on its implementation. The machine-readable [proof audit](../deploy/proof-verification.json) records the independent network audit; [release evidence](RELEASE.md) lists every canonical Explorer link.
 
 ## Implementation checks

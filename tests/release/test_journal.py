@@ -68,3 +68,28 @@ def test_lost_broadcast_response_blocks_duplicate_value_submission(tmp_path,monk
     except RuntimeError as error:assert 'Broadcast outcome is unknown' in str(error)
     else:raise AssertionError('A retry must never send a second payable call')
     assert calls==[1] and sum(m.load()['deposits'].values())==1
+
+def test_exhausted_budget_needs_explicit_new_cap_and_cannot_be_reset(tmp_path,monkeypatch):
+    m=module();monkeypatch.setattr(m,'ROOT',tmp_path)
+    (tmp_path/'deploy').mkdir();(tmp_path/'.secrets').mkdir()
+    approval=tmp_path/'.secrets/deposit-approval.json'
+    approval.write_text('{"approvedTotalWei":20}')
+    calls=[]
+    class Client:
+        def write_contract(self,*args,**kwargs):calls.append(kwargs['value']);return '0x'+'cd'*32
+    monkeypatch.setattr(m,'client',lambda index=0:Client())
+    monkeypatch.setattr(m,'fees',lambda c:{'feeValue':0})
+    m.save({'transactions':{},'deposits':{'prior':20},'approvedDepositBudgetWei':20})
+    for approved,expected in [(20,False),(22,True)]:
+        approval.write_text(json.dumps({'approvedTotalWei':approved}))
+        try:m.tx(m.load(),'new-pair','0x'+'11'*20,'deposit',['take-5'],value=2,wait=False)
+        except RuntimeError as error:
+            assert not expected and 'budget exhausted' in str(error)
+        else:assert expected
+    assert calls==[2] and sum(m.load()['deposits'].values())==22
+    m.save({'transactions':{},'approvedDepositBudgetWei':20})
+    assert m.load()['approvedDepositBudgetWei']==22
+    try:m.tx(m.load(),'beyond-new-cap','0x'+'11'*20,'deposit',['take-6'],value=1,wait=False)
+    except RuntimeError as error:assert 'budget exhausted' in str(error)
+    else:raise AssertionError('Previously returned funds never reset the cumulative ceiling')
+    assert calls==[2]

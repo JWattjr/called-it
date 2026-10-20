@@ -540,6 +540,26 @@ export default function CalledIt({
                 </p>
               </div>
             )}
+          {!!proof.previousUnsettledBets?.length &&
+            (view === "feed" || view === "proof") && (
+              <div className="notice">
+                <strong>An earlier matched bet is still holding its stakes.</strong>
+                <p>
+                  The previous attempt holds 2 wei in its original escrow. Its
+                  failed rulings did not settle or pay the bet. Its original
+                  refund deadline still applies.{" "}
+                  <External
+                    href={
+                      (proof.github ?? "https://github.com/JWattjr/called-it") +
+                      "/blob/main/deploy/releases/v3-proof.json"
+                    }
+                  >
+                    Read the earlier bet, balances and refund deadline
+                  </External>
+                  .
+                </p>
+              </div>
+            )}
           <div className="heading">
             <div>
               <h1>{title}</h1>
@@ -1422,7 +1442,10 @@ function ReceiptDetail({
             </p>
             {!account && b.status !== "SETTLED" && (
               <button className="button" disabled={!!busy} onClick={connect}>
-                <Wallet size={16} /> Connect wallet to take the other side
+                <Wallet size={16} />{" "}
+                {b.status === "OPEN"
+                  ? "Connect wallet to take the other side"
+                  : "Connect wallet to manage this take"}
               </button>
             )}
             {isAuthor &&

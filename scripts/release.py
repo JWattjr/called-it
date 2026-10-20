@@ -19,8 +19,9 @@ CASES=[
 ]
 
 p=load()
-if p.get('releaseAttempt')==3:
+if p.get('releaseAttempt',0)>=3:
     import runpy
+    if p['releaseAttempt']==4 and '--revision-4' not in sys.argv:sys.argv.append('--revision-4')
     runpy.run_path(str(ROOT/'scripts/fairness_release.py'),run_name='__main__')
     raise SystemExit(0)
 stage=sys.argv[1] if len(sys.argv)>1 else 'record'

@@ -113,6 +113,11 @@ export type Proof = {
     take: Take;
     contracts: Record<string, { address: string }>;
   }[];
+  previousUnsettledBets?: {
+    attempt: number;
+    entry: Entry;
+    contracts: Record<string, { address: string }>;
+  }[];
 };
 export type TxState =
   | "SUBMITTED"

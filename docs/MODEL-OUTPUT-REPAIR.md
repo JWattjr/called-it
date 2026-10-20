@@ -1,6 +1,6 @@
-# Local repair of the stopped resolver
+# Repair of the stopped resolver
 
-Implemented after the owner asked who would fix the failed release. This repair is local, linted and tested; it has not been deployed or proven with real consensus. The revision-3 addresses and failed receipts remain unchanged. The deployment manifest intentionally retains the hashes of the contracts actually deployed, so its resolver hash differs from this pending source.
+Implemented after the owner asked who would fix the failed release. The repair is now deployed in revision 4, with all four contracts finalized and source hashes verified against the local files and manifest. Real Apple YES, Nintendo NO and no-evidence default NO rulings passed with finalized callbacks and matching reads; the subjective claim was rejected. The new matched settlement proof awaits the owner's decision on two additional simulated wei. Revision 3's addresses and failed receipts remain unchanged in deploy/releases/v3-proof.json; its two-wei matched bet remains on its original escrow.
 
 Observed failures were `quote missing from fetched evidence` and `invalid resolution schema`. Receipts expose those validation errors, not the rejected raw model answers. Tests therefore reproduce the failure classes; they do not claim to replay an unavailable exact model response.
 
@@ -10,6 +10,6 @@ One bounded correction is allowed inside each nondeterministic judgment. It rece
 
 Each validator independently performs the same bounded judgment. It must still agree on verdict and resolution case and find every leader quotation verbatim in its own fetched evidence. No fuzzy matching, fabricated date, stitched quote or paraphrase is accepted. The existing fairness cases and refund accounting are unchanged.
 
-Validation: **69 direct contract tests and four release tests passed** (73 combined), including 19 new regression cases. The changed resolver passed GenVM lint with the pinned runner. Full-validator tests demonstrate that a repaired leader answer is rejected when the independently repaired validator chooses another verdict. Existing exact-quote, mocked HTTP 401/403, timeout, default, conservation and duplicate-refund tests continue to pass.
+Validation: **69 direct contract tests and five release tests passed**, including 19 model-output regression cases and the explicit deposit-limit extension guard. All four contracts passed GenVM lint with the pinned runner. Full-validator tests demonstrate that a repaired leader answer is rejected when the independently repaired validator chooses another verdict. Existing exact-quote, mocked HTTP 401/403, timeout, default, conservation and duplicate-refund tests continue to pass.
 
 Next release work remains the agent's responsibility: deploy fresh contracts and repeat real consensus, state reads and settlement proof before production publication. Additional deposits are not authorized: the cumulative 20 wei budget is exhausted, and the current revision-3 matched bet still holds two wei. A repaired deployment can be created with zero value; funding another 1+1 wei matched demonstration would require owner approval for two additional wei. Production and the Portal remain untouched.

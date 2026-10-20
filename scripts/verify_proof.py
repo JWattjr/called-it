@@ -119,6 +119,17 @@ for entry in p.get('takes',[]):
                 check(child.get('value_credited') is True and str(child.get('to_address','')).lower()==wallet.lower() and int(child['value'])==int(claim['amount']),key+' native value credited')
 for profile in p.get('profiles',[]):check(read('CalledItRecord','get_profile',[profile['wallet']])==profile,'profile finalized readback '+profile['wallet'])
 
+known=set(links.get('contracts',{}).values())|set(links.get('legacyContracts',{}).values())|set(links.get('previousUnsettledContracts',{}).values())|set(links.get('transactions',{}).values())
+for url in links.get('documentationExplorer',[]):
+    if url in known:continue
+    address=re.fullmatch(r'https://explorer-studio\.genlayer\.com/address/(0x[0-9a-fA-F]{40})',url)
+    transaction=re.fullmatch(r'https://explorer-studio\.genlayer\.com/tx/(0x[0-9a-fA-F]{64})',url)
+    check(bool(address or transaction),'canonical additional documented explorer URL '+url)
+    if address:check(get_json(url.replace('/address/','/api/address/')).get('type')=='CONTRACT','actual additional documented contract type CONTRACT '+url)
+    if transaction:
+        data=get_json(url.replace('/tx/','/api/transactions/'));actual=data.get('transaction',data)
+        check(str(actual.get('hash','')).lower()==transaction.group(1).lower(),'actual additional documented transaction hash '+url)
+
 labels={e.get('label'):e for e in p.get('takes',[])}
 check(labels.get('official-yes',{}).get('resolution',{}).get('verdict')=='YES','real official announcement demo YES')
 check(labels.get('rumours-no',{}).get('resolution',{}).get('verdict')=='NO','real nonqualifying reports demo NO')
@@ -127,7 +138,7 @@ check(labels.get('subjective-rejection',{}).get('take',{}).get('status')=='REJEC
 check(any(e.get('bet',{}).get('counterparty') and e['bet'].get('status')=='SETTLED' and any(v.get('status')=='PAID' for v in e['bet'].get('claims',{}).values()) for e in p.get('takes',[])),'second-wallet acceptance, settlement and verified claim')
 check(any(profile['wins']+profile['losses']+profile['voids']>0 for profile in p.get('profiles',[])),'public record updated')
 refund=p.get('refundDemo',{})
-if p.get('releaseAttempt')!=3:
+if p.get('releaseAttempt',0)<3:
     check(int(refund.get('after',{}).get('claim',{}).get('amount',0))==2 and refund.get('after',{}).get('claim',{}).get('status')=='PAID' and int(refund.get('after',{}).get('available_wei',-1))==0,'invalid and failed payable deposits recovered and pulled')
     if refund.get('nativeChild'):
         child=c.provider.make_request('eth_getTransactionByHash',[refund['nativeChild']])['result']
@@ -149,11 +160,19 @@ else:
     for name,url in links.get('legacyContracts',{}).items():
         check(re.fullmatch(r'https://explorer-studio\.genlayer\.com/address/0x[0-9a-fA-F]{40}',url) is not None,name+' canonical legacy contract URL')
         check(get_json(url.replace('/address/','/api/address/')).get('type')=='CONTRACT',name+' actual legacy contract record type CONTRACT')
+    for e in p.get('previousUnsettledBets',[]):
+        value=c.read_contract(e['contracts']['TakeEscrow']['address'],'get_bet',args=[e['entry']['take']['id']],transaction_hash_variant=TransactionHashVariant.LATEST_FINAL)
+        value=json.loads(value) if isinstance(value,str) else value
+        check(value==e['entry']['bet'],'previous revision '+str(e['attempt'])+' matched bet and held balance readback');time.sleep(2.2)
+    for name,url in links.get('previousUnsettledContracts',{}).items():
+        check(re.fullmatch(r'https://explorer-studio\.genlayer\.com/address/0x[0-9a-fA-F]{40}',url) is not None,name+' canonical earlier matched-bet contract URL')
+        check(get_json(url.replace('/address/','/api/address/')).get('type')=='CONTRACT',name+' actual earlier matched-bet contract record type CONTRACT')
     for url in links.get('other',[]):
         response=get_evidence(url);check(response.status_code==200,'published non-explorer URL HTTP 200: '+url)
-check(sum(p.get('deposits',{}).values())<=20,'cumulative simulated deposits within approved 20 wei')
+budget=p.get('approvedDepositBudgetWei',20)
+check(type(budget) is int and budget in (20,22) and sum(p.get('deposits',{}).values())<=budget,'cumulative simulated deposits within recorded approved '+str(budget)+' wei')
 unproven=[]
-if p.get('releaseAttempt')==3 and not p.get('unreachableProof',{}).get('proven'):
+if p.get('releaseAttempt',0)>=3 and not p.get('unreachableProof',{}).get('proven'):
     unproven.append('The full real blocked-host VOID proof is unproven; actual case: '+p.get('unreachableProof',{}).get('actualCase','pending')+'. Source preflights and the additional access probe are retained. Mocked 401/403 coverage is not live proof.')
 report={'checkedAt':datetime.now(timezone.utc).isoformat(),'passed':not failures,'checks':checks,'failures':failures,'readOnly':True,'unproven':unproven,'sourceCommit':p.get('sourceCommit'),'contractHashes':{name:contract['sha256'] for name,contract in p['contracts'].items()},'receiptVerification':'Live Explorer fields, leader output and quorum bound to saved RPC receipts; direct RPC for native credits, expected failures and missing quorum. Contract source and finalized state are read directly by RPC.'}
 (ROOT/'deploy/proof-verification.json').write_text(json.dumps(report,indent=2),encoding='utf8')

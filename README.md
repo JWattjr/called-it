@@ -4,6 +4,17 @@
 
 [Open Called It](https://called-it-genlayer.vercel.app) · [Public repository](https://github.com/JWattjr/called-it) · [Verification record](docs/VERIFICATION.md)
 
+**Revision 4: core live proofs passed; deposit approval pending.** Apple resolved YES, Nintendo NO, the no-evidence case applied its frozen NO default, and the subjective claim was rejected. All 27 writes and callbacks finalized successfully with matching state reads. All four deployed code hashes match local files and manifest. Production still serves revision 2 until the new matched-bet proof and publication checks pass. Revision 3's two failed rulings remain in [the stopped-run report](docs/FAIRNESS-REVISION.md) and archived proof.
+
+The resolver's model-output handling has been [repaired and tested](docs/MODEL-OUTPUT-REPAIR.md): 69 contract tests and five release tests pass. The repaired real rulings now pass. The 1+1 wei matched-bet settlement and verified native-credit proof await an owner decision on two additional simulated wei, raising the exhausted cumulative budget from 20 to 22. No additional deposit is authorized until that response arrives.
+
+| Contract | Revision-4 address |
+| --- | --- |
+| Takes | [0x1F797270d45281Aae3842Bd1f4ccE9eb114b51cA](https://explorer-studio.genlayer.com/address/0x1F797270d45281Aae3842Bd1f4ccE9eb114b51cA) |
+| TakeEscrow | [0xC5BeB6B171f37f2c7101EDc83eA2905615415e12](https://explorer-studio.genlayer.com/address/0xC5BeB6B171f37f2c7101EDc83eA2905615415e12) |
+| TakeResolver | [0xB614CbddBCe32f5ec68BA563957D6E4fB804a52e](https://explorer-studio.genlayer.com/address/0xB614CbddBCe32f5ec68BA563957D6E4fB804a52e) |
+| CalledItRecord | [0x6E3419ab4941cd39046973985fD363728D61dBd6](https://explorer-studio.genlayer.com/address/0x6E3419ab4941cd39046973985fD363728D61dBd6) |
+
 Called It is a one-on-one wager on a public announcement. An independently verified compilation freezes the proposition, official-evidence standard, event window, default and source domains before either side deposits. A second judgment resolves immutable evidence. Plain Python handles stakes, odds, deadlines, refunds, payouts and records.
 
 The live release URL, repository, canonical contract links and finalized transaction receipts are generated into [RELEASE.md](docs/RELEASE.md). The authoritative machine-readable record is [deploy/proof.json](deploy/proof.json). A deployment or screenshot alone does not establish demo completion; inspect `releaseStatus`, the verification report and documented blockers.
@@ -58,7 +69,7 @@ npm run verify:proof
 
 `npm run settle` is a resumable keeper: it skips takes that are not ready, settles finalized results or expired refunds, claims payouts for the locally generated demo wallets, verifies their exact native transfer receipts, and updates the public record. It does not advance time or fabricate evidence. A native transfer failure needs a finalized receipt before a safe retry. Keep `.secrets/demo-accounts.json` to resume the same wallets; it is gitignored and excluded from Vercel.
 
-The `fund` stage requires `.secrets/deposit-approval.json` with the owner's explicitly approved cumulative limit. Do not create that approval from silence. The cumulative ceiling remains 20 wei. Revision 2 consumed 18; revision 3 may deposit only the remaining two wei in one 1+1 matched demonstration. Recovered payouts do not reset the cumulative limit. Wallet funding and contract deposits are journalled separately. Nothing is submitted to the Portal.
+The `fund` stage requires `.secrets/deposit-approval.json` with the owner's explicitly approved cumulative limit. Do not create that approval from silence. The cumulative ceiling remains 20 wei. Revision 2 consumed 18; revision 3 deposited the remaining two wei in one 1+1 matched demonstration. The budget is exhausted. That new bet remains MATCHED and holds both stakes; settlement and claims have not been proven. Recovered payouts do not reset the cumulative limit. Wallet funding and contract deposits are journalled separately. Nothing is submitted to the Portal.
 
 ## Verify
 
@@ -100,7 +111,7 @@ See [the tutorial](docs/TUTORIAL.md), [the two-minute demo](docs/DEMO.md), [rele
 
 ## Fairness revision and prior live takes
 
-Revision 3 deploys four fresh contracts; it cannot change the original deployment. `python scripts/fairness_release.py deploy|compile|fund|evidence|resolve|settle|record` runs the staged revision. `npm run settle` dispatches to its resumable keeper when the manifest selects revision 3. Every write uses a distinct `r3-` journal label, follows the same saved hash after a polling timeout, and stops on finalized execution failure. It never retries a failed judgment as a fresh submission.
+Revision 3 deploys four fresh contracts; it cannot change the original deployment. `python scripts/fairness_release.py deploy|compile|fund|evidence|resolve|settle|record` runs the staged revision. `npm run settle` dispatches to its resumable keeper when the manifest selects revision 3. Every write uses a distinct `r3-` journal label, follows the same saved hash after a polling timeout, and stops on finalized execution failure. It never automatically retries a failed judgment as a fresh submission. After the Apple quote-guard failure was reported, the owner explicitly said to proceed. The separate `recover-apple` stage journals exactly one zero-value recovery attempt on the unchanged rule and evidence; it preserves the original failure and all quote checks. Re-running that stage follows its saved hash rather than creating another attempt.
 
 The two earlier live takes (Nintendo delay, 29 October 2026; Apple results, 4 November 2026; both at 23:59:59 UTC) remain funded on revision 2. Their complete immutable rules, addresses, deposits and refund deadlines are retained in `deploy/releases/v2-proof.json`. They retain revision 2's original technical-failure default behavior. They were not migrated or reopened under the revised policy.
 

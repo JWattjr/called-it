@@ -100,7 +100,7 @@ def save(p):
         p['transactions']={**current.get('transactions',{}),**p.get('transactions',{})}
         if current.get('deposits') or p.get('deposits'):p['deposits']={**current.get('deposits',{}),**p.get('deposits',{})}
         if current.get('expectedFailures') or p.get('expectedFailures'):p['expectedFailures']={**current.get('expectedFailures',{}),**p.get('expectedFailures',{})}
-        for key in ('website','github','sourceCommit','funding'):
+        for key in ('website','github','sourceCommit','funding','approvedDepositBudgetWei'):
             if current.get(key):p[key]=current[key]
         if current.get('recordedAt','')>p.get('recordedAt',''):
             for key in ('takes','profiles','demoWallets','recordedAt'):p[key]=current[key]
@@ -148,16 +148,19 @@ def tx(p,label,contract=None,method=None,args=None,code=None,index=0,value=0,wai
     c=client(index)
     if value:
         approval=ROOT/'.secrets/deposit-approval.json'
-        if not approval.exists() or json.loads(approval.read_text()).get('approvedTotalWei')!=20:
-            raise RuntimeError('Owner must approve the 20-wei cumulative demo deposit budget')
+        budget=json.loads(approval.read_text()).get('approvedTotalWei') if approval.exists() else None
+        if type(budget) is not int or budget not in (20,22):
+            raise RuntimeError('Owner must explicitly approve the cumulative demo deposit budget')
         with journal_lock('proof'):
             current=load()
             journal=current.setdefault('deposits',{})
             if label not in journal:
-                if sum(journal.values())+value>20:raise RuntimeError('Deposit budget exhausted')
+                if sum(journal.values())+value>budget:raise RuntimeError('Deposit budget exhausted')
                 journal[label]=value
             elif journal[label]!=value:raise RuntimeError('Saved deposit amount differs from this attempt')
             p['deposits']=journal.copy()
+            current['approvedDepositBudgetWei']=budget
+            p['approvedDepositBudgetWei']=budget
             temporary=ROOT/'deploy/proof.json.tmp'
             temporary.write_text(json.dumps(current,indent=2),encoding='utf8')
             temporary.replace(ROOT/'deploy/proof.json')
