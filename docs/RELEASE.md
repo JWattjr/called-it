@@ -1,7 +1,7 @@
 # Called It release evidence
 
 Recorded: 2026-10-20T03:39:19.522452+00:00
-Status: STOPPED_CONSENSUS_DISAGREEMENT
+Status: STOPPED_DIAGNOSTIC_REGRESSION
 
 App: https://called-it-genlayer.vercel.app
 Repository: https://github.com/JWattjr/called-it
@@ -60,6 +60,10 @@ Ruling: Apple officially announced the Apple Vision Pro in a press release dated
 - [r4-seal-author-take-1](https://explorer-studio.genlayer.com/tx/0xe713d1d43842a66f2f60a541839e05749ac563d77b5b7b6f7933974700407cf5)
 - [r4-resolve-take-1](https://explorer-studio.genlayer.com/tx/0xaac2c0426e7fa24bbd573b59264139bdcc3e7938acbae041790fb7df913b4152)
 - [r4-resolve-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x4a40bd7baf1e329b0e20f2316d154ae4014b191758db99512de28a5e39fd7a4e)
+- [diagnostic-schedule-v1-take-1-evidence-0](https://explorer-studio.genlayer.com/tx/0x86bb4501ed4e7810d4adb6947a711f64c64a91ec09a5707260a829ed94cb5512)
+- [diagnostic-schedule-v1-take-1-seal-author](https://explorer-studio.genlayer.com/tx/0x7ed023cfddf6d899c53fca2e06d708d80a8b88a9ca2a1bcb688efd1b38d307f1)
+- [diagnostic-schedule-v1-take-1-resolve](https://explorer-studio.genlayer.com/tx/0x0b81f58f421613a044ffdd9feceee73a402161798edcf4a3b5a7987fb4d8f630)
+- [diagnostic-schedule-v1-take-1-resolve-child-0](https://explorer-studio.genlayer.com/tx/0x838f7593d69bb549fbd8d75db50fd6f17c93ab3a1777d308793dde5164cd96ca)
 ### take-2 — rumours-no
 
 Nintendo officially reveals its next console under the retail name Nintendo Switch 2.
@@ -102,6 +106,10 @@ Ruling: The only Wikipedia revision provided is dated 8 January 2025, inside the
 - [r4-seal-author-take-2](https://explorer-studio.genlayer.com/tx/0xe9e50810cd5cb066e8ffb7e6302621469c5bbeb4e592bc0347bd7fa239800bfd)
 - [r4-resolve-take-2](https://explorer-studio.genlayer.com/tx/0x22d2877b4d327bdcd87ac71bf869ab157e344b6fca925007d8ff8c8fa83166ac)
 - [r4-resolve-take-2-child-0](https://explorer-studio.genlayer.com/tx/0xff746e7e0932a9e2b7bd7c523d5a67cdfc05ac5f967586edf9256daa1baa713b)
+- [diagnostic-schedule-v1-take-2-evidence-0](https://explorer-studio.genlayer.com/tx/0x977874791b9924ac8af79c7f3e0b0b3cc7dcfc82fb99caf90c05b6df1d780cdf)
+- [diagnostic-schedule-v1-take-2-seal-author](https://explorer-studio.genlayer.com/tx/0x4f8fb7a913157661b7f15edba3f278bfd42da2140d850d772d62eaadbba322a9)
+- [diagnostic-schedule-v1-take-2-resolve](https://explorer-studio.genlayer.com/tx/0x371b345c8c26938293c39c44f032fded7309605323e1d3d26ebfaf90e3b4311d)
+- [diagnostic-schedule-v1-take-2-resolve-child-0](https://explorer-studio.genlayer.com/tx/0xb5229a440a67a588b49c3a960b22e42921055bb6930d9998bd5748cc40f37658)
 ### take-3 — no-evidence-default
 
 Apple officially announces a foldable iPhone.
@@ -186,6 +194,11 @@ Event deadline: 2024-11-10T23:59:59+00:00
 - [r4-seal-author-take-5](https://explorer-studio.genlayer.com/tx/0xb3b7d087b6cc66798003c57f04aaf7527eacfa954b55a6fbadbef3d02a1a470b)
 - [r4-seal-counter-take-5](https://explorer-studio.genlayer.com/tx/0x9b95bcdddda5051810a2b4eac31f63913315b05daf9a8d07958e9ae68e126ff9)
 - [r4-resolve-take-5](https://explorer-studio.genlayer.com/tx/0xb97d441634f38c048daf936a1569bf41fd1851d3e2dc591baf744f31780003ad)
+- [diagnostic-schedule-v1-take-5-evidence-0](https://explorer-studio.genlayer.com/tx/0xbe1f8a6dcc6695e4b67a5803d0fb282087c53108a0d3a0c1eb7e1663cb28d0a4)
+- [diagnostic-schedule-v1-take-5-seal-author](https://explorer-studio.genlayer.com/tx/0x7260cf216417dec322c0f027a895a8090afd5cbfe0d9ad93138777506bceba94)
+- [diagnostic-schedule-v1-take-5-seal-counter](https://explorer-studio.genlayer.com/tx/0x5e614621d1bd69cfa83bfbb5e4674e3f539ce8743ccb546ea86751968944d6cb)
+- [diagnostic-schedule-v1-take-5-resolve](https://explorer-studio.genlayer.com/tx/0x51ba8ed712c27ad4ec71543b9668679e5ba3e5c00def89c459f87f9ca389e2f0)
+- [diagnostic-schedule-v1-take-5-resolve-child-0](https://explorer-studio.genlayer.com/tx/0x57f9c655aefac8e4aa66ae4c41733d76c4acde26abeed8fa3339cc8458196326)
 
 ## Pending live takes remain on the previous deployment
 
@@ -202,6 +215,21 @@ These funded takes retain the earlier immutable default policy. They were not mi
 
 {"proven": false, "actualCase": "NO_FINAL_CONSENSUS", "take": "take-5", "preflights": [{"error": "", "length": 24000, "status": "FETCHED", "checked_at": 1792455472}], "note": "The unlisted article was FETCHED; the leader proposed NO but the network rejected it. This was not a finalized NO or VOID."}
 
+
+## Isolated unfunded diagnostic candidate
+
+Status: STOPPED_DIAGNOSTIC_FAILURE. This candidate is not configured as the escrow resolver and cannot settle the original bet.
+
+- [Unfunded candidate](https://explorer-studio.genlayer.com/address/0x0938252Bc5bB85c48E42281c9B4DCDdBCf33c664)
+- take-5: expected VOID, actual VOID / VOID_INSUFFICIENT_EVIDENCE; regression PASS.
+- take-1: expected YES, actual YES / JUDGED_YES; regression PASS.
+- take-2: expected NO, actual VOID / VOID_INSUFFICIENT_EVIDENCE; regression FAIL.
+
+See [consensus diagnosis](CONSENSUS-DIAGNOSIS.md) and [the diagnostic report](../deploy/consensus-diagnostics.json).
+
+## Approved timeout follow-up
+
+One-time same-chat recovery is scheduled for 23 October 2026 at 22:06 Africa/Lagos, after actual timeout eligibility at 22:04:35. No additional deposits, candidate promotion or Portal submission. See [recovery status](../deploy/timeout-recovery.json).
 
 ## All transaction receipts
 
@@ -376,10 +404,25 @@ These funded takes retain the earlier immutable default policy. They were not mi
 - [r4-seal-author-take-5](https://explorer-studio.genlayer.com/tx/0xb3b7d087b6cc66798003c57f04aaf7527eacfa954b55a6fbadbef3d02a1a470b)
 - [r4-seal-counter-take-5](https://explorer-studio.genlayer.com/tx/0x9b95bcdddda5051810a2b4eac31f63913315b05daf9a8d07958e9ae68e126ff9)
 - [r4-resolve-take-5](https://explorer-studio.genlayer.com/tx/0xb97d441634f38c048daf936a1569bf41fd1851d3e2dc591baf744f31780003ad)
+- [diagnostic-schedule-v1-deploy](https://explorer-studio.genlayer.com/tx/0x278d46b37d06cda0066e6f4a68c768a98287e1aa330f4bb38ee4596fdf9d0fde)
+- [diagnostic-schedule-v1-take-5-evidence-0](https://explorer-studio.genlayer.com/tx/0xbe1f8a6dcc6695e4b67a5803d0fb282087c53108a0d3a0c1eb7e1663cb28d0a4)
+- [diagnostic-schedule-v1-take-5-seal-author](https://explorer-studio.genlayer.com/tx/0x7260cf216417dec322c0f027a895a8090afd5cbfe0d9ad93138777506bceba94)
+- [diagnostic-schedule-v1-take-5-seal-counter](https://explorer-studio.genlayer.com/tx/0x5e614621d1bd69cfa83bfbb5e4674e3f539ce8743ccb546ea86751968944d6cb)
+- [diagnostic-schedule-v1-take-5-resolve](https://explorer-studio.genlayer.com/tx/0x51ba8ed712c27ad4ec71543b9668679e5ba3e5c00def89c459f87f9ca389e2f0)
+- [diagnostic-schedule-v1-take-5-resolve-child-0](https://explorer-studio.genlayer.com/tx/0x57f9c655aefac8e4aa66ae4c41733d76c4acde26abeed8fa3339cc8458196326)
+- [diagnostic-schedule-v1-take-1-evidence-0](https://explorer-studio.genlayer.com/tx/0x86bb4501ed4e7810d4adb6947a711f64c64a91ec09a5707260a829ed94cb5512)
+- [diagnostic-schedule-v1-take-1-seal-author](https://explorer-studio.genlayer.com/tx/0x7ed023cfddf6d899c53fca2e06d708d80a8b88a9ca2a1bcb688efd1b38d307f1)
+- [diagnostic-schedule-v1-take-1-resolve](https://explorer-studio.genlayer.com/tx/0x0b81f58f421613a044ffdd9feceee73a402161798edcf4a3b5a7987fb4d8f630)
+- [diagnostic-schedule-v1-take-1-resolve-child-0](https://explorer-studio.genlayer.com/tx/0x838f7593d69bb549fbd8d75db50fd6f17c93ab3a1777d308793dde5164cd96ca)
+- [diagnostic-schedule-v1-take-2-evidence-0](https://explorer-studio.genlayer.com/tx/0x977874791b9924ac8af79c7f3e0b0b3cc7dcfc82fb99caf90c05b6df1d780cdf)
+- [diagnostic-schedule-v1-take-2-seal-author](https://explorer-studio.genlayer.com/tx/0x4f8fb7a913157661b7f15edba3f278bfd42da2140d850d772d62eaadbba322a9)
+- [diagnostic-schedule-v1-take-2-resolve](https://explorer-studio.genlayer.com/tx/0x371b345c8c26938293c39c44f032fded7309605323e1d3d26ebfaf90e3b4311d)
+- [diagnostic-schedule-v1-take-2-resolve-child-0](https://explorer-studio.genlayer.com/tx/0xb5229a440a67a588b49c3a960b22e42921055bb6930d9998bd5748cc40f37658)
 
 ## Blockers
 
-- The matched Grammy ruling finalized MAJORITY_DISAGREE; no ruling was applied. Chain writes stopped with no retry.
-- New escrow still holds the two original stakes in MATCHED state. Settlement, claims and public record are unproven.
-- Real blocked-source VOID is unproven: the article fetched successfully and no final result was reached.
-- Full publication audit, Vercel production deployment and push were not performed after the failure.
+- Original matched ruling remains MAJORITY_DISAGREE; its escrow still holds both stakes and has no accepted outcome.
+- The isolated candidate passed Grammy VOID and Apple YES but regressed Nintendo from required NO to VOID. Diagnostic writes stopped; candidate is not promoted.
+- The real timeout cannot run before 23 October 2026 at 22:04:35 Lagos. A one-time owner-approved follow-up is scheduled at 22:06 for verified refunds only.
+- Matched settlement/native claims, real blocked-source VOID, full publication audit, production deployment and push remain incomplete.
+- Diagnostic Explorer link audit is incomplete: six checks passed and nine returned HTTP 502/503.

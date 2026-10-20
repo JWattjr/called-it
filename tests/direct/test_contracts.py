@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 from pathlib import Path
 from datetime import datetime,timezone
@@ -15,6 +16,7 @@ def warp(vm,t):
     if sdk is not None and getattr(sdk,'message_raw',None) is not None:sdk.message_raw['datetime']=vm._datetime
 
 def helpers(file):
+    if file=='contracts/take_resolver.py':file=os.environ.get('CALLED_IT_TEST_RESOLVER',file)
     scope={}
     exec(compile(Path(file).read_text().split('\n@gl.evm.contract_interface')[0].split('\nclass ')[0],file,'exec'),scope)
     return scope
@@ -59,6 +61,7 @@ def env(direct_vm,direct_deploy,direct_owner,direct_alice,direct_bob,monkeypatch
     state={'get_take':json.dumps(take),'get_config':{'resolver':A[0],'escrow':A[1],'record':A[2]},'get_bet':'{}','get_resolution':'{}'}
     stub(monkeypatch,state)
     def deploy(path,*args):
+        if path=='contracts/take_resolver.py':path=os.environ.get('CALLED_IT_TEST_RESOLVER',path)
         c=direct_deploy(path,*args)
         from genlayer import gl,Address
         old=gl.message

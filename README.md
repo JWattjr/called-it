@@ -6,7 +6,9 @@
 
 **Revision 4: stopped on matched-bet consensus disagreement.** Apple resolved YES, Nintendo NO, the no-evidence case applied its frozen NO default, and the subjective claim was rejected. Of 36 new writes and callbacks, 35 finalized successfully; the funded take-5 ruling finalized `MAJORITY_DISAGREE` and applied no outcome. Both stakes remain in escrow. All four deployed code hashes match local files and manifest. Production still serves revision 2. See the [current verification report](docs/VERIFICATION.md) for the failure and limits; revision 3's failures remain in [its historical report](docs/FAIRNESS-REVISION.md).
 
-The resolver's model-output handling has been [repaired and tested](docs/MODEL-OUTPUT-REPAIR.md): 69 contract tests and six release tests pass. The core real rulings passed, but the later matched ruling did not reach agreement despite a valid leader proposal. The owner approved two additional simulated wei, and the 1+1 wei bet consumed the full 22-wei cumulative limit. Settlement and native-credit proof remain unproven. Chain writes stopped at the failure, without retry or production publication.
+The resolver's model-output handling has been [repaired and tested](docs/MODEL-OUTPUT-REPAIR.md): 69 contract tests and 14 release tests pass. The core real rulings passed, but the later matched ruling did not reach agreement despite a valid leader proposal. The owner approved two additional simulated wei, and the 1+1 wei bet consumed the full 22-wei cumulative limit. Settlement and native-credit proof remain unproven. Chain writes stopped at the failure, without retry or production publication.
+
+The subsequent [unfunded diagnostic candidate](docs/CONSENSUS-DIAGNOSIS.md) reached Grammy VOID and Apple YES but regressed Nintendo to VOID instead of NO. It is not promoted. Original stakes remain intact. An owner-approved follow-up will resume this chat on 23 October at 22:06 Africa/Lagos to execute the genuine timeout and verify both refunds; the chain deadline cannot be accelerated.
 
 | Contract | Revision-4 address |
 | --- | --- |

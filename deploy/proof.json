@@ -194,7 +194,21 @@
     "r4-deposit-counter-take-5-child-0": "0x0dea61942ae3e6f922dea5f3602e0353e85d30e4cbded82d456673ce467a71fa",
     "r4-seal-author-take-5": "0xb3b7d087b6cc66798003c57f04aaf7527eacfa954b55a6fbadbef3d02a1a470b",
     "r4-seal-counter-take-5": "0x9b95bcdddda5051810a2b4eac31f63913315b05daf9a8d07958e9ae68e126ff9",
-    "r4-resolve-take-5": "0xb97d441634f38c048daf936a1569bf41fd1851d3e2dc591baf744f31780003ad"
+    "r4-resolve-take-5": "0xb97d441634f38c048daf936a1569bf41fd1851d3e2dc591baf744f31780003ad",
+    "diagnostic-schedule-v1-deploy": "0x278d46b37d06cda0066e6f4a68c768a98287e1aa330f4bb38ee4596fdf9d0fde",
+    "diagnostic-schedule-v1-take-5-evidence-0": "0xbe1f8a6dcc6695e4b67a5803d0fb282087c53108a0d3a0c1eb7e1663cb28d0a4",
+    "diagnostic-schedule-v1-take-5-seal-author": "0x7260cf216417dec322c0f027a895a8090afd5cbfe0d9ad93138777506bceba94",
+    "diagnostic-schedule-v1-take-5-seal-counter": "0x5e614621d1bd69cfa83bfbb5e4674e3f539ce8743ccb546ea86751968944d6cb",
+    "diagnostic-schedule-v1-take-5-resolve": "0x51ba8ed712c27ad4ec71543b9668679e5ba3e5c00def89c459f87f9ca389e2f0",
+    "diagnostic-schedule-v1-take-5-resolve-child-0": "0x57f9c655aefac8e4aa66ae4c41733d76c4acde26abeed8fa3339cc8458196326",
+    "diagnostic-schedule-v1-take-1-evidence-0": "0x86bb4501ed4e7810d4adb6947a711f64c64a91ec09a5707260a829ed94cb5512",
+    "diagnostic-schedule-v1-take-1-seal-author": "0x7ed023cfddf6d899c53fca2e06d708d80a8b88a9ca2a1bcb688efd1b38d307f1",
+    "diagnostic-schedule-v1-take-1-resolve": "0x0b81f58f421613a044ffdd9feceee73a402161798edcf4a3b5a7987fb4d8f630",
+    "diagnostic-schedule-v1-take-1-resolve-child-0": "0x838f7593d69bb549fbd8d75db50fd6f17c93ab3a1777d308793dde5164cd96ca",
+    "diagnostic-schedule-v1-take-2-evidence-0": "0x977874791b9924ac8af79c7f3e0b0b3cc7dcfc82fb99caf90c05b6df1d780cdf",
+    "diagnostic-schedule-v1-take-2-seal-author": "0x4f8fb7a913157661b7f15edba3f278bfd42da2140d850d772d62eaadbba322a9",
+    "diagnostic-schedule-v1-take-2-resolve": "0x371b345c8c26938293c39c44f032fded7309605323e1d3d26ebfaf90e3b4311d",
+    "diagnostic-schedule-v1-take-2-resolve-child-0": "0xb5229a440a67a588b49c3a960b22e42921055bb6930d9998bd5748cc40f37658"
   },
   "takes": [
     {
@@ -555,7 +569,7 @@
       "label": "sources-unreachable"
     }
   ],
-  "releaseStatus": "STOPPED_CONSENSUS_DISAGREEMENT",
+  "releaseStatus": "STOPPED_DIAGNOSTIC_REGRESSION",
   "probeContract": "0x22Ee65F5E91C2C0899ae4F44538989a0bE0f6617",
   "probeSourceSha256": "4cbc40bcd5be8e7851add731e35750ea0bf2e51899228ca6d4a2fe4f7e3e68af",
   "probes": {
@@ -774,10 +788,11 @@
     "Browser-extension wallet approval popups were not exercised. Production still serves revision 2. No Portal submission."
   ],
   "blockers": [
-    "The matched Grammy ruling finalized MAJORITY_DISAGREE; no ruling was applied. Chain writes stopped with no retry.",
-    "New escrow still holds the two original stakes in MATCHED state. Settlement, claims and public record are unproven.",
-    "Real blocked-source VOID is unproven: the article fetched successfully and no final result was reached.",
-    "Full publication audit, Vercel production deployment and push were not performed after the failure."
+    "Original matched ruling remains MAJORITY_DISAGREE; its escrow still holds both stakes and has no accepted outcome.",
+    "The isolated candidate passed Grammy VOID and Apple YES but regressed Nintendo from required NO to VOID. Diagnostic writes stopped; candidate is not promoted.",
+    "The real timeout cannot run before 23 October 2026 at 22:04:35 Lagos. A one-time owner-approved follow-up is scheduled at 22:06 for verified refunds only.",
+    "Matched settlement/native claims, real blocked-source VOID, full publication audit, production deployment and push remain incomplete.",
+    "Diagnostic Explorer link audit is incomplete: six checks passed and nine returned HTTP 502/503."
   ],
   "legacyLiveTakes": [
     {
@@ -1099,13 +1114,16 @@
   },
   "implementationChecks": {
     "contractTestsPassed": 69,
-    "releaseTestsPassed": 6,
+    "releaseTestsPassed": 14,
     "appTestsPassed": 7,
     "typecheck": "PASS",
     "eslint": "PASS",
     "productionBuild": "PASS",
     "genvmLint": "All four deployed contracts PASS",
-    "deployedSourceHashes": "4/4 match local bytes and manifest"
+    "deployedSourceHashes": "4/4 match local bytes and manifest",
+    "candidateContractTestsPassed": 69,
+    "diagnosticLiveCasesPassed": 2,
+    "diagnosticLiveCasesFailed": 1
   },
   "unreachableProof": {
     "proven": false,
@@ -1194,5 +1212,446 @@
       "stateApplied": false,
       "individualValidatorReasons": "Not exposed by the receipt; disagreement cause is not proven."
     }
-  ]
+  ],
+  "consensusDiagnostics": {
+    "status": "STOPPED_DIAGNOSTIC_FAILURE",
+    "candidateSource": "diagnostics/consensus_candidate.py",
+    "candidateSha256": "0bc0985c2cc09ae6e894fe1e5c5681f3b779c7e3e3e2711438adc73a1ff96219",
+    "canonicalResolver": "0xB614CbddBCe32f5ec68BA563957D6E4fB804a52e",
+    "canonicalResolverSha256": "e47e551b9881261c86c90da5414459e949ea737611748cbbf68d8468744eb4df",
+    "canonicalChanged": false,
+    "depositBudgetWei": 22,
+    "newDepositsWei": 0,
+    "authorization": "Owner said Run it after the diagnosis/unfunded-replay recovery plan.",
+    "recordedFailure": {
+      "hash": "0xb97d441634f38c048daf936a1569bf41fd1851d3e2dc591baf744f31780003ad",
+      "result": "MAJORITY_DISAGREE",
+      "rounds": [
+        {
+          "round": 0,
+          "verdict": "INSUFFICIENT_EVIDENCE",
+          "case": "VOID_INSUFFICIENT_EVIDENCE",
+          "quotes": [
+            {
+              "index": 0,
+              "text": "Nominations for the 2025 GRAMMYs will be announced Friday, Nov. 8, 2024."
+            },
+            {
+              "index": 0,
+              "text": "The 2025 GRAMMY nominations will be announced on Friday, Nov. 8, 2024"
+            }
+          ],
+          "reason": "The document states the announcement date but does not contain an explicit dated official confirmation that the nominations have occurred within the required event window. The text is forward-looking and lacks a post-event verification from an allowlisted domain.",
+          "execution": "SUCCESS",
+          "validatorVotes": [
+            "disagree",
+            "idle",
+            "idle",
+            "disagree"
+          ]
+        },
+        {
+          "round": 1,
+          "verdict": "YES",
+          "case": "JUDGED_YES",
+          "quotes": [
+            {
+              "index": 0,
+              "text": "The 67th GRAMMY Awards nominations will take place on Friday, Nov. 8, 2024 at 7:45 a.m. PT / 10:45 a.m. ET , featuring guest appearances from multiple GRAMMY-winning artists, including Mark Ronson , Kylie Minogue , Victoria Mon\u00e9t , Brandy Clark , Kirk Franklin , and others."
+            },
+            {
+              "index": 0,
+              "text": "Nov. 8, 2024 Nominees Announced for the 2025 GRAMMY Awards Announcing the official nominees list for the 2025 GRAMMYs."
+            },
+            {
+              "index": 0,
+              "text": "Nina Frazier | GRAMMYs / Nov 1, 2024 - 03:21 pm"
+            }
+          ],
+          "reason": "The document from grammy.com (an allowlisted domain) explicitly states that the 67th GRAMMY Awards nominations were scheduled and announced on Friday, November 8, 2024 \u2014 which falls strictly within the event window (2024-11-01T00:00:00Z to 2024-11-10T23:59:59Z). The page, authored by the Recording Academy's own publication on Nov 1, 2024, confirms the official nominations announcement date of Nov. 8, 2024, and the timeline section explicitly lists 'Nov. 8, 2024 Nominees Announced for the 2025 GRAMMY Awards.' This constitutes an official announcement by the named organization on an allowlisted domain with a qualifying event date inside the window.",
+          "execution": "SUCCESS",
+          "validatorVotes": [
+            "agree",
+            "disagree",
+            "disagree",
+            "disagree"
+          ]
+        },
+        {
+          "round": 2,
+          "verdict": "YES",
+          "case": "JUDGED_YES",
+          "quotes": [
+            {
+              "index": 0,
+              "text": "Nov. 8, 2024 Nominees Announced for the 2025 GRAMMY Awards Announcing the official nominees list for the 2025 GRAMMYs."
+            },
+            {
+              "index": 0,
+              "text": "The 67th GRAMMY Awards nominations will take place on Friday, Nov. 8, 2024 at 7:45 a.m. PT / 10:45 a.m. ET"
+            }
+          ],
+          "reason": "The Recording Academy (grammy.com) officially announced the nominations for the 67th GRAMMY Awards on November 8, 2024. This date falls strictly within the required window (after Nov 1 and before Nov 10, 2024). The documents include a formal timeline and specific press release confirming the event date and the official status of the nominees list.",
+          "execution": "SUCCESS",
+          "validatorVotes": [
+            "disagree",
+            "agree",
+            "disagree",
+            "disagree"
+          ]
+        },
+        {
+          "round": 3,
+          "verdict": "NO",
+          "case": "JUDGED_NO",
+          "quotes": [
+            {
+              "index": 0,
+              "text": "Nina Frazier | GRAMMYs / Nov 1, 2024 - 03:21 pm The 2025 GRAMMYs season is officially here. The 67th GRAMMY Awards nominations will take place on Friday, Nov. 8, 2024 at 7:45 a.m. PT / 10:45 a.m. ET"
+            },
+            {
+              "index": 0,
+              "text": "Nina Frazier | GRAMMYs / Oct 17, 2024 - 11:51 pm The 2025 GRAMMYs season is in full swing. Next up: The 2025 GRAMMY nominations will be announced on Friday, Nov. 8, 2024"
+            },
+            {
+              "index": 0,
+              "text": "Nov. 8, 2024 Nominees Announced for the 2025 GRAMMY Awards Announcing the official nominees list for the 2025 GRAMMYs."
+            }
+          ],
+          "reason": "The only submitted official-source evidence is dated Oct. 17 and Nov. 1, both before the event window, and it states the nominations will be announced on Nov. 8 rather than confirming they were announced. No qualifying official confirmation dated within 2024-11-01 through 2024-11-10 shows the announcement occurred, so under the rule this resolves NO.",
+          "execution": "SUCCESS",
+          "validatorVotes": [
+            "disagree",
+            "disagree",
+            "disagree",
+            "idle"
+          ]
+        }
+      ]
+    },
+    "cases": {
+      "take-5": {
+        "expectedOutcome": "VOID",
+        "expectedCase": "VOID_INSUFFICIENT_EVIDENCE",
+        "resolution": {
+          "id": "take-5",
+          "rule_hash": "6b5ab13134f668db76c0e454c0e9bf525e96b44e2e2a06f419e74c417d25af04",
+          "status": "FINAL",
+          "evidence": [
+            {
+              "party": "0x4106c978789a6e28f4c6044bf252f2667939e5a7",
+              "url": "https://web.archive.org/web/20241108004348id_/https://www.grammy.com/news/2025-grammys-nominations-full-winners-nominees-list",
+              "info": {
+                "kind": "archive",
+                "original": "https://www.grammy.com/news/2025-grammys-nominations-full-winners-nominees-list",
+                "revision": "",
+                "capture": "20241108004348"
+              },
+              "argument": "Apply the frozen rule. Treat source access failure as technical VOID, never as a default-side win.",
+              "preflight": {
+                "error": "",
+                "length": 24000,
+                "status": "FETCHED",
+                "checked_at": 1792471024
+              }
+            }
+          ],
+          "sealed": [
+            "0x4106c978789a6e28f4c6044bf252f2667939e5a7",
+            "0x3fbb8bc6f0c35cb8989cef4575c03284e3fa1f8f"
+          ],
+          "verdict": "INSUFFICIENT_EVIDENCE",
+          "outcome": "VOID",
+          "quotes": [
+            {
+              "index": 0,
+              "text": "Read on for everything you need to know about nominations, which will be announced on Friday, Nov 8."
+            },
+            {
+              "index": 0,
+              "text": "The 67th GRAMMY Awards nominations will take place on Friday, Nov. 8, 2024 at 7:45 a.m. PT / 10:45 a.m. ET"
+            },
+            {
+              "index": 0,
+              "text": "When Are The 2025 GRAMMY Nominations Announced? The 2025 GRAMMY nominees will be unveiled during a livestream event on live.GRAMMY.com and YouTube"
+            }
+          ],
+          "reason": "The only official-source evidence provided is a pre-event GRAMMY.com page, archived before the announced livestream time, describing a future nominations announcement on Nov. 8. It schedules the event but does not explicitly confirm that the Recording Academy actually announced the nominations within the window.",
+          "resolution_case": "VOID_INSUFFICIENT_EVIDENCE",
+          "default_applied": false,
+          "finalized_at": 1792471240
+        },
+        "ruleHashMatches": true,
+        "sourceUrlsUnchanged": true,
+        "passed": true
+      },
+      "take-1": {
+        "expectedOutcome": "YES",
+        "expectedCase": "JUDGED_YES",
+        "resolution": {
+          "id": "take-1",
+          "rule_hash": "026900fd5a5091f5153db5f1190ab6d61770565cb36dc0d169a85720c5c7d3dd",
+          "status": "FINAL",
+          "evidence": [
+            {
+              "party": "0x4106c978789a6e28f4c6044bf252f2667939e5a7",
+              "url": "https://web.archive.org/web/20230605190503id_/https://www.apple.com/newsroom/2023/06/introducing-apple-vision-pro/",
+              "info": {
+                "kind": "archive",
+                "original": "https://www.apple.com/newsroom/2023/06/introducing-apple-vision-pro/",
+                "revision": "",
+                "capture": "20230605190503"
+              },
+              "argument": "Apply the frozen rule. Treat source access failure as technical VOID, never as a default-side win.",
+              "preflight": {
+                "error": "",
+                "length": 24000,
+                "status": "FETCHED",
+                "checked_at": 1792471288
+              }
+            }
+          ],
+          "sealed": [
+            "0x4106c978789a6e28f4c6044bf252f2667939e5a7"
+          ],
+          "verdict": "YES",
+          "outcome": "YES",
+          "quotes": [
+            {
+              "index": 0,
+              "text": "PRESS RELEASE June 5, 2023 Introducing Apple Vision Pro: Apple\u2019s first spatial computer"
+            },
+            {
+              "index": 0,
+              "text": "Apple today unveiled Apple Vision Pro, a revolutionary spatial computer that seamlessly blends digital content with the physical world"
+            }
+          ],
+          "reason": "Document 0 is an official Apple Newsroom press release dated June 5, 2023, from apple.com (an allowlisted domain), archived at 2023-06-05T19:05:03 UTC. It explicitly states Apple unveiled Apple Vision Pro on that date, which falls strictly within the event window (2023-06-03T00:00:00Z to 2023-06-06T23:59:59Z). This is a dated official announcement by Apple on an allowlisted domain confirming the event occurred.",
+          "resolution_case": "JUDGED_YES",
+          "default_applied": false,
+          "finalized_at": 1792471449
+        },
+        "ruleHashMatches": true,
+        "sourceUrlsUnchanged": true,
+        "passed": true
+      },
+      "take-2": {
+        "expectedOutcome": "NO",
+        "expectedCase": "JUDGED_NO",
+        "resolution": {
+          "id": "take-2",
+          "rule_hash": "684938d0b001a96ff1ee27f23b089acdeb0e14fe2d68fc8e8e3bc8760b83df3b",
+          "status": "FINAL",
+          "evidence": [
+            {
+              "party": "0x4106c978789a6e28f4c6044bf252f2667939e5a7",
+              "url": "https://en.wikipedia.org/w/index.php?title=Nintendo_Switch_2&oldid=1268215322",
+              "info": {
+                "kind": "wikipedia",
+                "original": "https://en.wikipedia.org/w/index.php?title=Nintendo_Switch_2&oldid=1268215322",
+                "revision": "1268215322",
+                "capture": ""
+              },
+              "argument": "Apply the frozen rule. Treat source access failure as technical VOID, never as a default-side win.",
+              "preflight": {
+                "error": "",
+                "length": 15402,
+                "status": "FETCHED",
+                "checked_at": 1792471500
+              }
+            }
+          ],
+          "sealed": [
+            "0x4106c978789a6e28f4c6044bf252f2667939e5a7"
+          ],
+          "verdict": "INSUFFICIENT_EVIDENCE",
+          "outcome": "VOID",
+          "quotes": [
+            {
+              "index": 0,
+              "text": "An unnamed video game console , codenamed Ounces , [ 1 ] is currently in development at Nintendo . It will be the successor to the Nintendo Switch"
+            },
+            {
+              "index": 0,
+              "text": "On January 1, 2025, alleged images of the system's motherboard appeared."
+            },
+            {
+              "index": 0,
+              "text": "A Taiwanese newspaper, Economic Daily News , reported that they had obtained information that the console would contain two different screens"
+            }
+          ],
+          "reason": "The provided documents, including the Wikipedia revision from January 8, 2025, describe the console as 'unnamed' and 'in development'. While there are reports of leaked motherboard images (Jan 1) and rumors of dual screens, there is no evidence of an official announcement by Nintendo revealing the 'Nintendo Switch 2' retail name within the window (Jan 1 to Jan 9). The document explicitly refers to the device by its codename 'Ounces' or as the 'Nintendo Switch successor'.",
+          "resolution_case": "VOID_INSUFFICIENT_EVIDENCE",
+          "default_applied": false,
+          "finalized_at": 1792471660
+        },
+        "ruleHashMatches": true,
+        "sourceUrlsUnchanged": true,
+        "passed": false
+      }
+    },
+    "scope": "Candidate replay only. Its results cannot settle the configured escrow or update a public record.",
+    "before": {
+      "checkedAt": "2026-10-20T04:35:05.580249+00:00",
+      "nativeBalancesWei": {
+        "author": "6",
+        "counterparty": "6",
+        "escrow": "2"
+      },
+      "bet": {
+        "id": "take-5",
+        "author": "0x4106c978789a6e28f4c6044bf252f2667939e5a7",
+        "counterparty": "0x3fbb8bc6f0c35cb8989cef4575c03284e3fa1f8f",
+        "rule_hash": "6b5ab13134f668db76c0e454c0e9bf525e96b44e2e2a06f419e74c417d25af04",
+        "author_stake": "1",
+        "counter_stake": "1",
+        "accept_deadline": 1792530275,
+        "refund_deadline": 1792793075,
+        "status": "MATCHED",
+        "deposits": {
+          "0x4106c978789a6e28f4c6044bf252f2667939e5a7": "1",
+          "0x3fbb8bc6f0c35cb8989cef4575c03284e3fa1f8f": "1"
+        },
+        "payouts": {},
+        "claims": {},
+        "intent_wallet": "",
+        "intent_expires": 1792467705,
+        "intent_kind": "COUNTER",
+        "total": "2",
+        "funded_at": 1792466879
+      },
+      "resolution": {
+        "id": "take-5",
+        "rule_hash": "6b5ab13134f668db76c0e454c0e9bf525e96b44e2e2a06f419e74c417d25af04",
+        "status": "OPEN",
+        "evidence": [
+          {
+            "party": "0x4106c978789a6e28f4c6044bf252f2667939e5a7",
+            "url": "https://web.archive.org/web/20241108004348id_/https://www.grammy.com/news/2025-grammys-nominations-full-winners-nominees-list",
+            "info": {
+              "kind": "archive",
+              "original": "https://www.grammy.com/news/2025-grammys-nominations-full-winners-nominees-list",
+              "revision": "",
+              "capture": "20241108004348"
+            },
+            "argument": "Apply the frozen rule. Treat source access failure as technical VOID, never as a default-side win.",
+            "preflight": {
+              "error": "",
+              "length": 24000,
+              "status": "FETCHED",
+              "checked_at": 1792455472
+            }
+          }
+        ],
+        "sealed": [
+          "0x4106c978789a6e28f4c6044bf252f2667939e5a7",
+          "0x3fbb8bc6f0c35cb8989cef4575c03284e3fa1f8f"
+        ],
+        "verdict": null,
+        "outcome": null,
+        "quotes": [],
+        "reason": "",
+        "resolution_case": null
+      }
+    },
+    "updatedAt": "2026-10-20T04:50:02.627433+00:00",
+    "address": "0x0938252Bc5bB85c48E42281c9B4DCDdBCf33c664",
+    "sourceHashCorrection": {
+      "originalLocalCRLFSha256": "9f9dc0ac791f3e031bfb8e03f7ba016aad0bd0cb6d9f503c9b1342b9d59b53a9",
+      "deployedLFSha256": "0bc0985c2cc09ae6e894fe1e5c5681f3b779c7e3e3e2711438adc73a1ff96219",
+      "cause": "read_text normalized CRLF to LF before the SDK deployment; fetched deployed bytes exactly equal the local LF-normalized source.",
+      "newDeployment": false,
+      "semanticChange": false
+    },
+    "deployedSourceMatches": true,
+    "error": "AssertionError: Unexpected diagnostic ruling; STOP",
+    "after": {
+      "checkedAt": "2026-10-20T04:50:02.605114+00:00",
+      "nativeBalancesWei": {
+        "author": "6",
+        "counterparty": "6",
+        "escrow": "2"
+      },
+      "bet": {
+        "id": "take-5",
+        "author": "0x4106c978789a6e28f4c6044bf252f2667939e5a7",
+        "counterparty": "0x3fbb8bc6f0c35cb8989cef4575c03284e3fa1f8f",
+        "rule_hash": "6b5ab13134f668db76c0e454c0e9bf525e96b44e2e2a06f419e74c417d25af04",
+        "author_stake": "1",
+        "counter_stake": "1",
+        "accept_deadline": 1792530275,
+        "refund_deadline": 1792793075,
+        "status": "MATCHED",
+        "deposits": {
+          "0x4106c978789a6e28f4c6044bf252f2667939e5a7": "1",
+          "0x3fbb8bc6f0c35cb8989cef4575c03284e3fa1f8f": "1"
+        },
+        "payouts": {},
+        "claims": {},
+        "intent_wallet": "",
+        "intent_expires": 1792467705,
+        "intent_kind": "COUNTER",
+        "total": "2",
+        "funded_at": 1792466879
+      },
+      "resolution": {
+        "id": "take-5",
+        "rule_hash": "6b5ab13134f668db76c0e454c0e9bf525e96b44e2e2a06f419e74c417d25af04",
+        "status": "OPEN",
+        "evidence": [
+          {
+            "party": "0x4106c978789a6e28f4c6044bf252f2667939e5a7",
+            "url": "https://web.archive.org/web/20241108004348id_/https://www.grammy.com/news/2025-grammys-nominations-full-winners-nominees-list",
+            "info": {
+              "kind": "archive",
+              "original": "https://www.grammy.com/news/2025-grammys-nominations-full-winners-nominees-list",
+              "revision": "",
+              "capture": "20241108004348"
+            },
+            "argument": "Apply the frozen rule. Treat source access failure as technical VOID, never as a default-side win.",
+            "preflight": {
+              "error": "",
+              "length": 24000,
+              "status": "FETCHED",
+              "checked_at": 1792455472
+            }
+          }
+        ],
+        "sealed": [
+          "0x4106c978789a6e28f4c6044bf252f2667939e5a7",
+          "0x3fbb8bc6f0c35cb8989cef4575c03284e3fa1f8f"
+        ],
+        "verdict": null,
+        "outcome": null,
+        "quotes": [],
+        "reason": "",
+        "resolution_case": null
+      }
+    },
+    "fundsUnchanged": true,
+    "stopFailure": {
+      "label": "diagnostic-schedule-v1-take-2-resolve",
+      "hash": "0x371b345c8c26938293c39c44f032fded7309605323e1d3d26ebfaf90e3b4311d",
+      "expectedOutcome": "NO",
+      "actualOutcome": "VOID",
+      "actualCase": "VOID_INSUFFICIENT_EVIDENCE",
+      "execution": "FINALIZED_SUCCESS",
+      "reason": "The candidate reached consensus on the wrong regression outcome. It is not promoted and no later writes were made."
+    },
+    "eligibleForPromotion": false
+  },
+  "recoveryFollowup": {
+    "recordedAt": "2026-10-20T04:46:25.380024+00:00",
+    "automationId": "called-it-timeout-recovery",
+    "name": "Called It timeout recovery",
+    "status": "ACTIVE",
+    "kind": "heartbeat",
+    "sameChat": true,
+    "oneTime": true,
+    "scheduledForLagos": "2026-10-23T22:06:00+01:00",
+    "scheduledForUTC": "2026-10-23T21:06:00+00:00",
+    "ownerAuthorization": "Yes, resume automatically after the deadline",
+    "scope": "Owner-approved timeout refund and native-credit checks only. Candidate is not promoted; no additional deposits, model retries, push, production publication or Portal submission.",
+    "localRuntimeRequired": true
+  }
 }

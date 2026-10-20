@@ -29,6 +29,9 @@ const links = {
       ([name, c]) => [name, explorer("address", c.address)],
     ),
   ),
+  diagnosticContracts: proof.consensusDiagnostics?.address
+    ? { "Unfunded candidate": explorer("address", proof.consensusDiagnostics.address) }
+    : {},
   legacyContracts: Object.fromEntries(
     Object.entries(
       (proof.legacyLiveTakes?.[0]?.contracts ?? {}) as Record<

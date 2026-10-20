@@ -2,6 +2,12 @@
 
 **Revision 4 stopped on a funded matched-bet consensus failure. This is not a verified production release.** Four contracts were deployed and wired, and their deployed code hashes match the local files and manifest. Of 36 new writes and callbacks, 35 finalized successfully and one finalized with `MAJORITY_DISAGREE`. Chain writes stopped at that failure; there was no agent resubmission, settlement or claim afterward. Production still serves revision 2. No production deployment, push or Portal submission followed the failure.
 
+## Latest isolated diagnostic investigation
+
+The [candidate replay](CONSENSUS-DIAGNOSIS.md) finalized Grammy VOID_INSUFFICIENT_EVIDENCE and Apple YES, but Nintendo finalized VOID instead of the required NO. The candidate is not promoted and diagnostic writes stopped. All diagnostic transactions executed successfully; the Nintendo result still fails the semantic regression. Both resolver versions passed the same 69 mocked contract tests, which did not predict this real-model regression. Fourteen release tests pass.
+
+A fresh read after diagnostics confirmed the canonical resolver remains OPEN, the bet remains MATCHED, and balances are author 6, counterparty 6, escrow 2 wei. The [one-time approved follow-up](../deploy/recovery-followup.json) resumes this chat on 23 October at 22:06 Lagos for the original resolver's code-driven timeout, one-time refunds and native-credit verification. It cannot use the candidate as authority or publish it. The recovery is not yet executed.
+
 ## Outcomes and failure
 
 | Demonstration | Finalized state |
@@ -27,7 +33,7 @@ For the new matched bet, resolver timeout eligibility is 23 October 2026 at 22:0
 ## Implementation checks
 
 - 69 direct contract tests passed, including mocked HTTP 401/403, no-evidence default, consensus timeout, exact balances, one-time refunds, exact quotes and 19 model-output regression cases.
-- Six release tests passed, including explicit deposit-limit extension and stopping the auditor on its first failed assertion rather than leaving a stale successful report.
+- Fourteen release tests passed, including explicit deposit-limit extension and stopping the auditor on its first failed assertion rather than leaving a stale successful report.
 - Seven app tests passed. TypeScript, ESLint and the local production build passed.
 - All four GenVM lints passed with the pinned runner. Catalog refresh was unavailable; the cached explicitly pinned runner was used.
 - The [source audit](../deploy/source-verification.json) verified all four deployed byte hashes against the local files and manifest.
@@ -39,6 +45,8 @@ Mocked failures establish implementation behavior; they do not prove real-networ
 The local browser's Read live flow displayed Apple's finalized YES, exact quotations and `JUDGED_YES`, with no warnings or errors. Screenshot capture was unavailable in this run; the accessibility-state record is retained locally. Full current mobile visual certification has not been repeated. An interactive browser-extension wallet approval popup was not exercised.
 
 The [partial link audit](../deploy/fairness-link-audit.json) passed 40 checks: four canonical `/address/` links whose actual Explorer API type is CONTRACT, and 36 canonical `/tx/` links with the matching finalized transaction identifiers. The rejected ruling's valid link does not make its execution successful. The full historical/publication/HTTP-200 audit was not repeated after this failure; those remaining links are not certified by the partial audit.
+
+The new [diagnostic link audit](../deploy/diagnostic-link-audit.json) is failed: six checks passed, including the candidate API type CONTRACT; nine requests returned HTTP 502/503. It does not certify all diagnostic links.
 
 The [current proof report](../deploy/proof-verification.json) is explicitly `passed: false`, `complete: false`. The [release record](RELEASE.md) lists current addresses, hashes, evidence and blockers. The [Portal fields](submission/portal-fields.json) are a bounded draft only.
 

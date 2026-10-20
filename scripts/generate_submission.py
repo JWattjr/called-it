@@ -30,6 +30,18 @@ if p.get('previousUnsettledBets'):
         b=e['entry']['bet']
         lines.append('- Revision '+str(e['attempt'])+' '+b['id']+': '+b['status']+', '+b['total']+' wei held. Escrow '+e['contracts']['TakeEscrow']['address']+'. Refund deadline '+datetime.fromtimestamp(b['refund_deadline'],timezone.utc).isoformat()+'. The new deployment did not migrate or pay this bet.')
 if p.get('unreachableProof'):lines+=['','## Honest unreachable-source proof status','',json.dumps(p['unreachableProof'],ensure_ascii=False),'']
+if p.get('consensusDiagnostics'):
+    diagnostic=p['consensusDiagnostics']
+    lines+=['','## Isolated unfunded diagnostic candidate','',
+            'Status: '+diagnostic['status']+'. This candidate is not configured as the escrow resolver and cannot settle the original bet.','']
+    for name,url in links.get('diagnosticContracts',{}).items():lines.append(f'- [{name}]({url})')
+    for key,case in diagnostic.get('cases',{}).items():
+        result=case['resolution']
+        lines.append('- '+key+': expected '+case['expectedOutcome']+', actual '+result['outcome']+' / '+result['resolution_case']+'; regression '+('PASS' if case['passed'] else 'FAIL')+'.')
+    lines+=['','See [consensus diagnosis](CONSENSUS-DIAGNOSIS.md) and [the diagnostic report](../deploy/consensus-diagnostics.json).']
+if p.get('recoveryFollowup'):
+    lines+=['','## Approved timeout follow-up','',
+            'One-time same-chat recovery is scheduled for 23 October 2026 at 22:06 Africa/Lagos, after actual timeout eligibility at 22:04:35. No additional deposits, candidate promotion or Portal submission. See [recovery status](../deploy/timeout-recovery.json).']
 lines+=['','## All transaction receipts','']
 for name,url in links.get('transactions',{}).items():lines.append(f'- [{name}]({url})')
 lines+=['','## Blockers','']+[('- '+b) for b in p.get('blockers',[])]
@@ -52,7 +64,7 @@ portal={
 if p.get('releaseAttempt',0)>=3 and not p.get('unreachableProof',{}).get('proven'):
  portal['description']+=' Real blocked-source VOID is unproven in this run.'
 if p.get('releaseStatus','').startswith('STOPPED'):
- portal['description']+=(' Matched proof stopped on consensus disagreement.' if p.get('releaseStatus')=='STOPPED_CONSENSUS_DISAGREEMENT' else ' Live proof stopped on model-output errors.')
+ portal['description']+=(' Matched proof stopped on consensus disagreement.' if p.get('releaseStatus')=='STOPPED_CONSENSUS_DISAGREEMENT' else ' Candidate failed its Nintendo regression.' if p.get('releaseStatus')=='STOPPED_DIAGNOSTIC_REGRESSION' else ' Live proof stopped on model-output errors.')
 if p.get('releaseStatus','').startswith('AWAITING_DEPOSIT'):
  portal['description']+=' Matched settlement awaits deposit approval.'
 assert len(portal['oneLiner'])<=180 and len(portal['description'])<=1000 and len(portal['expectedOutcome'])<=500
