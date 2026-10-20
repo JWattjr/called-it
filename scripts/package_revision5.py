@@ -16,8 +16,9 @@ def main():
         assert r['status']=='FINAL' and r['outcome']==outcome and r['resolution_case']==case
     assert entries['subjective-rejection']['take']['status']=='REJECTED'
     writes={label:h for label,h in p['transactions'].items() if label.startswith('r5-')}
+    link_map=json.loads((ROOT/'deploy/links.json').read_text())
     assert all(success(json.loads((ROOT/'deploy/receipts'/(label+'.json')).read_text())) for label in writes)
-    hashes={'releaseAttempt':5,'sourceCommit':p['sourceCommit'],'contracts':p['contracts'],'transactions':{label:{'hash':h,'url':'https://explorer-studio.genlayer.com/tx/'+h,'status':'FINALIZED'} for label,h in writes.items()},'allFinalizedSuccessful':True,'nativeBalanceProof':'deploy/native-balance-proof.json'}
+    hashes={'releaseAttempt':5,'sourceCommit':p['sourceCommit'],'contracts':p['contracts'],'transactions':{label:{'hash':h,'url':link_map['transactions'][label],'status':'FINALIZED'} for label,h in writes.items()},'allFinalizedSuccessful':True,'nativeBalanceProof':'deploy/native-balance-proof.json'}
     (ROOT/'deploy/r5-hashes.json').write_text(json.dumps(hashes,indent=2)+'\n',encoding='utf8')
     checks=json.loads((ROOT/'deploy/r5-local-checks.json').read_text())
     p['implementationChecks']={key:checks[key] for key in ('contractTestsPassed','releaseTestsPassed')}
@@ -35,8 +36,8 @@ def main():
         'An interactive browser-extension approval popup and current mobile visual certification remain unverified.'
     ]
     save(p)
-    address=lambda name:'https://explorer-studio.genlayer.com/address/'+p['contracts'][name]['address']
-    tx=lambda label:'https://explorer-studio.genlayer.com/tx/'+p['transactions'][label]
+    address=lambda name:link_map['contracts'][name]
+    tx=lambda label:link_map['transactions'][label]
     table='| Contract | Revision-5 address |\n| --- | --- |\n'+'\n'.join('| '+name+' | ['+item['address']+']('+address(name)+') |' for name,item in p['contracts'].items())
     production=ROOT/'deploy/production-verification.json'
     deployed=production.exists() and json.loads(production.read_text()).get('releaseAttempt')==5 and json.loads(production.read_text()).get('passed') is True
@@ -66,7 +67,7 @@ def main():
             'The owner approved exactly one new wei from each demo wallet, raising cumulative deposits from 22 to 24 wei. Apple take-1 matched two distinct wallets and settled YES. Its payout map gives the author exactly two wei. The claim is PAID after its native child was verified; the losing wallet has no payout.','',
             '- [Settlement]('+tx('r5-settle-take-1')+')',
             '- [Winner claim]('+tx('r5-claim-take-1-0')+')',
-            '- [Native credit](https://explorer-studio.genlayer.com/tx/'+claim['child']+')',
+            '- [Native credit]('+tx('r5-claim-take-1-0-child-0')+')',
             '- [Credit verification]('+tx('r5-verify-take-1-0')+')',
             '- [Public record]('+tx('r5-record-take-1')+')','',
             'Exact native balances before the claim: `'+json.dumps(native['before']['balancesWei'])+'`; after: `'+json.dumps(native['after']['balancesWei'])+'`. The author gains two wei, counterparty changes by zero after funding, and escrow loses two. [Balance proof](../deploy/native-balance-proof.json). The record shows one historical win and one loss; unfunded replays do not add wins.','',

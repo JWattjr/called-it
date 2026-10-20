@@ -53,7 +53,7 @@ if p.get('releaseAttempt')==5:
             'Owner approved exactly one additional wei per wallet, raising cumulative deposits from 22 to 24 wei. The revision-4 archive, original held stakes and scheduled recovery are separate. See [verification](VERIFICATION.md) and [the immutable revision-4 archive](../deploy/releases/v4-proof.json).']
 lines+=['','## All transaction receipts','']
 for name,url in links.get('transactions',{}).items():lines.append(f'- [{name}]({url})')
-lines+=['','## Blockers','']+[('- '+b) for b in p.get('blockers',[])]
+if p.get('blockers'):lines+=['','## Blockers','']+[('- '+b) for b in p['blockers']]
 (ROOT/'docs/RELEASE.md').write_text('\n'.join(lines)+'\n',encoding='utf8')
 portal={
  'contributionType':'Projects','projectName':'Called It','primaryTag':'Gaming','tag1':'Outcome Verification','tag2':'Prediction Markets',

@@ -1,7 +1,7 @@
 # Called It release evidence
 
 Recorded: 2026-10-20T07:57:45.109491+00:00
-Status: LIVE_PROOFS_PASSED_AWAITING_PUBLICATION
+Status: VERIFIED_LIVE_PROOFS
 
 App: https://called-it-genlayer.vercel.app
 Repository: https://github.com/JWattjr/called-it
@@ -539,7 +539,3 @@ Owner approved exactly one additional wei per wallet, raising cumulative deposit
 - [r5-verify-take-1-0](https://explorer-studio.genlayer.com/tx/0x7fa6113ecf8b605a5a1d0dada52d25fcdf7b305d3c1aa69d2ff76fa62de8f857)
 - [r5-record-take-1](https://explorer-studio.genlayer.com/tx/0x4cd2d89555b9f1731248a8c2546645d5bd8601c0b2d67dc42ead44d5dde06ea3)
 - [r5-record-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x2defcfea8dae32210fa2b6b7a36ba02dbf95f3a52633924ca383630f0dd203a2)
-
-## Blockers
-
-- Complete publication audit and production verification remain pending.

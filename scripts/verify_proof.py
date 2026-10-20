@@ -23,6 +23,7 @@ c=create_client(chain=studionet,account=Account.create())
 explorer_cache=load_verified_cache(ROOT,p.get('sourceCommit')) if '--reuse-explorer-audit' in sys.argv else {}
 explorer_cache_hits=0
 failures=[];checks=[]
+evidence_responses={}
 def check(ok,message):
     checks.append({'passed':bool(ok),'check':message})
     print('PASS' if ok else 'FAIL',message,flush=True)
@@ -45,16 +46,22 @@ def get_json(url):
             time.sleep(10)
 
 def get_evidence(url):
+    # Audit each distinct published URL once in this invocation. Repeated
+    # references to one archive capture must not create unnecessary requests.
+    if url in evidence_responses:return evidence_responses[url]
     # Archive availability can briefly return 429 even while the immutable
     # capture remains available. Retry bounded transient failures, preserving
     # the exact URL and reporting failure if availability does not recover.
     for attempt in range(3):
         try:
-            response=requests.get(url,headers=headers,timeout=60)
+            response=requests.get(url,headers={'User-Agent':'Mozilla/5.0'},timeout=60)
         except requests.RequestException:
             if attempt==2:raise
             time.sleep(10)
             continue
+        if response.status_code==200:
+            evidence_responses[url]=response
+            return response
         if response.status_code not in (429,500,502,503,504) or attempt==2:return response
         retry=response.headers.get('Retry-After','')
         delay=max(30,int(retry)) if retry.isdigit() else 30
@@ -210,6 +217,7 @@ if p.get('releaseAttempt',0)>=3 and not p.get('unreachableProof',{}).get('proven
     unproven.append('The full real blocked-host VOID proof is unproven; actual case: '+p.get('unreachableProof',{}).get('actualCase','pending')+'. Source preflights and the additional access probe are retained. Mocked 401/403 coverage is not live proof.')
 report={'checkedAt':datetime.now(timezone.utc).isoformat(),'passed':not failures,'checks':checks,'failures':failures,'readOnly':True,'unproven':unproven,'sourceCommit':p.get('sourceCommit'),'contractHashes':{name:contract['sha256'] for name,contract in p['contracts'].items()},'receiptVerification':'Live Explorer fields, leader output and quorum bound to saved RPC receipts; direct RPC for native credits, expected failures and missing quorum. Contract source and finalized state are read directly by RPC.'}
 report['explorerPreAudit']={'report':'deploy/r5-explorer-audit.json' if explorer_cache else None,'reusedImmutableFinalRecords':explorer_cache_hits,'maximumAgeSeconds':1800,'integrity':'SHA-256 matched the public pre-audit report; exact URL, hash, FINALIZED status and HTTP 200 required. Missing or stale records fetched live. Native credit and contract state are never cached here.'}
+report['publishedHttpUrls']={'uniqueSuccessfulUrls':len(evidence_responses),'statuses':{url:response.status_code for url,response in evidence_responses.items()},'scope':'Distinct exact URLs fetched during this invocation; repeated references reuse only this invocation\'s HTTP 200 response.'}
 (ROOT/'deploy/proof-verification.json').write_text(json.dumps(report,indent=2),encoding='utf8')
 print(len(checks),'checks;',len(failures),'failures')
 sys.exit(1 if failures else 0)
