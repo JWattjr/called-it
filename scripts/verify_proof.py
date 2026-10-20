@@ -124,7 +124,7 @@ for entry in p.get('takes',[]):
 for profile in p.get('profiles',[]):check(read('CalledItRecord','get_profile',[profile['wallet']])==profile,'profile finalized readback '+profile['wallet'])
 
 if p.get('nativeBalanceProof'):
-    balances=p['nativeBalanceProof'];entry=next(e for e in p['takes'] if e.get('label')=='sources-unreachable')
+    balances=p['nativeBalanceProof'];entry=next(e for e in p['takes'] if e['take']['id']==balances.get('takeId')) if balances.get('takeId') else next(e for e in p['takes'] if e.get('label')=='sources-unreachable')
     check(balances.get('passed') is True,'exact native balance proof completed')
     before=balances.get('before',{}).get('balancesWei',{})
     after=balances.get('after',{}).get('balancesWei',{})
@@ -151,6 +151,8 @@ check(labels.get('official-yes',{}).get('resolution',{}).get('verdict')=='YES','
 check(labels.get('rumours-no',{}).get('resolution',{}).get('verdict')=='NO','real nonqualifying reports demo NO')
 check(labels.get('no-evidence-default',{}).get('resolution',{}).get('default_applied') is True,'no-evidence default demo')
 check(labels.get('subjective-rejection',{}).get('take',{}).get('status')=='REJECTED','compile rejection demo')
+if p.get('releaseAttempt')==5:
+    check(labels.get('scheduling-void',{}).get('resolution',{}).get('resolution_case')=='VOID_INSUFFICIENT_EVIDENCE' and labels['scheduling-void']['resolution'].get('outcome')=='VOID','configured v2 judge resolves real Grammy scheduling evidence VOID')
 check(any(e.get('bet',{}).get('counterparty') and e['bet'].get('status')=='SETTLED' and any(v.get('status')=='PAID' for v in e['bet'].get('claims',{}).values()) for e in p.get('takes',[])),'second-wallet acceptance, settlement and verified claim')
 check(any(profile['wins']+profile['losses']+profile['voids']>0 for profile in p.get('profiles',[])),'public record updated')
 refund=p.get('refundDemo',{})
@@ -186,7 +188,7 @@ else:
     for url in links.get('other',[]):
         response=get_evidence(url);check(response.status_code==200,'published non-explorer URL HTTP 200: '+url)
 budget=p.get('approvedDepositBudgetWei',20)
-check(type(budget) is int and budget in (20,22) and sum(p.get('deposits',{}).values())<=budget,'cumulative simulated deposits within recorded approved '+str(budget)+' wei')
+check(type(budget) is int and budget in (20,22,24) and sum(p.get('deposits',{}).values())<=budget,'cumulative simulated deposits within recorded approved '+str(budget)+' wei')
 unproven=[]
 if p.get('releaseAttempt',0)>=3 and not p.get('unreachableProof',{}).get('proven'):
     unproven.append('The full real blocked-host VOID proof is unproven; actual case: '+p.get('unreachableProof',{}).get('actualCase','pending')+'. Source preflights and the additional access probe are retained. Mocked 401/403 coverage is not live proof.')

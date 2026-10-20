@@ -7,12 +7,26 @@ import hashlib
 import json
 import sys
 import time
+from pathlib import Path
 from datetime import datetime, timezone, timedelta
 
 from chain import ROOT, load, save, read, tx, client, signer
+import chain
 
 KEY = 'take-5'
 EXPECTED_ESCROW = '0xC5BeB6B171f37f2c7101EDc83eA2905615415e12'
+
+
+def select_revision_four():
+    """Keep recovery bound to its own journal after a newer release is promoted."""
+    current = load()
+    if current.get('releaseAttempt') != 4 or '--revision-4' in sys.argv:
+        isolated = ROOT / 'deploy/recovery-v4/proof.json'
+        assert isolated.exists(), 'The isolated revision-4 recovery journal is required'
+        chain.PROOF_RELATIVE = Path('deploy/recovery-v4/proof.json')
+        current = load()
+    assert current.get('releaseAttempt') == 4
+    return current
 
 
 def readiness(take, resolution, bet, at):
@@ -59,7 +73,8 @@ def recover(p, at=None, execute=False):
         return plan
 
     for item in contracts.values():
-        assert hashlib.sha256((ROOT / 'contracts' / item['source']).read_bytes()).hexdigest() == item['sha256']
+        folder = 'deploy/releases/v4/contracts' if chain.PROOF_RELATIVE != Path('deploy/proof.json') else 'contracts'
+        assert hashlib.sha256((ROOT / folder / item['source']).read_bytes()).hexdigest() == item['sha256']
     assert bet.get('counterparty') and bet['total'] == '2'
     addresses, before = balances(p, bet)
     if 'nativeBalanceProof' not in p:
@@ -111,7 +126,7 @@ def recover(p, at=None, execute=False):
     proof['passed'] = all(item['passed'] for item in proof['checks'])
     p['recordedAt'] = datetime.now(timezone.utc).isoformat()
     save(p)
-    (ROOT / 'deploy/native-balance-proof.json').write_text(json.dumps(proof, indent=2) + '\n', encoding='utf8')
+    (ROOT / chain.PROOF_RELATIVE.parent / 'native-balance-proof.json').write_text(json.dumps(proof, indent=2) + '\n', encoding='utf8')
     assert proof['passed'], 'Native balance differences do not match both original stakes; STOP'
     plan.update(status='RECOVERED_VERIFIED_REFUND', refundWeiEach='1', nativeBalancesPassed=True,
                 releaseVerified=False, note='Timeout refund proven; full release audit and production publication remain separate checks.')
@@ -122,7 +137,7 @@ def recover(p, at=None, execute=False):
 
 if __name__ == '__main__':
     try:
-        recover(load(), execute='--execute' in sys.argv)
+        recover(select_revision_four(), execute='--execute' in sys.argv)
     except Exception as error:
         target = ROOT / 'deploy/timeout-recovery.json'
         report = json.loads(target.read_text()) if target.exists() else {}

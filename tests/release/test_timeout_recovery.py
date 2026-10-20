@@ -118,3 +118,18 @@ def test_first_failed_native_claim_stops_before_other_wallet_or_record(fake_chai
     with pytest.raises(RuntimeError, match='Finalized claim error'):
         recovery.recover(p, at=100000 + 48 * 3600, execute=True)
     assert [method for method, _ in writes] == ['resolve', 'settle']
+
+
+def test_revision_five_selects_only_the_isolated_original_recovery(tmp_path, monkeypatch):
+    import chain
+    (tmp_path/'deploy/recovery-v4').mkdir(parents=True)
+    main={'releaseAttempt':5,'contracts':{'TakeEscrow':{'address':'new-release'}}}
+    original={'releaseAttempt':4,'contracts':{'TakeEscrow':{'address':recovery.EXPECTED_ESCROW}}}
+    (tmp_path/'deploy/proof.json').write_text(json.dumps(main))
+    (tmp_path/'deploy/recovery-v4/proof.json').write_text(json.dumps(original))
+    monkeypatch.setattr(chain,'ROOT',tmp_path)
+    monkeypatch.setattr(chain,'PROOF_RELATIVE',Path('deploy/proof.json'))
+    monkeypatch.setattr(recovery,'ROOT',tmp_path)
+    selected=recovery.select_revision_four()
+    assert selected==original and chain.PROOF_RELATIVE==Path('deploy/recovery-v4/proof.json')
+    assert json.loads((tmp_path/'deploy/proof.json').read_text())==main

@@ -14,6 +14,11 @@ from genlayer_py.types import TransactionHashVariant
 from genlayer_py.provider import provider
 
 ROOT=Path(__file__).resolve().parent.parent
+PROOF_RELATIVE=Path('deploy/proof.json')
+
+def proof_path():
+    return ROOT/PROOF_RELATIVE
+
 assert importlib.metadata.version('genlayer-py')=='0.18.0'
 _post=provider.requests.post
 _broadcast_context=None
@@ -93,7 +98,7 @@ def journal_lock(name):
             else:fcntl.flock(handle.fileno(),fcntl.LOCK_UN)
 
 def save(p):
-    path=ROOT/'deploy/proof.json'
+    path=proof_path()
     with journal_lock('proof'):
         current=json.loads(path.read_text(encoding='utf8')) if path.exists() else {}
         for key,value in current.items():p.setdefault(key,value)
@@ -109,7 +114,7 @@ def save(p):
         tmp.replace(path)
 
 def load():
-    path=ROOT/'deploy/proof.json'
+    path=proof_path()
     return json.loads(path.read_text()) if path.exists() else {'network':'StudioNet','chainId':61999,'contracts':{},'transactions':{},'takes':[],'releaseStatus':'IN_PROGRESS'}
 
 def success(r):
@@ -149,7 +154,7 @@ def tx(p,label,contract=None,method=None,args=None,code=None,index=0,value=0,wai
     if value:
         approval=ROOT/'.secrets/deposit-approval.json'
         budget=json.loads(approval.read_text()).get('approvedTotalWei') if approval.exists() else None
-        if type(budget) is not int or budget not in (20,22):
+        if type(budget) is not int or budget not in (20,22,24):
             raise RuntimeError('Owner must explicitly approve the cumulative demo deposit budget')
         with journal_lock('proof'):
             current=load()
@@ -161,9 +166,9 @@ def tx(p,label,contract=None,method=None,args=None,code=None,index=0,value=0,wai
             p['deposits']=journal.copy()
             current['approvedDepositBudgetWei']=budget
             p['approvedDepositBudgetWei']=budget
-            temporary=ROOT/'deploy/proof.json.tmp'
+            temporary=proof_path().with_suffix('.json.tmp')
             temporary.write_text(json.dumps(current,indent=2),encoding='utf8')
-            temporary.replace(ROOT/'deploy/proof.json')
+            temporary.replace(proof_path())
     if label not in p['transactions']:
         with journal_lock('submit'):
             latest=load()

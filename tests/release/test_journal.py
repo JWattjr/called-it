@@ -111,3 +111,35 @@ def test_proof_audit_stops_and_replaces_stale_green_report_on_first_failure(tmp_
     saved=json.loads(report.read_text())
     assert not saved['passed'] and saved['failures']==['broken boundary']
     assert len(saved['checks'])==2 and saved['sourceCommit']=='tested'
+
+
+def test_isolated_recovery_journal_cannot_replace_current_release(tmp_path,monkeypatch):
+    m=module();monkeypatch.setattr(m,'ROOT',tmp_path)
+    (tmp_path/'deploy/recovery-v4').mkdir(parents=True)
+    main={'releaseAttempt':5,'transactions':{'r5-deploy':'new'},'contracts':{'Takes':'revision5'}}
+    (tmp_path/'deploy/proof.json').write_text(json.dumps(main))
+    isolated={'releaseAttempt':4,'transactions':{'r4-resolve':'original'},'contracts':{'Takes':'revision4'}}
+    (tmp_path/'deploy/recovery-v4/proof.json').write_text(json.dumps(isolated))
+    monkeypatch.setattr(m,'PROOF_RELATIVE',Path('deploy/recovery-v4/proof.json'))
+    recovery=m.load();recovery['transactions']['r4-timeout']='saved-timeout'
+    m.save(recovery)
+    assert m.load()['releaseAttempt']==4 and m.load()['transactions']['r4-timeout']=='saved-timeout'
+    assert json.loads((tmp_path/'deploy/proof.json').read_text())==main
+
+
+def test_revision_five_budget_allows_only_two_additional_one_wei_deposits(tmp_path,monkeypatch):
+    import pytest
+    m=module();monkeypatch.setattr(m,'ROOT',tmp_path)
+    (tmp_path/'deploy').mkdir();(tmp_path/'.secrets').mkdir()
+    (tmp_path/'.secrets/deposit-approval.json').write_text('{"approvedTotalWei":24}')
+    calls=[]
+    class Client:
+        def write_contract(self,*args,**kwargs):calls.append(kwargs['value']);return '0x'+'ef'*32
+    monkeypatch.setattr(m,'client',lambda index=0:Client())
+    monkeypatch.setattr(m,'fees',lambda c:{'feeValue':0})
+    m.save({'transactions':{},'deposits':{'previous':22},'approvedDepositBudgetWei':22})
+    for label in ('r5-author','r5-counter'):
+        m.tx(m.load(),label,'0x'+'11'*20,'deposit',['take-1'],value=1,wait=False)
+    with pytest.raises(RuntimeError,match='budget exhausted'):
+        m.tx(m.load(),'r5-extra','0x'+'11'*20,'deposit',['take-2'],value=1,wait=False)
+    assert calls==[1,1] and sum(m.load()['deposits'].values())==24
