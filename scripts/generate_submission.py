@@ -46,7 +46,11 @@ if p.get('previousConsensusDiagnostics'):
         lines.append('- Version '+str(version)+': '+previous['status']+'. Its original source, rulings and failure remain in [the archived diagnostic](../deploy/consensus-diagnostics-v'+str(version)+'.json).')
 if p.get('recoveryFollowup'):
     lines+=['','## Approved timeout follow-up','',
-            'One-time same-chat recovery is scheduled for 23 October 2026 at 22:06 Africa/Lagos, after actual timeout eligibility at 22:04:35. No additional deposits, candidate promotion or Portal submission. See [recovery status](../deploy/timeout-recovery.json).']
+            'The original revision-4 bet has a separate one-time recovery scheduled for 23 October 2026 at 22:06 Africa/Lagos, after actual timeout eligibility at 22:04:35. It uses its isolated revision-4 journal and original contracts, independently of the current release. No additional deposits or Portal submission. See [recovery status](../deploy/timeout-recovery.json).']
+if p.get('releaseAttempt')==5:
+    lines+=['','## Revision-5 configured judge and matched proof','',
+            'The configured resolver adopts exactly v2\'s ordered four-step decision prompt and ARCHIVE_CAPTURE_TIMES_UTC block, without diagnostic output. All fairness branches remain unchanged. The real Grammy scheduling replay resolves VOID_INSUFFICIENT_EVIDENCE. Apple is the separate approved 1+1 wei matched bet; inspect finalized settlement, native-credit verification and the public record in the proof.','',
+            'Owner approved exactly one additional wei per wallet, raising cumulative deposits from 22 to 24 wei. The revision-4 archive, original held stakes and scheduled recovery are separate. See [verification](VERIFICATION.md) and [the immutable revision-4 archive](../deploy/releases/v4-proof.json).']
 lines+=['','## All transaction receipts','']
 for name,url in links.get('transactions',{}).items():lines.append(f'- [{name}]({url})')
 lines+=['','## Blockers','']+[('- '+b) for b in p.get('blockers',[])]
@@ -66,7 +70,11 @@ portal={
  'contractLinks':list(links.get('contracts',{}).values()),'website':p.get('website',''),'github':p.get('github',''),'demoVideo':'',
  'evidence':[p['github']+'/blob/main/'+path for path in ('deploy/proof.json','deploy/proof-verification.json','docs/VERIFICATION.md','docs/RELEASE.md','docs/TUTORIAL.md')] if p.get('github') else []
 }
-if p.get('releaseAttempt',0)>=3 and not p.get('unreachableProof',{}).get('proven'):
+portal['evidence']=list(links.get('contracts',{}).values())+portal['evidence']
+portal['evidenceEntries']=[{'label':name,'preferredEvidenceType':'GenLayer Explorer Contract','network':p.get('network'),'chainId':p.get('chainId'),'url':url} for name,url in links.get('contracts',{}).items()]
+if p.get('releaseAttempt')==5:
+ portal['description']='Called It turns a public hot take into a head-to-head bet settled by GenLayer validators. Compilation freezes a hashed rule before staking. The revision-5 v2 judge uses an ordered four-step decision and explicit archive capture times; validators independently judge evidence and verify every decisive quote. Real replays show Apple YES, Nintendo NO, the frozen default only for absent evidence, subjective rejection, and Grammy scheduling evidence VOID. Four newly wired contracts separate compilation, escrow, resolution and public records. A two-wallet 1+1 wei Apple bet settles to its winner, who pulls a verified native payout. Source failure or consensus timeout refunds both stakes. StudioNet GEN is simulated. The two earlier live takes and revision-4 timeout recovery remain on their original contracts. Real unreachable-source VOID remains unproven. The app exposes rules, evidence, rulings and finalized receipts without requiring a wallet.'
+if p.get('releaseAttempt',0)>=3 and p.get('releaseAttempt')!=5 and not p.get('unreachableProof',{}).get('proven'):
  portal['description']+=' Real blocked-source VOID is unproven in this run.'
 if p.get('releaseStatus','').startswith('STOPPED'):
  portal['description']+=(' Matched proof stopped on consensus disagreement.' if p.get('releaseStatus')=='STOPPED_CONSENSUS_DISAGREEMENT' else ' Candidate failed its Nintendo regression.' if p.get('releaseStatus')=='STOPPED_DIAGNOSTIC_REGRESSION' else ' Live proof stopped on model-output errors.')

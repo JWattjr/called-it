@@ -8,6 +8,8 @@
 
 **1:05–1:20 — Defaults and rejection.** Open the no-evidence take: code applied its frozen default, explicitly labelled. Then open the subjective “flop” claim and show the compiler's rejection before any stake.
 
+Also open the Grammy scheduling replay: the revision-5 v2 judge returns VOID_INSUFFICIENT_EVIDENCE because the captured article schedules the event without establishing completion. The old revision-4 disagreement stays archived and its original refund job remains separate.
+
 **1:20–1:45 — Money and record.** On the funded replay, show the different counterparty address, both tiny stakes, settlement, winner's claim and exact native child transfer. Open the winner's profile to show the finalized record update. Unfunded takes do not count.
 
 **1:45–2:00 — Verify it yourself.** Open The receipts. Follow a canonical contract explorer page and a transaction page. Show `deploy/proof.json` and the read-only verifier. “The model judges the announcement. Code counts the GEN. The receipt is public.”

@@ -64,6 +64,13 @@ def success(r):
     return finalized and (native or r.get('txExecutionResultName',leader.get('execution_result')) in ('SUCCESS','FINISHED_WITH_RETURN') and r.get('result_name') in (None,'AGREE','MAJORITY_AGREE','SUCCESS'))
 
 check(p.get('chainId')==61999,'StudioNet chain 61999')
+actual_chain=c.provider.make_request('eth_chainId',[])['result']
+actual_chain_id=int(actual_chain,0) if isinstance(actual_chain,str) else int(actual_chain)
+check(actual_chain_id==61999,'actual RPC chain identity StudioNet 61999')
+if p.get('releaseAttempt',0)>=5:
+    fields=json.loads((ROOT/'docs/submission/portal-fields.json').read_text(encoding='utf8'))
+    for name,url in links['contracts'].items():
+        check(url in fields.get('evidence',[]) and any(entry.get('url')==url and entry.get('preferredEvidenceType')=='GenLayer Explorer Contract' and entry.get('chainId')==61999 for entry in fields.get('evidenceEntries',[])),name+' direct contract URL is a separate typed StudioNet evidence entry')
 for name,contract in p['contracts'].items():
     source=(ROOT/'contracts'/contract['source']).read_bytes()
     check(hashlib.sha256(source).hexdigest()==contract['sha256'],name+' local source matches deployment manifest')
@@ -73,7 +80,7 @@ for name,contract in p['contracts'].items():
     url=links.get('contracts',{}).get(name,'')
     check(re.fullmatch(r'https://explorer-studio\.genlayer\.com/address/0x[0-9a-fA-F]{40}',url) is not None,name+' canonical contract URL')
     result=get_json(url.replace('/address/','/api/address/'))
-    check(result.get('type')=='CONTRACT',name+' real explorer record type CONTRACT')
+    check(result.get('type')=='CONTRACT' and str(result.get('address','')).lower()==contract['address'].lower(),name+' real explorer record type CONTRACT and exact address')
 
 for label,h in p['transactions'].items():
     saved=ROOT/'deploy/receipts'/(label+'.json')
@@ -101,7 +108,8 @@ for label,h in p['transactions'].items():
         extra=r.get('value_credited') is True if expected=='FAILED_PAYABLE' else r.get('result_name')=='MAJORITY_DISAGREE' if expected=='CONSENSUS_DISAGREEMENT' else True
         check(bool(r) and r.get('status')=='FINALIZED' and not success(r) and extra,label+' expected finalized error: '+expected)
     else:check(bool(r) and success(r),label+' finalized execution success')
-    time.sleep(2.2)
+    # Explorer API reads are sequential. Actual StudioNet RPC calls already
+    # enforce the shared minute/hour budget in browser_post.
 
 for entry in p.get('takes',[]):
     t=entry['take'];key=t['id']

@@ -19,6 +19,11 @@ CASES=[
 ]
 
 p=load()
+if p.get('releaseAttempt')==5:
+    import runpy
+    if len(sys.argv)==1:sys.argv.append('record')
+    runpy.run_path(str(ROOT/'scripts/revision5_release.py'),run_name='__main__')
+    raise SystemExit(0)
 if p.get('releaseAttempt',0)>=3:
     import runpy
     if p['releaseAttempt']==4 and '--revision-4' not in sys.argv:sys.argv.append('--revision-4')

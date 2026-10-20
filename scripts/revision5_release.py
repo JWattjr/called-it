@@ -41,14 +41,18 @@ def write(p, label, name, method, args, index=0, value=0):
     return tx(p, PREFIX + label, address(p, name), method, args, index=index, value=value)
 
 
-def record(p):
+def record(p, keys=None):
     entries = []
-    for key in read(address(p, 'Takes'), 'get_ids', [0, 100]):
+    ids = read(address(p, 'Takes'), 'get_ids', [0, 100]) if keys is None else keys
+    for key in ids:
         take = read(address(p, 'Takes'), 'get_take', [key])
         case = next(item for item in CASES if item['text'] == take['text'])
         entries.append({'take': take, 'label': case['label'],
                         'bet': read(address(p, 'TakeEscrow'), 'get_bet', [key]),
                         'resolution': read(address(p, 'TakeResolver'), 'get_resolution', [key])})
+    if keys is not None:
+        refreshed = {entry['take']['id']: entry for entry in entries}
+        entries = [refreshed.get(entry['take']['id'], entry) for entry in p['takes']]
     p.update(takes=entries, profiles=[read(address(p, 'CalledItRecord'), 'get_profile', [signer(i).address]) for i in range(2)], recordedAt=datetime.now(timezone.utc).isoformat())
     save(p)
 
@@ -89,6 +93,8 @@ def native_snapshot(p):
 def resolve(p, plans):
     for case in plans:
         key = 'take-' + str(CASES.index(case) + 1)
+        entry = next(e for e in p['takes'] if e['take']['id'] == key)
+        bet = entry['bet']
         result = read(address(p, 'TakeResolver'), 'get_resolution', [key])
         if result.get('status') != 'FINAL':
             write(p, 'seal-author-' + key, 'TakeResolver', 'seal_evidence', [key])
@@ -100,8 +106,10 @@ def resolve(p, plans):
         assert result['status'] == 'FINAL' and result['outcome'] == case['outcome'] and result['resolution_case'] == case['case'], 'Unexpected ruling; STOP: ' + key + ' ' + json.dumps(result)
         take = read(address(p, 'Takes'), 'get_take', [key])
         assert result['rule_hash'] == take['rule_hash']
+        entry.update(take=take, resolution=result, bet=bet)
         print(key, result['outcome'], result['resolution_case'], 'FINALIZED_READBACK', flush=True)
-    record(p)
+    p['recordedAt'] = datetime.now(timezone.utc).isoformat()
+    save(p)
 
 
 def main(stage):
@@ -167,7 +175,7 @@ def main(stage):
                 assert len(children) == 1
                 write(p, 'verify-take-1-0', 'TakeEscrow', 'verify_claim', [key, author, 1, p['transactions']['r5-claim-take-1-0'], children[0]])
             write(p, 'record-' + key, 'CalledItRecord', 'sync', [key])
-            record(p)
+            record(p, keys=[key])
             bet = next(e['bet'] for e in p['takes'] if e['take']['id'] == key)
             assert bet['claims'][author]['status'] == 'PAID'
             _, after = native_snapshot(p)

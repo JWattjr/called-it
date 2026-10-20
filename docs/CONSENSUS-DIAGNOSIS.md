@@ -1,5 +1,7 @@
 # Consensus diagnosis and recovery
 
+This is the historical revision-4 diagnosis. Revision 5 promotes the exact v2 judge into a fresh configured resolver; its current outcomes and publication status are in [VERIFICATION](VERIFICATION.md). The original diagnostic contracts stay isolated. The 23 October job now performs only original revision-4 refunds through its separate journal and cannot replace revision-5 production.
+
 ## Latest result: v2 passed all three unfunded replays
 
 The [v2 candidate](https://explorer-studio.genlayer.com/address/0xF311C732FB53Ee9F67aF704a48EB39fafC74B863) corrected the Nintendo regression while preserving the intended scheduling exception. All 14 deployment, evidence, seal, ruling and callback transactions finalized successfully. Every ruling has a matching FINAL state read, unchanged frozen rule hash and unchanged evidence URL.

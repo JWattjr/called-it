@@ -1,5 +1,7 @@
 # Repair of the stopped resolver
 
+This records the historical revision-4 repair and failure. Revision 5 additionally adopts v2's ordered decision prompt and explicit archive capture times in a new configured resolver, preserving every fairness branch. See [current verification](VERIFICATION.md); the original revision-4 recovery remains separate.
+
 Implemented after the owner asked who would fix the failed release. The repair is now deployed in revision 4, with all four contracts finalized and source hashes verified against the local files and manifest. Real Apple YES, Nintendo NO and no-evidence default NO rulings passed with finalized callbacks and matching reads; the subjective claim was rejected. After the owner approved two additional simulated wei, the new matched ruling finalized MAJORITY_DISAGREE. Its leader proposed a valid NO, but no ruling was accepted. Settlement and claims remain unproven, and chain writes stopped. Revision 3's addresses and failed receipts remain unchanged in deploy/releases/v3-proof.json; its two-wei matched bet remains on its original escrow.
 
 Observed failures were `quote missing from fetched evidence` and `invalid resolution schema`. Receipts expose those validation errors, not the rejected raw model answers. Tests therefore reproduce the failure classes; they do not claim to replay an unavailable exact model response.
