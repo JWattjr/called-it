@@ -23,7 +23,11 @@ failures=[];checks=[]
 def check(ok,message):
     checks.append({'passed':bool(ok),'check':message})
     print('PASS' if ok else 'FAIL',message,flush=True)
-    if not ok:failures.append(message)
+    if not ok:
+        failures.append(message)
+        report={'checkedAt':datetime.now(timezone.utc).isoformat(),'passed':False,'checks':checks,'failures':failures,'readOnly':True,'sourceCommit':p.get('sourceCommit'),'note':'Audit stopped at the first failed check. No writes or repairs were attempted.'}
+        (ROOT/'deploy/proof-verification.json').write_text(json.dumps(report,indent=2),encoding='utf8')
+        raise SystemExit(1)
 def get_json(url):
     for attempt in range(3):
         try:
@@ -118,6 +122,18 @@ for entry in p.get('takes',[]):
                 child=c.provider.make_request('eth_getTransactionByHash',[claim['child']])['result'];time.sleep(2.2)
                 check(child.get('value_credited') is True and str(child.get('to_address','')).lower()==wallet.lower() and int(child['value'])==int(claim['amount']),key+' native value credited')
 for profile in p.get('profiles',[]):check(read('CalledItRecord','get_profile',[profile['wallet']])==profile,'profile finalized readback '+profile['wallet'])
+
+if p.get('nativeBalanceProof'):
+    balances=p['nativeBalanceProof'];entry=next(e for e in p['takes'] if e.get('label')=='sources-unreachable')
+    check(balances.get('passed') is True,'exact native balance proof completed')
+    before=balances.get('before',{}).get('balancesWei',{})
+    after=balances.get('after',{}).get('balancesWei',{})
+    for label,address in balances['addresses'].items():
+        result=c.provider.make_request('eth_getBalance',[address,'latest'])['result'];time.sleep(2.2)
+        actual=int(result,0) if isinstance(result,str) else int(result)
+        check(str(actual)==after.get(label),'live native '+label+' balance equals final recorded balance')
+        expected=-sum(map(int,entry['bet']['payouts'].values())) if label=='escrow' else int(entry['bet']['payouts'].get(address.lower(),0))
+        check(actual-int(before.get(label,0))==expected,'exact native '+label+' balance change matches finalized payout')
 
 known=set(links.get('contracts',{}).values())|set(links.get('legacyContracts',{}).values())|set(links.get('previousUnsettledContracts',{}).values())|set(links.get('transactions',{}).values())
 for url in links.get('documentationExplorer',[]):

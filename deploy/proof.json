@@ -185,7 +185,16 @@
     "r4-resolve-take-2-child-0": "0xff746e7e0932a9e2b7bd7c523d5a67cdfc05ac5f967586edf9256daa1baa713b",
     "r4-seal-author-take-3": "0x25e5871254ef31fbbaf6f76d33abd41d823bf43d6a086fd9eeabd5edde19f947",
     "r4-resolve-take-3": "0x00dbdacea6aad9b1b356e13a99b5e13e25ad37a4fa13c108124aed89f3beb496",
-    "r4-resolve-take-3-child-0": "0x9086e735441a745068770d2793cf8ae900c60a233b47fb22304d3304aa539fb4"
+    "r4-resolve-take-3-child-0": "0x9086e735441a745068770d2793cf8ae900c60a233b47fb22304d3304aa539fb4",
+    "r4-prepare-take-5": "0xd201766fc126fc904bb8277cf7570908ba4102878d11a24e47e9345672902565",
+    "r4-deposit-author-take-5": "0x3fd3fb2c962c659f74b8a54657af86f6c8453fc88c582e9710d6cc88e84383dc",
+    "r4-deposit-author-take-5-child-0": "0x1307a79be75676dfbb0b3ef4bc9e0d1bdc9a1c8c33bca3504b68ffb40e5f705a",
+    "r4-accept-take-5": "0x2a63c50eacb638665b93a141fbe93a4624791929c6494c2eb2adf03d4b87589e",
+    "r4-deposit-counter-take-5": "0x5df7bff715fb55d12bdcd793ce84584dcb95b97bf9b4cdde6b2f232449e01fca",
+    "r4-deposit-counter-take-5-child-0": "0x0dea61942ae3e6f922dea5f3602e0353e85d30e4cbded82d456673ce467a71fa",
+    "r4-seal-author-take-5": "0xb3b7d087b6cc66798003c57f04aaf7527eacfa954b55a6fbadbef3d02a1a470b",
+    "r4-seal-counter-take-5": "0x9b95bcdddda5051810a2b4eac31f63913315b05daf9a8d07958e9ae68e126ff9",
+    "r4-resolve-take-5": "0xb97d441634f38c048daf936a1569bf41fd1851d3e2dc591baf744f31780003ad"
   },
   "takes": [
     {
@@ -488,7 +497,28 @@
         "reason": "Single verifiable entertainment claim; official announcement can settle it and date aligns with event window.",
         "finalized_at": 1792443925
       },
-      "bet": {},
+      "bet": {
+        "id": "take-5",
+        "author": "0x4106c978789a6e28f4c6044bf252f2667939e5a7",
+        "counterparty": "0x3fbb8bc6f0c35cb8989cef4575c03284e3fa1f8f",
+        "rule_hash": "6b5ab13134f668db76c0e454c0e9bf525e96b44e2e2a06f419e74c417d25af04",
+        "author_stake": "1",
+        "counter_stake": "1",
+        "accept_deadline": 1792530275,
+        "refund_deadline": 1792793075,
+        "status": "MATCHED",
+        "deposits": {
+          "0x4106c978789a6e28f4c6044bf252f2667939e5a7": "1",
+          "0x3fbb8bc6f0c35cb8989cef4575c03284e3fa1f8f": "1"
+        },
+        "payouts": {},
+        "claims": {},
+        "intent_wallet": "",
+        "intent_expires": 1792467705,
+        "intent_kind": "COUNTER",
+        "total": "2",
+        "funded_at": 1792466879
+      },
       "resolution": {
         "id": "take-5",
         "rule_hash": "6b5ab13134f668db76c0e454c0e9bf525e96b44e2e2a06f419e74c417d25af04",
@@ -512,7 +542,10 @@
             }
           }
         ],
-        "sealed": [],
+        "sealed": [
+          "0x4106c978789a6e28f4c6044bf252f2667939e5a7",
+          "0x3fbb8bc6f0c35cb8989cef4575c03284e3fa1f8f"
+        ],
         "verdict": null,
         "outcome": null,
         "quotes": [],
@@ -522,7 +555,7 @@
       "label": "sources-unreachable"
     }
   ],
-  "releaseStatus": "AWAITING_DEPOSIT_APPROVAL",
+  "releaseStatus": "STOPPED_CONSENSUS_DISAGREEMENT",
   "probeContract": "0x22Ee65F5E91C2C0899ae4F44538989a0bE0f6617",
   "probeSourceSha256": "4cbc40bcd5be8e7851add731e35750ea0bf2e51899228ca6d4a2fe4f7e3e68af",
   "probes": {
@@ -721,7 +754,9 @@
     "refund-invalid-amount": 1,
     "refund-runtime-failure": 1,
     "r3-deposit-author-take-5": 1,
-    "r3-deposit-counter-take-5": 1
+    "r3-deposit-counter-take-5": 1,
+    "r4-deposit-author-take-5": 1,
+    "r4-deposit-counter-take-5": 1
   },
   "expectedFailures": {
     "wallet-adapter-error": "ZERO_VALUE_UNAUTHORIZED_CALL",
@@ -732,17 +767,17 @@
     "r3-resolve-take-1-owner-recovery-1": "CONSENSUS_DISAGREEMENT"
   },
   "limitations": [
-    "External models and sources can still fail; the bounded correction does not guarantee availability. Both revision-3 failures are archived.",
-    "Mocked 401/403 and timeout refunds do not constitute real network proof of those cases.",
-    "The two earlier live takes remain on revision 2. The earlier revision-3 matched bet still holds two wei on its own escrow.",
-    "The browser live-read flow is verified; interactive extension-wallet approval popups have not been exercised in this release.",
-    "Production still serves revision 2; the repaired release is not yet published. No Portal submission."
+    "Models can still disagree despite valid schema and exact quotations. The rejected leader proposal does not establish an outcome.",
+    "The specific reason each validator disagreed is not exposed; interpretation ambiguity is an inference, not a proven diagnosis.",
+    "Mocked 401/403 and 48-hour timeout tests do not constitute live proof of those cases.",
+    "Cumulative deposits are 22/22 wei. Two wei remain on this escrow, two on revision 3, and four in the earlier revision-2 live takes.",
+    "Browser-extension wallet approval popups were not exercised. Production still serves revision 2. No Portal submission."
   ],
   "blockers": [
-    "Owner decision pending: two additional wei would raise the cumulative deposit ceiling from 20 to 22. No new deposit has been made.",
-    "New matched-bet settlement, verified native claims and record remain unproven pending the deposit decision.",
-    "Real VOID_SOURCES_UNREACHABLE remains unproven: the unlisted article preflight was FETCHED; no failure was manufactured.",
-    "Full publication link audit, production deployment and final push remain pending."
+    "The matched Grammy ruling finalized MAJORITY_DISAGREE; no ruling was applied. Chain writes stopped with no retry.",
+    "New escrow still holds the two original stakes in MATCHED state. Settlement, claims and public record are unproven.",
+    "Real blocked-source VOID is unproven: the article fetched successfully and no final result was reached.",
+    "Full publication audit, Vercel production deployment and push were not performed after the failure."
   ],
   "legacyLiveTakes": [
     {
@@ -1051,19 +1086,20 @@
       }
     }
   ],
-  "recordedAt": "2026-10-20T00:33:01.308541+00:00",
-  "approvedDepositBudgetWei": 20,
+  "recordedAt": "2026-10-20T03:39:19.522452+00:00",
+  "approvedDepositBudgetWei": 22,
   "requiredApproval": {
-    "status": "PENDING",
+    "status": "APPROVED",
     "additionalWei": 2,
     "cumulativeTotalWei": 22,
     "escrow": "0xC5BeB6B171f37f2c7101EDc83eA2905615415e12",
     "take": "take-5",
-    "purpose": "One wei from each existing demo wallet for the repaired deployment matched-bet, settlement and verified native-credit proof. Simulated StudioNet GEN only."
+    "purpose": "One wei from each existing demo wallet for the repaired deployment matched-bet, settlement and verified native-credit proof. Simulated StudioNet GEN only.",
+    "approvedAt": "2026-10-20T03:23:13.194426+00:00"
   },
   "implementationChecks": {
     "contractTestsPassed": 69,
-    "releaseTestsPassed": 5,
+    "releaseTestsPassed": 6,
     "appTestsPassed": 7,
     "typecheck": "PASS",
     "eslint": "PASS",
@@ -1073,7 +1109,7 @@
   },
   "unreachableProof": {
     "proven": false,
-    "actualCase": "AWAITING_MATCHED_BET_AND_RESOLUTION",
+    "actualCase": "NO_FINAL_CONSENSUS",
     "take": "take-5",
     "preflights": [
       {
@@ -1083,6 +1119,80 @@
         "checked_at": 1792455472
       }
     ],
-    "note": "The real unlisted article fetched successfully. Only actual failure of all resolution fetches can prove the technical VOID case."
-  }
+    "note": "The unlisted article was FETCHED; the leader proposed NO but the network rejected it. This was not a finalized NO or VOID."
+  },
+  "budgetApprovals": [
+    {
+      "approvedTotalWei": 22,
+      "additionalWei": 2,
+      "approvedAt": "2026-10-20T03:23:13.194426+00:00",
+      "authorization": "Owner replied Continue immediately after the specific request for two additional simulated wei, one from each wallet, raising the cumulative allowance to 22.",
+      "scope": "Simulated StudioNet GEN; revision-4 take-5 at Escrow 0xC5BeB6B171f37f2c7101EDc83eA2905615415e12"
+    }
+  ],
+  "nativeBalanceProof": {
+    "addresses": {
+      "author": "0x4106c978789a6e28f4c6044bf252f2667939e5a7",
+      "counterparty": "0x3fbb8bc6f0c35cb8989cef4575c03284e3fa1f8f",
+      "escrow": "0xC5BeB6B171f37f2c7101EDc83eA2905615415e12"
+    },
+    "before": {
+      "checkedAt": "2026-10-20T03:30:25.324755+00:00",
+      "balancesWei": {
+        "author": "6",
+        "counterparty": "6",
+        "escrow": "2"
+      }
+    },
+    "stopped": {
+      "checkedAt": "2026-10-20T03:40:13.528854+00:00",
+      "balancesWei": {
+        "author": "6",
+        "counterparty": "6",
+        "escrow": "2"
+      },
+      "note": "No ruling accepted, settlement or claim. This is not a payout verification."
+    },
+    "unchangedSinceBeforeClaims": true
+  },
+  "stopFailure": {
+    "label": "r4-resolve-take-5",
+    "hash": "0xb97d441634f38c048daf936a1569bf41fd1851d3e2dc591baf744f31780003ad",
+    "status": "FINALIZED",
+    "result": "MAJORITY_DISAGREE",
+    "leaderExecution": "SUCCESS",
+    "votes": {
+      "disagree": 3,
+      "agree": 1,
+      "idle": 1
+    },
+    "unacceptedLeaderProposal": {
+      "verdict": "NO",
+      "resolution_case": "JUDGED_NO",
+      "reason": "The only submitted official-source evidence is dated Oct. 17 and Nov. 1, both before the event window, and it states the nominations will be announced on Nov. 8 rather than confirming they were announced. No qualifying official confirmation dated within 2024-11-01 through 2024-11-10 shows the announcement occurred, so under the rule this resolves NO."
+    },
+    "stateApplied": false,
+    "individualValidatorReasons": "Not exposed by the receipt; disagreement cause is not proven."
+  },
+  "failedResolutionAttempts": [
+    {
+      "label": "r4-resolve-take-5",
+      "hash": "0xb97d441634f38c048daf936a1569bf41fd1851d3e2dc591baf744f31780003ad",
+      "status": "FINALIZED",
+      "result": "MAJORITY_DISAGREE",
+      "leaderExecution": "SUCCESS",
+      "votes": {
+        "disagree": 3,
+        "agree": 1,
+        "idle": 1
+      },
+      "unacceptedLeaderProposal": {
+        "verdict": "NO",
+        "resolution_case": "JUDGED_NO",
+        "reason": "The only submitted official-source evidence is dated Oct. 17 and Nov. 1, both before the event window, and it states the nominations will be announced on Nov. 8 rather than confirming they were announced. No qualifying official confirmation dated within 2024-11-01 through 2024-11-10 shows the announcement occurred, so under the rule this resolves NO."
+      },
+      "stateApplied": false,
+      "individualValidatorReasons": "Not exposed by the receipt; disagreement cause is not proven."
+    }
+  ]
 }

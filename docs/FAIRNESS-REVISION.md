@@ -1,5 +1,7 @@
 # Fairness revision: stopped live proof
 
+This is the historical revision-3 report. The current revision-4 deployment, core proofs and later matched-bet consensus failure are documented in [VERIFICATION.md](VERIFICATION.md). Its addresses and results supersede this snapshot for the current attempt.
+
 Revision 3 deployed all four fresh contracts and verified their wiring, but it is not a verified production release. The first Apple resolution finalized with `MAJORITY_DISAGREE` and `[EXPECTED] quote missing from fetched evidence`. Work stopped and this failure was reported. After the owner said "proceed", one explicitly journalled zero-value recovery on the unchanged frozen rule and evidence finalized with `MAJORITY_DISAGREE` and `[EXPECTED] invalid resolution schema`. Chain writes stopped again. Neither failure was a polling timeout; no pending transaction was resubmitted. No quote guard was relaxed and no successful result was invented.
 
 | Contract | New address |

@@ -1,7 +1,7 @@
 # Called It release evidence
 
-Recorded: 2026-10-20T00:33:01.308541+00:00
-Status: AWAITING_DEPOSIT_APPROVAL
+Recorded: 2026-10-20T03:39:19.522452+00:00
+Status: STOPPED_CONSENSUS_DISAGREEMENT
 
 App: https://called-it-genlayer.vercel.app
 Repository: https://github.com/JWattjr/called-it
@@ -157,7 +157,7 @@ Compiler decision: SUBJECTIVE — This is a subjective prediction and not a conc
 
 The Recording Academy officially announces the nominations for the 67th GRAMMY Awards.
 
-Historical replay · COMPILED · verdict pending · outcome pending · escrow unfunded
+Historical replay · COMPILED · verdict pending · outcome pending · escrow MATCHED
 
 Event deadline: 2024-11-10T23:59:59+00:00
 
@@ -177,6 +177,15 @@ Event deadline: 2024-11-10T23:59:59+00:00
 - [r4-compile-sources-unreachable](https://explorer-studio.genlayer.com/tx/0x8de0fac63be8a841e750043fcebf252913c3b47af49e3c77f3edf47758b822ca)
 - [r4-compile-sources-unreachable-child-0](https://explorer-studio.genlayer.com/tx/0x9619127064381dc97ecbbc61281de4746d54c1c11a68b99a0a61344deb4d0c6f)
 - [r4-evidence-take-5](https://explorer-studio.genlayer.com/tx/0x3e822b7bd7da7f79a293050e029bdba5b46a89ea802587569661787661bdf49b)
+- [r4-prepare-take-5](https://explorer-studio.genlayer.com/tx/0xd201766fc126fc904bb8277cf7570908ba4102878d11a24e47e9345672902565)
+- [r4-deposit-author-take-5](https://explorer-studio.genlayer.com/tx/0x3fd3fb2c962c659f74b8a54657af86f6c8453fc88c582e9710d6cc88e84383dc)
+- [r4-deposit-author-take-5-child-0](https://explorer-studio.genlayer.com/tx/0x1307a79be75676dfbb0b3ef4bc9e0d1bdc9a1c8c33bca3504b68ffb40e5f705a)
+- [r4-accept-take-5](https://explorer-studio.genlayer.com/tx/0x2a63c50eacb638665b93a141fbe93a4624791929c6494c2eb2adf03d4b87589e)
+- [r4-deposit-counter-take-5](https://explorer-studio.genlayer.com/tx/0x5df7bff715fb55d12bdcd793ce84584dcb95b97bf9b4cdde6b2f232449e01fca)
+- [r4-deposit-counter-take-5-child-0](https://explorer-studio.genlayer.com/tx/0x0dea61942ae3e6f922dea5f3602e0353e85d30e4cbded82d456673ce467a71fa)
+- [r4-seal-author-take-5](https://explorer-studio.genlayer.com/tx/0xb3b7d087b6cc66798003c57f04aaf7527eacfa954b55a6fbadbef3d02a1a470b)
+- [r4-seal-counter-take-5](https://explorer-studio.genlayer.com/tx/0x9b95bcdddda5051810a2b4eac31f63913315b05daf9a8d07958e9ae68e126ff9)
+- [r4-resolve-take-5](https://explorer-studio.genlayer.com/tx/0xb97d441634f38c048daf936a1569bf41fd1851d3e2dc591baf744f31780003ad)
 
 ## Pending live takes remain on the previous deployment
 
@@ -191,7 +200,7 @@ These funded takes retain the earlier immutable default policy. They were not mi
 
 ## Honest unreachable-source proof status
 
-{"proven": false, "actualCase": "AWAITING_MATCHED_BET_AND_RESOLUTION", "take": "take-5", "preflights": [{"error": "", "length": 24000, "status": "FETCHED", "checked_at": 1792455472}], "note": "The real unlisted article fetched successfully. Only actual failure of all resolution fetches can prove the technical VOID case."}
+{"proven": false, "actualCase": "NO_FINAL_CONSENSUS", "take": "take-5", "preflights": [{"error": "", "length": 24000, "status": "FETCHED", "checked_at": 1792455472}], "note": "The unlisted article was FETCHED; the leader proposed NO but the network rejected it. This was not a finalized NO or VOID."}
 
 
 ## All transaction receipts
@@ -358,10 +367,19 @@ These funded takes retain the earlier immutable default policy. They were not mi
 - [r4-seal-author-take-3](https://explorer-studio.genlayer.com/tx/0x25e5871254ef31fbbaf6f76d33abd41d823bf43d6a086fd9eeabd5edde19f947)
 - [r4-resolve-take-3](https://explorer-studio.genlayer.com/tx/0x00dbdacea6aad9b1b356e13a99b5e13e25ad37a4fa13c108124aed89f3beb496)
 - [r4-resolve-take-3-child-0](https://explorer-studio.genlayer.com/tx/0x9086e735441a745068770d2793cf8ae900c60a233b47fb22304d3304aa539fb4)
+- [r4-prepare-take-5](https://explorer-studio.genlayer.com/tx/0xd201766fc126fc904bb8277cf7570908ba4102878d11a24e47e9345672902565)
+- [r4-deposit-author-take-5](https://explorer-studio.genlayer.com/tx/0x3fd3fb2c962c659f74b8a54657af86f6c8453fc88c582e9710d6cc88e84383dc)
+- [r4-deposit-author-take-5-child-0](https://explorer-studio.genlayer.com/tx/0x1307a79be75676dfbb0b3ef4bc9e0d1bdc9a1c8c33bca3504b68ffb40e5f705a)
+- [r4-accept-take-5](https://explorer-studio.genlayer.com/tx/0x2a63c50eacb638665b93a141fbe93a4624791929c6494c2eb2adf03d4b87589e)
+- [r4-deposit-counter-take-5](https://explorer-studio.genlayer.com/tx/0x5df7bff715fb55d12bdcd793ce84584dcb95b97bf9b4cdde6b2f232449e01fca)
+- [r4-deposit-counter-take-5-child-0](https://explorer-studio.genlayer.com/tx/0x0dea61942ae3e6f922dea5f3602e0353e85d30e4cbded82d456673ce467a71fa)
+- [r4-seal-author-take-5](https://explorer-studio.genlayer.com/tx/0xb3b7d087b6cc66798003c57f04aaf7527eacfa954b55a6fbadbef3d02a1a470b)
+- [r4-seal-counter-take-5](https://explorer-studio.genlayer.com/tx/0x9b95bcdddda5051810a2b4eac31f63913315b05daf9a8d07958e9ae68e126ff9)
+- [r4-resolve-take-5](https://explorer-studio.genlayer.com/tx/0xb97d441634f38c048daf936a1569bf41fd1851d3e2dc591baf744f31780003ad)
 
 ## Blockers
 
-- Owner decision pending: two additional wei would raise the cumulative deposit ceiling from 20 to 22. No new deposit has been made.
-- New matched-bet settlement, verified native claims and record remain unproven pending the deposit decision.
-- Real VOID_SOURCES_UNREACHABLE remains unproven: the unlisted article preflight was FETCHED; no failure was manufactured.
-- Full publication link audit, production deployment and final push remain pending.
+- The matched Grammy ruling finalized MAJORITY_DISAGREE; no ruling was applied. Chain writes stopped with no retry.
+- New escrow still holds the two original stakes in MATCHED state. Settlement, claims and public record are unproven.
+- Real blocked-source VOID is unproven: the article fetched successfully and no final result was reached.
+- Full publication audit, Vercel production deployment and push were not performed after the failure.

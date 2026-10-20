@@ -52,7 +52,7 @@ portal={
 if p.get('releaseAttempt',0)>=3 and not p.get('unreachableProof',{}).get('proven'):
  portal['description']+=' Real blocked-source VOID is unproven in this run.'
 if p.get('releaseStatus','').startswith('STOPPED'):
- portal['description']+=' Live proof stopped on model-output errors.'
+ portal['description']+=(' Matched proof stopped on consensus disagreement.' if p.get('releaseStatus')=='STOPPED_CONSENSUS_DISAGREEMENT' else ' Live proof stopped on model-output errors.')
 if p.get('releaseStatus','').startswith('AWAITING_DEPOSIT'):
  portal['description']+=' Matched settlement awaits deposit approval.'
 assert len(portal['oneLiner'])<=180 and len(portal['description'])<=1000 and len(portal['expectedOutcome'])<=500

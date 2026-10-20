@@ -93,3 +93,21 @@ def test_exhausted_budget_needs_explicit_new_cap_and_cannot_be_reset(tmp_path,mo
     except RuntimeError as error:assert 'budget exhausted' in str(error)
     else:raise AssertionError('Previously returned funds never reset the cumulative ceiling')
     assert calls==[2]
+
+def test_proof_audit_stops_and_replaces_stale_green_report_on_first_failure(tmp_path):
+    import ast
+    from datetime import datetime,timezone
+    (tmp_path/'deploy').mkdir()
+    report=tmp_path/'deploy/proof-verification.json'
+    report.write_text('{"passed":true}')
+    tree=ast.parse(Path('scripts/verify_proof.py').read_text())
+    checker=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='check')
+    scope={'ROOT':tmp_path,'checks':[],'failures':[],'p':{'sourceCommit':'tested'},'datetime':datetime,'timezone':timezone,'json':json}
+    exec(compile(ast.Module(body=[checker],type_ignores=[]),'<audit-check>','exec'),scope)
+    scope['check'](True,'first pass')
+    try:scope['check'](False,'broken boundary')
+    except SystemExit as stopped:assert stopped.code==1
+    else:raise AssertionError('An audit must stop at its first confirmed failure')
+    saved=json.loads(report.read_text())
+    assert not saved['passed'] and saved['failures']==['broken boundary']
+    assert len(saved['checks'])==2 and saved['sourceCommit']=='tested'

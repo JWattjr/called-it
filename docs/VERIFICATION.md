@@ -1,61 +1,49 @@
 # Verification record
 
-**Current attempt: revision 4, core live proofs passed; deposit approval pending.** All contracts, wiring, compilations, evidence submissions and three core rulings finalized successfully with matching state reads: Apple YES, Nintendo NO, no-evidence default NO with `DEFAULT_NO_EVIDENCE`, subjective claim rejected. The read-only [source audit](../deploy/source-verification.json) verified all four deployed hashes against local files and manifest. All four Explorer API records identify as CONTRACT. The [partial link audit](../deploy/fairness-link-audit.json) checks the current deployment's contract and transaction links; it does not certify publication or the incomplete money proof.
+**Revision 4 stopped on a funded matched-bet consensus failure. This is not a verified production release.** Four contracts were deployed and wired, and their deployed code hashes match the local files and manifest. Of 36 new writes and callbacks, 35 finalized successfully and one finalized with `MAJORITY_DISAGREE`. Chain writes stopped at that failure; there was no agent resubmission, settlement or claim afterward. Production still serves revision 2. No production deployment, push or Portal submission followed the failure.
 
-The local suite passes 69 contract tests, five release tests and seven app tests; TypeScript, ESLint, all four GenVM lints and production build pass. The browser's Read live flow displayed Apple's final YES, its exact quotations and `JUDGED_YES`, with no warnings or errors. Screenshot capture was unavailable during this run; the accessibility-state record is retained locally. Full current mobile visual certification has not been repeated.
+## Outcomes and failure
 
-The new take-5 is compiled with a successful real article preflight and remains OPEN and unfunded. Its matched settlement, native claims and public record remain unproven while the owner's additional 2-wei approval request is pending. The original 20-wei cumulative deposit budget is exhausted. No answer has been inferred, no extra deposit made, and no real blocked-source VOID manufactured. Full publication checks, production deployment and final push remain pending; nothing was submitted to the Portal.
+| Demonstration | Finalized state |
+| --- | --- |
+| Apple announcement | YES, `JUDGED_YES` |
+| Nintendo announcement | NO, `JUDGED_NO` |
+| No submitted evidence | Frozen NO default, `DEFAULT_NO_EVIDENCE` |
+| Subjective claim | REJECTED before funding |
+| Matched Grammy announcement | Resolver OPEN; escrow MATCHED, two wei held; no accepted ruling |
 
-## Previous attempt: revision 3
+The [failed matched ruling](https://explorer-studio.genlayer.com/tx/0xb97d441634f38c048daf936a1569bf41fd1851d3e2dc591baf744f31780003ad) is FINALIZED with three disagree votes, one agree and one idle. The leader executed successfully and proposed NO / `JUDGED_NO`, but the network did not accept that proposal. It is not a finalized NO. The receipt does not expose individual validator explanations, so the precise disagreement cause is unproven. The source includes advance announcement language; interpretation ambiguity is a possible explanation, not an established diagnosis.
 
-**Revision 3 is deployed and wired, but its live proof stopped on finalized execution errors. It is not a verified release.** Apple first failed the quote guard, then the one owner-authorized recovery failed the resolution schema check. Both receipts remain in the manifest; no further chain writes followed the recovery failure. Production remains revision 2; the new work has not been pushed or deployed to Vercel. No Portal submission occurred.
+The article from the unlisted host passed real preflight as FETCHED. It did not establish `VOID_SOURCES_UNREACHABLE`. No blocked host was admitted, no HTTP failure was fabricated, and no successful result was substituted. The owner authorized an honest attempt and disclosure if that real-source proof could not be reproduced.
 
-The current local checks passed: 50 direct contract tests, four release tests, seven app tests, TypeScript, ESLint and a production build. All four GenVM checks passed during the fairness implementation; the unchanged resolver passed again during the recovery investigation. Mocked 401/403 and timeout refund tests are not real-network proof. The two-wallet 1+1 wei bet is still MATCHED with no verified claim. Cumulative approved deposits are 20/20 wei.
+## Funds and deadlines
 
-See [FAIRNESS-REVISION.md](FAIRNESS-REVISION.md), [the current release record](RELEASE.md), and [the partial link audit](../deploy/fairness-link-audit.json). The full revision-3 network/source/state/publication audit remains incomplete. The historical report below applies only to revision 2, whose machine-readable proof is preserved in [the archived report](../deploy/releases/v2-proof-verification.json).
+The owner approved an additional two simulated wei after the explicit request to raise the cumulative deposit ceiling from 20 to 22. The two deposits of one wei each finalized and credited the intended parties. All 22 approved wei of cumulative deposits have now been used; recovered payouts do not reset that limit.
 
-## Archived revision 2 report
+[Native balance snapshots](../deploy/native-balance-proof.json), taken before the ruling and after failure, both show author 6, counterparty 6 and the new escrow 2 wei. The bet remains MATCHED with empty payouts and claims. These reads prove unchanged funds, not a payout or refund. Settlement, exact native-credit claims and the new matched public record remain unproven.
 
-Subsequent local work is recorded separately in [MODEL-OUTPUT-REPAIR.md](MODEL-OUTPUT-REPAIR.md): the pending resolver repair passes 69 contract tests and four release tests, plus GenVM lint. It has not been deployed or proven by real consensus and does not change the failed revision-3 release verdict.
-
-This report describes the real StudioNet release and the checks performed on its implementation. The machine-readable [proof audit](../deploy/proof-verification.json) records the independent network audit; [release evidence](RELEASE.md) lists every canonical Explorer link.
+For the new matched bet, resolver timeout eligibility is 23 October 2026 at 22:04:35 Africa/Lagos; the escrow fallback refund deadline is 23 October at 23:04:35 Africa/Lagos. No refund has been invoked. The revision-3 matched bet separately holds two wei on its original escrow. Two revision-2 live takes retain four wei total, with event deadlines 29 October and 4 November 2026 at 23:59:59 UTC. They were not migrated or reopened and retain their old immutable failure-default policy.
 
 ## Implementation checks
 
-- 38 direct contract tests passed with mocked web and model responses. Coverage includes excluded and compound claims, evidence timestamps and domains, independent verdict and quote checks, injection, odds, deadlines, refunds, authorization, duplicate counterparties and claims, and finalized records.
-- Four release-script tests passed, including cumulative deposit accounting, journal merging and locking, failed payable classification, and preventing a second broadcast after a lost submission response.
-- Five app tests passed: transaction finality and native-credit classification, exact integer payout arithmetic, unsafe evidence URLs, canonical Explorer URLs, and wallet chain addition followed by verified switching.
-- TypeScript, ESLint and the local production build passed.
-- GenVM lint passed for all four deployed contracts using the cached pinned runner. The linter could not refresh its remote runner catalog in the sandbox; the explicitly requested runner pin remains unchanged.
+- 69 direct contract tests passed, including mocked HTTP 401/403, no-evidence default, consensus timeout, exact balances, one-time refunds, exact quotes and 19 model-output regression cases.
+- Six release tests passed, including explicit deposit-limit extension and stopping the auditor on its first failed assertion rather than leaving a stale successful report.
+- Seven app tests passed. TypeScript, ESLint and the local production build passed.
+- All four GenVM lints passed with the pinned runner. Catalog refresh was unavailable; the cached explicitly pinned runner was used.
+- The [source audit](../deploy/source-verification.json) verified all four deployed byte hashes against the local files and manifest.
 
-## Browser checks
+Mocked failures establish implementation behavior; they do not prove real-network unreachable-source or 48-hour refund execution. A valid schema and exact quotations also do not guarantee model agreement on every claim.
 
-Every flow was inspected at 1440 × 960 and 390 × 844: feed and filters, post form and compilation review, opposite-side stake review, evidence preflight, YES/NO/default receipts, rejection, profile, proof ledger and transaction tracker. Captures and viewport/overflow measurements are retained locally under `.impeccable/review/`.
+## Browser and link checks
 
-A fresh visual reviewer inspected 25 required captures. Its four material findings were fixed and rescored as resolved: wallet connection at the stake point, Share in normal header flow, meaningful profile-history titles, and recovery guidance alongside raw transaction diagnostics. The final visual disposition was `ship`, with no remaining material findings from that batch. This is a visual verdict, not a substitute for chain or wallet verification.
+The local browser's Read live flow displayed Apple's finalized YES, exact quotations and `JUDGED_YES`, with no warnings or errors. Screenshot capture was unavailable in this run; the accessibility-state record is retained locally. Full current mobile visual certification has not been repeated. An interactive browser-extension wallet approval popup was not exercised.
 
-The evidence preview fetched the exact Apple archive capture, verified its CDX record and displayed extracted text before the evidence window was sealed. The final receipts now correctly close evidence submission. Shares preserve the selected take, and profile reads do not substitute another wallet's record.
+The [partial link audit](../deploy/fairness-link-audit.json) passed 40 checks: four canonical `/address/` links whose actual Explorer API type is CONTRACT, and 36 canonical `/tx/` links with the matching finalized transaction identifiers. The rejected ruling's valid link does not make its execution successful. The full historical/publication/HTTP-200 audit was not repeated after this failure; those remaining links are not certified by the partial audit.
 
-Real receipts exercised the tracker: a successful contract call, an unauthorized call, a native payout and a runtime-failed payable call. The native payout displays finalized success; native credit on the failed contract call does not turn that call into success. A submitted hash survived reload and resumed polling to its finalized error. Successful finality triggered a fresh contract-state read.
+The [current proof report](../deploy/proof-verification.json) is explicitly `passed: false`, `complete: false`. The [release record](RELEASE.md) lists current addresses, hashes, evidence and blockers. The [Portal fields](submission/portal-fields.json) are a bounded draft only.
 
-The real EIP-1193 software-wallet adapter signed successful and failed zero-value StudioNet calls. An interactive browser-extension approval popup was **not exercised**. Browser verification therefore covers inspection, forms, preflight and receipt tracking, with real adapter signing verified separately; it does not certify every extension's popup behavior.
+## Earlier releases
 
-## Real money and outcomes
+Revision 3's quote-guard and schema failures remain in [its historical report](FAIRNESS-REVISION.md), [archived proof](../deploy/releases/v3-proof.json) and [failed audit](../deploy/releases/v3-proof-verification.json). The [model-output repair](MODEL-OUTPUT-REPAIR.md) was subsequently deployed in revision 4 and passed the core real rulings; it does not erase either earlier failures or the new consensus failure.
 
-The owner approved up to 20 wei of simulated GEN deposits. The release deposited 18 wei: 12 across three matched historical bets, four across two live author stakes, and two for refundable-deposit tests. Winner claims returned 12 wei and the refund claim returned two; four wei remain in the two live open takes. The two-wei contingency was unused.
-
-The Apple replay resolved YES. The Nintendo replay resolved NO. The evidence-free replay applied its frozen NO default. All three matched bets settled, native payouts were independently verified and public records were updated. The subjective claim was rejected without funding.
-
-The Nintendo NO required two failed zero-value resolution attempts before the third succeeded against the unchanged frozen rule and evidence. Both failures remain public. The Disney live compilation incorrectly rejected a valid future publication window; that false negative is retained and was never funded. These are model reliability limitations, not hidden successful outcomes.
-
-## Independent network audit
-
-The read-only verifier checks each deployed source hash, every canonical contract and transaction URL against its actual Explorer API record, finalized take/escrow/resolution/profile state, frozen rule hashes, evidence URL accessibility, payout conservation and exact native credits. It also verifies the failed payable recovery and the two funded future open takes.
-
-The first complete audit passed 595 of 596 checks; the Apple archive availability request returned HTTP 429. That report is retained as `deploy/audit-first-attempt.json`. The exact immutable URL subsequently opened in the browser and returned HTTP 200 to the verifier's HTTP client after backoff. Evidence availability checks now retry transient 429/5xx responses up to three times, without changing the URL or accepting an exhausted error as success. Local retry checks covered recovery, exhaustion and a permanent 404. The final report records a new complete audit rather than editing the failed result.
-
-Finalized agreeing consensus receipts are bound to live Explorer fields, votes and leader output. Native credits, expected errors and missing quorums are reread directly from RPC. The verifier does not load signing keys or send transactions. Its final timestamp, count and failures are in `deploy/proof-verification.json`; a started but incomplete audit is explicitly marked failed.
-
-The final deployment is built remotely by Vercel in `wattxs-projects`. The Portal fields are a draft only; no Portal submission was made.
-
-The final complete network audit passed **596 checks with zero failures**. Vercel deployment `dpl_6nMxdwQk4ick3yfdKE5UmA8yf2PD` then completed its remote production build and was aliased to `https://called-it-genlayer.vercel.app`. Public HTTP checks returned 200 for the feed, native-payout success, failed-payable error, author profile (1W/2L) and a fresh finalized take read. The production browser confirmed the live-read label and VERIFIED proof badge at the required viewport sizes, with no console errors or warnings. See [production-verification.json](../deploy/production-verification.json) for the deployment and check record.
+Revision 2's previously successful 596-check audit is preserved in [its archived report](../deploy/releases/v2-proof-verification.json), with [its production check record](../deploy/releases/v2-production-verification.json). Those results apply to revision 2, not the current stopped attempt.
