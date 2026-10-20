@@ -1,18 +1,18 @@
 # Called It release evidence
 
-Recorded: 2026-10-20T03:39:19.522452+00:00
-Status: AWAITING_TIMEOUT_RECOVERY
+Recorded: 2026-10-20T07:57:45.109491+00:00
+Status: LIVE_PROOFS_PASSED_AWAITING_PUBLICATION
 
 App: https://called-it-genlayer.vercel.app
 Repository: https://github.com/JWattjr/called-it
-Source commit: `753a6549691c9e21ed6d21545b545851ab97b677`
+Source commit: `b83e8f203c61222313344ff429f6cb394ba511a6`
 
 ## Contracts
 
-- [Takes](https://explorer-studio.genlayer.com/address/0x1F797270d45281Aae3842Bd1f4ccE9eb114b51cA)
-- [TakeEscrow](https://explorer-studio.genlayer.com/address/0xC5BeB6B171f37f2c7101EDc83eA2905615415e12)
-- [TakeResolver](https://explorer-studio.genlayer.com/address/0xB614CbddBCe32f5ec68BA563957D6E4fB804a52e)
-- [CalledItRecord](https://explorer-studio.genlayer.com/address/0x6E3419ab4941cd39046973985fD363728D61dBd6)
+- [Takes](https://explorer-studio.genlayer.com/address/0xF1615c3dE4e472c855d5BB7a38151790f13aFCb1)
+- [TakeEscrow](https://explorer-studio.genlayer.com/address/0x759FAa1540280A01877b63d680B833101dBfb2D4)
+- [TakeResolver](https://explorer-studio.genlayer.com/address/0x6df78000eb25a880d1980aA99Bd6859C86deDA93)
+- [CalledItRecord](https://explorer-studio.genlayer.com/address/0xc4d80b678DFAAf1810c7957D13CE4b1316aa6e71)
 
 ## Takes and outcomes
 
@@ -20,11 +20,12 @@ Source commit: `753a6549691c9e21ed6d21545b545851ab97b677`
 
 Apple officially announces Apple Vision Pro.
 
-Historical replay · COMPILED · verdict YES · outcome YES · escrow unfunded
+Historical replay · COMPILED · verdict YES · outcome YES · escrow SETTLED
 
 Event deadline: 2023-06-06T23:59:59+00:00
 Resolution case: JUDGED_YES
-Ruling: Apple officially announced the Apple Vision Pro in a press release dated June 5, 2023, which falls within the specified event window (June 3 to June 6, 2023). The announcement was published on apple.com, an allowlisted domain.
+Ruling: The document is an official press release from Apple (allowlisted domain: apple.com) dated June 5, 2023, which falls within the event window (2023-06-03 to 2023-06-06). It explicitly announces the Apple Vision Pro, fulfilling the requirement for a completed qualifying official announcement.
+Native claims: {"0x4106c978789a6e28f4c6044bf252f2667939e5a7": {"amount": "2", "attempt": 1, "status": "PAID", "requested_at": 1792482081, "parent": "0x18297a4c5b9326d1b43e7bb40c3ec762c1eddb554d31340b05bc82ef7d02ad99", "child": "0xf1e0d16da650ea181bcfb4fa6936bfbbd2a049edeabfdf9a096db226e638ff63"}}
 
 - [Immutable evidence](https://web.archive.org/web/20230605190503id_/https://www.apple.com/newsroom/2023/06/introducing-apple-vision-pro/)
 - [compile-official-yes](https://explorer-studio.genlayer.com/tx/0x71d3797b1ad5432815bf22005887bcedf02d29480ea92c8cbbf3805a21b93c0e)
@@ -68,6 +69,26 @@ Ruling: Apple officially announced the Apple Vision Pro in a press release dated
 - [diagnostic-schedule-v2-take-1-seal-author](https://explorer-studio.genlayer.com/tx/0xb75abeebaaee5235f09ab73c3189938e381ef9f0aef7513723c040a1c243462d)
 - [diagnostic-schedule-v2-take-1-resolve](https://explorer-studio.genlayer.com/tx/0xe279e9fa93ff487e05c0c14d2e2132577032ead85d5152e144c18ee7821ed027)
 - [diagnostic-schedule-v2-take-1-resolve-child-0](https://explorer-studio.genlayer.com/tx/0x129fc3430ff40591c2e1f70d4df83490d07beda45d6d6abd70cac565ec688838)
+- [r5-compile-official-yes](https://explorer-studio.genlayer.com/tx/0x47bd1cbe77ef722f5b80c5f173c137546612e7c0102cde0b9c6e78a866f9b3d6)
+- [r5-compile-official-yes-child-0](https://explorer-studio.genlayer.com/tx/0xed09de203ef949e2e94777121d0d1c7ebec3aa168a477a769655757a405495ed)
+- [r5-evidence-take-1](https://explorer-studio.genlayer.com/tx/0xb612523814748a8bc8a58941fe7065daff616e76706283be6ae177d08a675f6d)
+- [r5-prepare-take-1](https://explorer-studio.genlayer.com/tx/0x31f649aa1421e70ee6fe1feab5e1b4ebbc3308237380b3ae969819e070c7135d)
+- [r5-deposit-author-take-1](https://explorer-studio.genlayer.com/tx/0x4ed7c00061b528e4cb53eb671dad26759b6a89b87d5134c6425e7bdcf758bb92)
+- [r5-deposit-author-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x6a2d6084c4826ad4b5c37183feff6850e2094d414f0e134b82591aed27ad1a88)
+- [r5-accept-take-1](https://explorer-studio.genlayer.com/tx/0x064609f562d0bdfad2e5fb576bd413ff8f2d800da0d4b924cf73cf1b733b50ca)
+- [r5-deposit-counter-take-1](https://explorer-studio.genlayer.com/tx/0xc1e00afc1d823eae76f2831dced0b6ff42724ae4b36b66dd89e824c1f2801737)
+- [r5-deposit-counter-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x479ebede7791c1b9a76f2ddf184f314a7e4208ed699d1cbd34af44e6395023aa)
+- [r5-seal-author-take-1](https://explorer-studio.genlayer.com/tx/0x066562637ddb056c066ee25436dd38b22b5a0792a165cb8db6f92b150d01c01f)
+- [r5-seal-counter-take-1](https://explorer-studio.genlayer.com/tx/0x4d7ae9f4c0ba1900612694ba3789a2a27b4ea61b9f9ed95051ff5c7f27afd9ea)
+- [r5-resolve-take-1](https://explorer-studio.genlayer.com/tx/0xf7bc3c23e9616da3d07a676d8a000553ba9a315a212fc8e0a0ce3e136e768c32)
+- [r5-resolve-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x5392fb1cb7bcf2b59bb5588b997e933b7a1aa027fcfc6547b5a81cb858b881c7)
+- [r5-settle-take-1](https://explorer-studio.genlayer.com/tx/0x5a23f02662f622075fc3b5078a5fac5faa75e94dd5334904f7c9182ff4c79594)
+- [r5-settle-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x297c0e944338559e84fc123ad05ee6d473799295e6149a7fe4daa86b96e0e710)
+- [r5-claim-take-1-0](https://explorer-studio.genlayer.com/tx/0x18297a4c5b9326d1b43e7bb40c3ec762c1eddb554d31340b05bc82ef7d02ad99)
+- [r5-claim-take-1-0-child-0](https://explorer-studio.genlayer.com/tx/0xf1e0d16da650ea181bcfb4fa6936bfbbd2a049edeabfdf9a096db226e638ff63)
+- [r5-verify-take-1-0](https://explorer-studio.genlayer.com/tx/0x7fa6113ecf8b605a5a1d0dada52d25fcdf7b305d3c1aa69d2ff76fa62de8f857)
+- [r5-record-take-1](https://explorer-studio.genlayer.com/tx/0x4cd2d89555b9f1731248a8c2546645d5bd8601c0b2d67dc42ead44d5dde06ea3)
+- [r5-record-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x2defcfea8dae32210fa2b6b7a36ba02dbf95f3a52633924ca383630f0dd203a2)
 ### take-2 — rumours-no
 
 Nintendo officially reveals its next console under the retail name Nintendo Switch 2.
@@ -76,7 +97,7 @@ Historical replay · COMPILED · verdict NO · outcome NO · escrow unfunded
 
 Event deadline: 2025-01-09T23:59:59+00:00
 Resolution case: JUDGED_NO
-Ruling: The only Wikipedia revision provided is dated 8 January 2025, inside the window, but it describes the console as unnamed/in development and cites only pre-window official acknowledgements (May/November 2024) plus rumours/leaks. It contains no dated official Nintendo announcement within Jan 1-9 2025 revealing the retail name Nintendo Switch 2, so the proposition is not established.
+Ruling: No document shows an official announcement within 2025-01-01 through 2025-01-09 revealing the next console under the retail name Nintendo Switch 2. The evidence only supports a nonqualifying status: the successor was still unnamed, with more information promised later.
 
 - [Immutable evidence](https://en.wikipedia.org/w/index.php?title=Nintendo_Switch_2&oldid=1268215322)
 - [compile-rumours-no](https://explorer-studio.genlayer.com/tx/0x4bd40e50d12913306e32e57f3c5357267155e8c4736d1df1dd7f5764a7f273a6)
@@ -118,6 +139,12 @@ Ruling: The only Wikipedia revision provided is dated 8 January 2025, inside the
 - [diagnostic-schedule-v2-take-2-seal-author](https://explorer-studio.genlayer.com/tx/0x0b1521af9317ea48770a827b37f8354d1b0e486fdbfd0607a0f3a9e489e0e39b)
 - [diagnostic-schedule-v2-take-2-resolve](https://explorer-studio.genlayer.com/tx/0x3a6763049654cf879966a9ee13576630a412428fd7a5064a0487923cdee40791)
 - [diagnostic-schedule-v2-take-2-resolve-child-0](https://explorer-studio.genlayer.com/tx/0x468128c02e330fcade04675c7978f1ccb864abac28c6325a1d57068ad516c83d)
+- [r5-compile-rumours-no](https://explorer-studio.genlayer.com/tx/0x7de840316e989c96e55f9ddd08a2acba43e2ef81183900110e6974b5030c92dd)
+- [r5-compile-rumours-no-child-0](https://explorer-studio.genlayer.com/tx/0x188784da336dfb87cadaaddfa5484a7cff427ee476d040c12b6cd81a61508758)
+- [r5-evidence-take-2](https://explorer-studio.genlayer.com/tx/0xcc2ed3e216f5086a1f9a6d63a591e5dfcc03d474135f5e177804f9be194b063e)
+- [r5-seal-author-take-2](https://explorer-studio.genlayer.com/tx/0xadbe61ef1dbc5fd652251ca24952b4c8424cff08926a876427bf5b54d0914276)
+- [r5-resolve-take-2](https://explorer-studio.genlayer.com/tx/0x4e9259c8606b72358e9cc7cc9826bff7e82b9b67f22501c945a3a7ee280ae815)
+- [r5-resolve-take-2-child-0](https://explorer-studio.genlayer.com/tx/0xaabb738241a20fcc5b740e2d730fe6483d45eabb50916ad746855113e2cc40fa)
 ### take-3 — no-evidence-default
 
 Apple officially announces a foldable iPhone.
@@ -154,6 +181,11 @@ Ruling: No evidence submitted; code applied the frozen default.
 - [r4-seal-author-take-3](https://explorer-studio.genlayer.com/tx/0x25e5871254ef31fbbaf6f76d33abd41d823bf43d6a086fd9eeabd5edde19f947)
 - [r4-resolve-take-3](https://explorer-studio.genlayer.com/tx/0x00dbdacea6aad9b1b356e13a99b5e13e25ad37a4fa13c108124aed89f3beb496)
 - [r4-resolve-take-3-child-0](https://explorer-studio.genlayer.com/tx/0x9086e735441a745068770d2793cf8ae900c60a233b47fb22304d3304aa539fb4)
+- [r5-compile-no-evidence-default](https://explorer-studio.genlayer.com/tx/0x649fd1f7801b572e9243ec44f1cb67a700c8638578afba388d3247693094332d)
+- [r5-compile-no-evidence-default-child-0](https://explorer-studio.genlayer.com/tx/0xf931e5ed4e4bef23b333573d61df9d8b9c2acca3fbe9dba0099f053b9aa0447a)
+- [r5-seal-author-take-3](https://explorer-studio.genlayer.com/tx/0x2643fcda335ab2acf0f56ae6ef46563e3f5909008e14d58351dac496edfbb869)
+- [r5-resolve-take-3](https://explorer-studio.genlayer.com/tx/0xfeb8ef50f4c20815b799419c095ae7c70b5a1a6cd9332ba4c1d69394b34a22d1)
+- [r5-resolve-take-3-child-0](https://explorer-studio.genlayer.com/tx/0x4c83dad87ec3be3a0efeabf70bae3b833b6f275897ad97226a5a0ad3a2ba5f31)
 ### take-4 — subjective-rejection
 
 Apple's next headset will be a flop.
@@ -161,7 +193,7 @@ Apple's next headset will be a flop.
 Historical replay · REJECTED · verdict pending · outcome pending · escrow unfunded
 
 Event deadline: 2025-01-09T23:59:59+00:00
-Compiler decision: SUBJECTIVE — This is a subjective prediction and not a concrete, verifiable event that an official announcement could settle.
+Compiler decision: SUBJECTIVE — This is a subjective prediction and not a precise factual event that an official announcement could settle.
 
 - [compile-subjective-rejection](https://explorer-studio.genlayer.com/tx/0x7542486b5085dd4f230357a41eb8e74a5b73cd83ca759478358890b4e35037a8)
 - [compile-subjective-rejection-child-0](https://explorer-studio.genlayer.com/tx/0x2628241c80d876513e50282b9685cab57153d0783b79eb7c5bac79990792c19c)
@@ -169,20 +201,22 @@ Compiler decision: SUBJECTIVE — This is a subjective prediction and not a conc
 - [r3-compile-subjective-rejection-child-0](https://explorer-studio.genlayer.com/tx/0x44b54c48a15fcf2145dafeeb47e459381e0bb5583fbe74ed2a92908ffb28f96a)
 - [r4-compile-subjective-rejection](https://explorer-studio.genlayer.com/tx/0xb72555c3f0b683df5a46adfda95af3def753c6cf4187da60a39c21e19647a40a)
 - [r4-compile-subjective-rejection-child-0](https://explorer-studio.genlayer.com/tx/0x23d69b563ccfe60e46c54691df4c56845c726b17129cd14d13ba4d2fa6728bf5)
-### take-5 — sources-unreachable
+- [r5-compile-subjective-rejection](https://explorer-studio.genlayer.com/tx/0x4003f16b2ad71a62ae3d9efab855b3e1b085ecedfa62a0f572fc85da68d29107)
+- [r5-compile-subjective-rejection-child-0](https://explorer-studio.genlayer.com/tx/0x131c7ff8342881a8b28664cad400f566082466187655d71c2f47c62817bc8905)
+### take-5 — scheduling-void
 
 The Recording Academy officially announces the nominations for the 67th GRAMMY Awards.
 
-Historical replay · COMPILED · verdict pending · outcome pending · escrow MATCHED
+Historical replay · COMPILED · verdict INSUFFICIENT_EVIDENCE · outcome VOID · escrow unfunded
 
 Event deadline: 2024-11-10T23:59:59+00:00
+Resolution case: VOID_INSUFFICIENT_EVIDENCE
+Ruling: Document 0 repeatedly schedules the nominations announcement for Friday, 8 Nov 2024 (within the 1–10 Nov window) but only describes the event as future; no dated post-event confirmation of the completed announcement appears.
 
 - [Immutable evidence](https://web.archive.org/web/20241108004348id_/https://www.grammy.com/news/2025-grammys-nominations-full-winners-nominees-list)
 - [prepare-take-5](https://explorer-studio.genlayer.com/tx/0xb405c2c5c847fa81e26adf5f42b9eac1513f8d0062aba7fbab7de6ea14076d91)
 - [deposit-author-take-5](https://explorer-studio.genlayer.com/tx/0xbe85c1f61bb6b9be4d9b6a3c2fe848b47d78c37e756868b815729881ab5a0c53)
 - [deposit-author-take-5-child-0](https://explorer-studio.genlayer.com/tx/0x9b7969c84d96dd34c5cbf8c3f6a2182f6dfa6cfde4d4852cc83dd95bde8eb764)
-- [r3-compile-sources-unreachable](https://explorer-studio.genlayer.com/tx/0x179bbad2dcac5e9fda7d44138350971f5f1196536427d6fbc7c4e89ec7e71e2b)
-- [r3-compile-sources-unreachable-child-0](https://explorer-studio.genlayer.com/tx/0xf867c62e44e3c05e6b3c23c8843612ba64a07c66d38742861cef0b74bb241c97)
 - [r3-evidence-take-5](https://explorer-studio.genlayer.com/tx/0x2424a8c7c81490606f8f783ec8b3aebde5177fe629a45c90ccf3da30efbd5922)
 - [r3-prepare-take-5](https://explorer-studio.genlayer.com/tx/0xa34a73a771169e4404e1cb5ec829d2712c8cad87019d0db89eed75f85183e4b4)
 - [r3-deposit-author-take-5](https://explorer-studio.genlayer.com/tx/0x61234a60dda4c95fb3f3fee860c394cd9f04741ec621f4efabaa84970d32c695)
@@ -190,8 +224,6 @@ Event deadline: 2024-11-10T23:59:59+00:00
 - [r3-accept-take-5](https://explorer-studio.genlayer.com/tx/0x3e5eb0cd57d9bcfbdc13de11939a35715265ba4ad5db506b23170708287e03bc)
 - [r3-deposit-counter-take-5](https://explorer-studio.genlayer.com/tx/0x8d34ef56b733f0f98959925962c31abdc7ac170eca502424fe3e0590c5c8d9fc)
 - [r3-deposit-counter-take-5-child-0](https://explorer-studio.genlayer.com/tx/0xea341a8280616af02ba33e4359d75f21f5ec6579ce939421d7ed34be87a7d116)
-- [r4-compile-sources-unreachable](https://explorer-studio.genlayer.com/tx/0x8de0fac63be8a841e750043fcebf252913c3b47af49e3c77f3edf47758b822ca)
-- [r4-compile-sources-unreachable-child-0](https://explorer-studio.genlayer.com/tx/0x9619127064381dc97ecbbc61281de4746d54c1c11a68b99a0a61344deb4d0c6f)
 - [r4-evidence-take-5](https://explorer-studio.genlayer.com/tx/0x3e822b7bd7da7f79a293050e029bdba5b46a89ea802587569661787661bdf49b)
 - [r4-prepare-take-5](https://explorer-studio.genlayer.com/tx/0xd201766fc126fc904bb8277cf7570908ba4102878d11a24e47e9345672902565)
 - [r4-deposit-author-take-5](https://explorer-studio.genlayer.com/tx/0x3fd3fb2c962c659f74b8a54657af86f6c8453fc88c582e9710d6cc88e84383dc)
@@ -212,6 +244,12 @@ Event deadline: 2024-11-10T23:59:59+00:00
 - [diagnostic-schedule-v2-take-5-seal-counter](https://explorer-studio.genlayer.com/tx/0x80fead3400a4b6f2de5026745d7a9664b276ca33fa6beba585d863fc50463204)
 - [diagnostic-schedule-v2-take-5-resolve](https://explorer-studio.genlayer.com/tx/0xdaa9d4ba32fa78f8788a7540a02857fea4d75d62cccafbb8587c0940217cc84d)
 - [diagnostic-schedule-v2-take-5-resolve-child-0](https://explorer-studio.genlayer.com/tx/0x47297c995bb1ce438df6532fad1328be1bd112f5eb6e4e4baed6b524f68c86ba)
+- [r5-compile-scheduling-void](https://explorer-studio.genlayer.com/tx/0xec74afca859b73881c69f33b3efcc7a69740accd88ac8fede6fd75a76457b90d)
+- [r5-compile-scheduling-void-child-0](https://explorer-studio.genlayer.com/tx/0xdc615b59023a9ad11f3ea844083a2da72e531f403b8546f4fd784317648e6ce5)
+- [r5-evidence-take-5](https://explorer-studio.genlayer.com/tx/0xb1c95e3561ac036685f18a2221292822c3d560d0f5f10757546f538c80a6db2e)
+- [r5-seal-author-take-5](https://explorer-studio.genlayer.com/tx/0x2b701bb340a2c747a7ac30dc596dd522088e3f1c1fd542c0a2bd738807a18c45)
+- [r5-resolve-take-5](https://explorer-studio.genlayer.com/tx/0xd31e48a7c23e7763dbdae0c5535caa1fc2ded833b39e7cb16afb83345bad755c)
+- [r5-resolve-take-5-child-0](https://explorer-studio.genlayer.com/tx/0xfd5e88b394e339390b9b1234d5f845e1646194f9125857a0e503ee0e53e9ab6f)
 
 ## Pending live takes remain on the previous deployment
 
@@ -223,10 +261,11 @@ These funded takes retain the earlier immutable default policy. They were not mi
 ## Earlier matched bets remain on their original escrow
 
 - Revision 3 take-5: MATCHED, 2 wei held. Escrow 0x4f7519b441c80244cb3Cf381b6A3a44A574412BB. Refund deadline 2026-10-23T20:37:37+00:00. The new deployment did not migrate or pay this bet.
+- Revision 4 take-5: MATCHED, 2 wei held. Escrow 0xC5BeB6B171f37f2c7101EDc83eA2905615415e12. Refund deadline 2026-10-23T22:04:35+00:00. The new deployment did not migrate or pay this bet.
 
 ## Honest unreachable-source proof status
 
-{"proven": false, "actualCase": "NO_FINAL_CONSENSUS", "take": "take-5", "preflights": [{"error": "", "length": 24000, "status": "FETCHED", "checked_at": 1792455472}], "note": "The unlisted article was FETCHED; the leader proposed NO but the network rejected it. This was not a finalized NO or VOID."}
+{"proven": false, "actualCase": "VOID_INSUFFICIENT_EVIDENCE", "note": "Grammy readable scheduling VOID is not an unreachable-source proof. Owner approved honest reporting when an unlisted host is reachable."}
 
 
 ## Isolated unfunded diagnostic candidate
@@ -247,7 +286,13 @@ See [consensus diagnosis](CONSENSUS-DIAGNOSIS.md) and [the diagnostic report](..
 
 ## Approved timeout follow-up
 
-One-time same-chat recovery is scheduled for 23 October 2026 at 22:06 Africa/Lagos, after actual timeout eligibility at 22:04:35. No additional deposits, candidate promotion or Portal submission. See [recovery status](../deploy/timeout-recovery.json).
+The original revision-4 bet has a separate one-time recovery scheduled for 23 October 2026 at 22:06 Africa/Lagos, after actual timeout eligibility at 22:04:35. It uses its isolated revision-4 journal and original contracts, independently of the current release. No additional deposits or Portal submission. See [recovery status](../deploy/timeout-recovery.json).
+
+## Revision-5 configured judge and matched proof
+
+The configured resolver adopts exactly v2's ordered four-step decision prompt and ARCHIVE_CAPTURE_TIMES_UTC block, without diagnostic output. All fairness branches remain unchanged. The real Grammy scheduling replay resolves VOID_INSUFFICIENT_EVIDENCE. Apple is the separate approved 1+1 wei matched bet; inspect finalized settlement, native-credit verification and the public record in the proof.
+
+Owner approved exactly one additional wei per wallet, raising cumulative deposits from 22 to 24 wei. The revision-4 archive, original held stakes and scheduled recovery are separate. See [verification](VERIFICATION.md) and [the immutable revision-4 archive](../deploy/releases/v4-proof.json).
 
 ## All transaction receipts
 
@@ -450,10 +495,51 @@ One-time same-chat recovery is scheduled for 23 October 2026 at 22:06 Africa/Lag
 - [diagnostic-schedule-v2-take-1-seal-author](https://explorer-studio.genlayer.com/tx/0xb75abeebaaee5235f09ab73c3189938e381ef9f0aef7513723c040a1c243462d)
 - [diagnostic-schedule-v2-take-1-resolve](https://explorer-studio.genlayer.com/tx/0xe279e9fa93ff487e05c0c14d2e2132577032ead85d5152e144c18ee7821ed027)
 - [diagnostic-schedule-v2-take-1-resolve-child-0](https://explorer-studio.genlayer.com/tx/0x129fc3430ff40591c2e1f70d4df83490d07beda45d6d6abd70cac565ec688838)
+- [r5-deploy-Takes](https://explorer-studio.genlayer.com/tx/0x6fed9e076326a58eea14ab1c37ab2b52ca79e395988b6a67548259fc71be4738)
+- [r5-deploy-TakeEscrow](https://explorer-studio.genlayer.com/tx/0xf1d4e164b02daecb27d641e4aed1ebfd90c46e493845748c930d777d5936ca64)
+- [r5-deploy-TakeResolver](https://explorer-studio.genlayer.com/tx/0xc62911d3a2a6fb4bce823b6cef86cba350bc59f39409d1f04b06bbbdd4bf0988)
+- [r5-deploy-CalledItRecord](https://explorer-studio.genlayer.com/tx/0x4086a55fae481a49742b637530c4689fe01844ae464017778ec7e8e31af54b8f)
+- [r5-configure](https://explorer-studio.genlayer.com/tx/0xf2b074c720b13467662670b46b5c3b742c2f87667cbc7742c9364c22f2d487d9)
+- [r5-compile-official-yes](https://explorer-studio.genlayer.com/tx/0x47bd1cbe77ef722f5b80c5f173c137546612e7c0102cde0b9c6e78a866f9b3d6)
+- [r5-compile-official-yes-child-0](https://explorer-studio.genlayer.com/tx/0xed09de203ef949e2e94777121d0d1c7ebec3aa168a477a769655757a405495ed)
+- [r5-compile-rumours-no](https://explorer-studio.genlayer.com/tx/0x7de840316e989c96e55f9ddd08a2acba43e2ef81183900110e6974b5030c92dd)
+- [r5-compile-rumours-no-child-0](https://explorer-studio.genlayer.com/tx/0x188784da336dfb87cadaaddfa5484a7cff427ee476d040c12b6cd81a61508758)
+- [r5-compile-no-evidence-default](https://explorer-studio.genlayer.com/tx/0x649fd1f7801b572e9243ec44f1cb67a700c8638578afba388d3247693094332d)
+- [r5-compile-no-evidence-default-child-0](https://explorer-studio.genlayer.com/tx/0xf931e5ed4e4bef23b333573d61df9d8b9c2acca3fbe9dba0099f053b9aa0447a)
+- [r5-compile-subjective-rejection](https://explorer-studio.genlayer.com/tx/0x4003f16b2ad71a62ae3d9efab855b3e1b085ecedfa62a0f572fc85da68d29107)
+- [r5-compile-subjective-rejection-child-0](https://explorer-studio.genlayer.com/tx/0x131c7ff8342881a8b28664cad400f566082466187655d71c2f47c62817bc8905)
+- [r5-compile-scheduling-void](https://explorer-studio.genlayer.com/tx/0xec74afca859b73881c69f33b3efcc7a69740accd88ac8fede6fd75a76457b90d)
+- [r5-compile-scheduling-void-child-0](https://explorer-studio.genlayer.com/tx/0xdc615b59023a9ad11f3ea844083a2da72e531f403b8546f4fd784317648e6ce5)
+- [r5-evidence-take-1](https://explorer-studio.genlayer.com/tx/0xb612523814748a8bc8a58941fe7065daff616e76706283be6ae177d08a675f6d)
+- [r5-evidence-take-2](https://explorer-studio.genlayer.com/tx/0xcc2ed3e216f5086a1f9a6d63a591e5dfcc03d474135f5e177804f9be194b063e)
+- [r5-evidence-take-5](https://explorer-studio.genlayer.com/tx/0xb1c95e3561ac036685f18a2221292822c3d560d0f5f10757546f538c80a6db2e)
+- [r5-seal-author-take-5](https://explorer-studio.genlayer.com/tx/0x2b701bb340a2c747a7ac30dc596dd522088e3f1c1fd542c0a2bd738807a18c45)
+- [r5-resolve-take-5](https://explorer-studio.genlayer.com/tx/0xd31e48a7c23e7763dbdae0c5535caa1fc2ded833b39e7cb16afb83345bad755c)
+- [r5-resolve-take-5-child-0](https://explorer-studio.genlayer.com/tx/0xfd5e88b394e339390b9b1234d5f845e1646194f9125857a0e503ee0e53e9ab6f)
+- [r5-prepare-take-1](https://explorer-studio.genlayer.com/tx/0x31f649aa1421e70ee6fe1feab5e1b4ebbc3308237380b3ae969819e070c7135d)
+- [r5-deposit-author-take-1](https://explorer-studio.genlayer.com/tx/0x4ed7c00061b528e4cb53eb671dad26759b6a89b87d5134c6425e7bdcf758bb92)
+- [r5-deposit-author-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x6a2d6084c4826ad4b5c37183feff6850e2094d414f0e134b82591aed27ad1a88)
+- [r5-accept-take-1](https://explorer-studio.genlayer.com/tx/0x064609f562d0bdfad2e5fb576bd413ff8f2d800da0d4b924cf73cf1b733b50ca)
+- [r5-deposit-counter-take-1](https://explorer-studio.genlayer.com/tx/0xc1e00afc1d823eae76f2831dced0b6ff42724ae4b36b66dd89e824c1f2801737)
+- [r5-deposit-counter-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x479ebede7791c1b9a76f2ddf184f314a7e4208ed699d1cbd34af44e6395023aa)
+- [r5-seal-author-take-1](https://explorer-studio.genlayer.com/tx/0x066562637ddb056c066ee25436dd38b22b5a0792a165cb8db6f92b150d01c01f)
+- [r5-seal-counter-take-1](https://explorer-studio.genlayer.com/tx/0x4d7ae9f4c0ba1900612694ba3789a2a27b4ea61b9f9ed95051ff5c7f27afd9ea)
+- [r5-resolve-take-1](https://explorer-studio.genlayer.com/tx/0xf7bc3c23e9616da3d07a676d8a000553ba9a315a212fc8e0a0ce3e136e768c32)
+- [r5-resolve-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x5392fb1cb7bcf2b59bb5588b997e933b7a1aa027fcfc6547b5a81cb858b881c7)
+- [r5-seal-author-take-2](https://explorer-studio.genlayer.com/tx/0xadbe61ef1dbc5fd652251ca24952b4c8424cff08926a876427bf5b54d0914276)
+- [r5-resolve-take-2](https://explorer-studio.genlayer.com/tx/0x4e9259c8606b72358e9cc7cc9826bff7e82b9b67f22501c945a3a7ee280ae815)
+- [r5-resolve-take-2-child-0](https://explorer-studio.genlayer.com/tx/0xaabb738241a20fcc5b740e2d730fe6483d45eabb50916ad746855113e2cc40fa)
+- [r5-seal-author-take-3](https://explorer-studio.genlayer.com/tx/0x2643fcda335ab2acf0f56ae6ef46563e3f5909008e14d58351dac496edfbb869)
+- [r5-resolve-take-3](https://explorer-studio.genlayer.com/tx/0xfeb8ef50f4c20815b799419c095ae7c70b5a1a6cd9332ba4c1d69394b34a22d1)
+- [r5-resolve-take-3-child-0](https://explorer-studio.genlayer.com/tx/0x4c83dad87ec3be3a0efeabf70bae3b833b6f275897ad97226a5a0ad3a2ba5f31)
+- [r5-settle-take-1](https://explorer-studio.genlayer.com/tx/0x5a23f02662f622075fc3b5078a5fac5faa75e94dd5334904f7c9182ff4c79594)
+- [r5-settle-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x297c0e944338559e84fc123ad05ee6d473799295e6149a7fe4daa86b96e0e710)
+- [r5-claim-take-1-0](https://explorer-studio.genlayer.com/tx/0x18297a4c5b9326d1b43e7bb40c3ec762c1eddb554d31340b05bc82ef7d02ad99)
+- [r5-claim-take-1-0-child-0](https://explorer-studio.genlayer.com/tx/0xf1e0d16da650ea181bcfb4fa6936bfbbd2a049edeabfdf9a096db226e638ff63)
+- [r5-verify-take-1-0](https://explorer-studio.genlayer.com/tx/0x7fa6113ecf8b605a5a1d0dada52d25fcdf7b305d3c1aa69d2ff76fa62de8f857)
+- [r5-record-take-1](https://explorer-studio.genlayer.com/tx/0x4cd2d89555b9f1731248a8c2546645d5bd8601c0b2d67dc42ead44d5dde06ea3)
+- [r5-record-take-1-child-0](https://explorer-studio.genlayer.com/tx/0x2defcfea8dae32210fa2b6b7a36ba02dbf95f3a52633924ca383630f0dd203a2)
 
 ## Blockers
 
-- Original funded ruling finalized MAJORITY_DISAGREE; canonical resolver remains OPEN and escrow MATCHED with two wei held.
-- Actual timeout eligibility is 23 October 2026 at 22:04:35 Lagos. Settlement and native-credit claims remain unproven until genuine recovery.
-- Real blocked-source VOID remains unproven: the real admitted article fetched successfully. The diagnostic VOID is insufficient evidence, not source failure.
-- Full publication audit, Vercel production deployment and push remain pending verified refunds.
+- Complete publication audit and production verification remain pending.

@@ -4,20 +4,18 @@
 
 [Open Called It](https://called-it-genlayer.vercel.app) · [Public repository](https://github.com/JWattjr/called-it) · [Verification record](docs/VERIFICATION.md)
 
-**Revision 4: awaiting genuine timeout recovery after the matched-bet consensus failure.** Apple resolved YES, Nintendo NO, the no-evidence case applied its frozen NO default, and the subjective claim was rejected. Of 36 new writes and callbacks, 35 finalized successfully; the funded take-5 ruling finalized `MAJORITY_DISAGREE` and applied no outcome. Both stakes remain in escrow. All four deployed code hashes match local files and manifest. Production still serves revision 2. See the [current verification report](docs/VERIFICATION.md) for the failure and limits; revision 3's failures remain in [its historical report](docs/FAIRNESS-REVISION.md).
+**Revision 5: the v2 judge is promoted into four fresh, fully wired contracts.** Real finalized replays show Apple YES, Nintendo NO, the no-evidence frozen NO default, subjective rejection and Grammy scheduling evidence VOID_INSUFFICIENT_EVIDENCE. The separate two-wallet Apple bet used exactly 1+1 wei, settled to the winner and paid a verified two-wei native credit. Production rollout and its live address check remain pending. Nothing was submitted to the Portal.
 
-The resolver's model-output handling has been [repaired and tested](docs/MODEL-OUTPUT-REPAIR.md): 69 contract tests and 21 release tests pass. The core real rulings passed, but the later matched ruling did not reach agreement despite a valid leader proposal. The owner approved two additional simulated wei, and the 1+1 wei bet consumed the full 22-wei cumulative limit. Settlement and native-credit proof remain unproven. Chain writes stopped at the failure, without retry or production publication.
+All 69 contract tests and 31 release tests pass; all four contracts pass GenVM lint. The configured resolver uses exactly v2's ordered four-step judge and ARCHIVE_CAPTURE_TIMES_UTC block, with diagnostic output omitted. All fairness branches remain unchanged. [Verification](docs/VERIFICATION.md) Â· [All hashes](docs/RELEASE.md) Â· [Local checks](deploy/r5-local-checks.json).
 
-The isolated [v2 diagnostic candidate](docs/CONSENSUS-DIAGNOSIS.md) passed Nintendo NO, Grammy VOID_INSUFFICIENT_EVIDENCE and Apple YES with finalized callbacks and matching reads. Its predecessor's Nintendo regression remains archived. Neither candidate replaces the configured resolver. Original stakes remain intact. The owner-approved 23 October 22:06 Africa/Lagos follow-up will verify the genuine timeout refunds, then continue release checks and publication only after verification passes.
+The original revision-4 bet and its failed ruling remain intact. Its 23 October 22:06 Africa/Lagos recovery uses only its isolated original-contract journal. The two earlier live takes remain on revision 2. Cumulative deposits are exactly 24/24 approved simulated wei; no further deposits are authorized. Real unreachable-source VOID remains unproven.
 
-The [20 October readiness checks](deploy/release-readiness.json) passed all seven app tests, ESLint, TypeScript and the production build. A separate historical Explorer recheck passed 15/15 links, and 13 already-published HTTP links returned 200. New artifacts still await publication and a complete audit; these checks do not prove refunds or a production rollout.
-
-| Contract | Revision-4 address |
+| Contract | Revision-5 address |
 | --- | --- |
-| Takes | [0x1F797270d45281Aae3842Bd1f4ccE9eb114b51cA](https://explorer-studio.genlayer.com/address/0x1F797270d45281Aae3842Bd1f4ccE9eb114b51cA) |
-| TakeEscrow | [0xC5BeB6B171f37f2c7101EDc83eA2905615415e12](https://explorer-studio.genlayer.com/address/0xC5BeB6B171f37f2c7101EDc83eA2905615415e12) |
-| TakeResolver | [0xB614CbddBCe32f5ec68BA563957D6E4fB804a52e](https://explorer-studio.genlayer.com/address/0xB614CbddBCe32f5ec68BA563957D6E4fB804a52e) |
-| CalledItRecord | [0x6E3419ab4941cd39046973985fD363728D61dBd6](https://explorer-studio.genlayer.com/address/0x6E3419ab4941cd39046973985fD363728D61dBd6) |
+| Takes | [0xF1615c3dE4e472c855d5BB7a38151790f13aFCb1](https://explorer-studio.genlayer.com/address/0xF1615c3dE4e472c855d5BB7a38151790f13aFCb1) |
+| TakeEscrow | [0x759FAa1540280A01877b63d680B833101dBfb2D4](https://explorer-studio.genlayer.com/address/0x759FAa1540280A01877b63d680B833101dBfb2D4) |
+| TakeResolver | [0x6df78000eb25a880d1980aA99Bd6859C86deDA93](https://explorer-studio.genlayer.com/address/0x6df78000eb25a880d1980aA99Bd6859C86deDA93) |
+| CalledItRecord | [0xc4d80b678DFAAf1810c7957D13CE4b1316aa6e71](https://explorer-studio.genlayer.com/address/0xc4d80b678DFAAf1810c7957D13CE4b1316aa6e71) |
 
 Called It is a one-on-one wager on a public announcement. An independently verified compilation freezes the proposition, official-evidence standard, event window, default and source domains before either side deposits. A second judgment resolves immutable evidence. Plain Python handles stakes, odds, deadlines, refunds, payouts and records.
 
@@ -73,7 +71,7 @@ npm run verify:proof
 
 `npm run settle` is a resumable keeper: it skips takes that are not ready, settles finalized results or expired refunds, claims payouts for the locally generated demo wallets, verifies their exact native transfer receipts, and updates the public record. It does not advance time or fabricate evidence. A native transfer failure needs a finalized receipt before a safe retry. Keep `.secrets/demo-accounts.json` to resume the same wallets; it is gitignored and excluded from Vercel.
 
-The `fund` stage requires `.secrets/deposit-approval.json` with the owner's explicitly approved cumulative limit. Do not create that approval from silence. The cumulative ceiling is 22 wei: revision 2 deposited 18, revision 3 deposited two, and the owner-approved revision-4 extension deposited two. The budget is exhausted. Both later matched bets retain two wei each on their own escrows; the two revision-2 live takes retain four wei total. Recovered payouts do not reset the cumulative limit. Wallet funding and contract deposits are journalled separately. Nothing is submitted to the Portal.
+The `fund` stage requires `.secrets/deposit-approval.json` with the owner's explicitly approved cumulative limit. Do not create that approval from silence. The cumulative ceiling is 24 wei: revision 2 deposited 18, revision 3 two, revision 4 two and revision 5 the explicitly approved 1+1 wei. The budget is exhausted. Revision 5 paid its winner; revision 3 and revision 4 each retain their separate two-wei matched bets, while the revision-2 live takes retain four wei total. Recovered payouts do not reset the cumulative limit. Wallet funding and contract deposits are journalled separately. Nothing is submitted to the Portal.
 
 ## Verify
 
@@ -92,7 +90,7 @@ npm run verify:proof
 
 The proof verifier is read-only: it never loads the demo keys, signs, deposits or resolves a take. It verifies source hashes against deployed code, finalized execution results, live state, rule hashes, payout conservation, native transfer credits, reviewer evidence URLs and the explorer's actual API records. Contract pages must identify a `CONTRACT`; transaction API objects must contain the exact hash. Every publication URL is generated by the same [explorer helper](lib/explorer.ts), including documentation and Portal fields through `scripts/links.ts`.
 
-To conserve the shared RPC budget, finalized consensus receipts are bound to the live Explorer's exact transaction fields, votes, leader result and nondeterministic output, with an agreeing quorum. Native credits, expected failures and missing quorums are reread directly from RPC. Deployed code and all final contract state are also read directly. The release transport caps itself at 24 RPC requests per minute and 450 per hour, leaving headroom below the network's 30/500 limits. Consecutive keeper stages can reuse a finalized snapshot less than 30 seconds old; the final verifier independently rereads it.
+To conserve the shared RPC budget, finalized consensus receipts are bound to the live Explorer's exact transaction fields, votes, leader result and nondeterministic output, with an agreeing quorum. Native credits, expected failures and missing quorums are reread directly from RPC. Deployed code and all final contract state are also read directly. The release transport caps itself at 24 RPC requests per minute and 490 per hour, leaving headroom below the network's 30/500 limits. Consecutive keeper stages can reuse a finalized snapshot less than 30 seconds old; the final verifier independently rereads it.
 
 ## Evidence and limitations
 
@@ -115,7 +113,7 @@ See [the tutorial](docs/TUTORIAL.md), [the two-minute demo](docs/DEMO.md), [rele
 
 ## Fairness revision and prior live takes
 
-The staged fairness release deploys four fresh contracts; it cannot change earlier contracts. Revision 4 uses `python scripts/fairness_release.py <stage> --revision-4`; the package release commands dispatch according to the manifest. Every write has a distinct `r4-` journal label and follows the saved hash after a polling timeout. A finalized failed judgment stops the run; it is never automatically submitted again. The current run is stopped and the generic commands above are not an instruction to retry it. Revision 3's separately authorized recovery and failures remain archived.
+Revision 5 uses `python scripts/revision5_release.py <stage>` with stages init, deploy, compile, evidence, resolve-grammy, fund, resolve, settle and record. The package release command dispatches to that driver. Every new write uses a distinct `r5-` label and follows its saved hash and finality callbacks. The driver stops on an unexpected ruling or finalized failure. It permits only one additional wei per demo wallet for the Apple bet. The original revision-4 recovery uses `python scripts/recover_timeout.py --revision-4 --execute` and a separate journal; it cannot overwrite this release.
 
 The two earlier live takes (Nintendo delay, 29 October 2026; Apple results, 4 November 2026; both at 23:59:59 UTC) remain funded on revision 2. Their complete immutable rules, addresses, deposits and refund deadlines are retained in `deploy/releases/v2-proof.json`. They retain revision 2's original technical-failure default behavior. They were not migrated or reopened under the revised policy.
 

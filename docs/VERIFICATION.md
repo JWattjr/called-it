@@ -1,53 +1,56 @@
 # Verification record
 
-**Revision 4 awaits genuine timeout recovery. The isolated v2 diagnostic passed all three replays; the financial and production release remains incomplete.** The four configured contracts are unchanged. Production still serves revision 2, and nothing was submitted to the Portal.
+**Revision 5: the v2 judge is promoted into four fresh, fully wired contracts.** Real finalized replays show Apple YES, Nintendo NO, the no-evidence frozen NO default, subjective rejection and Grammy scheduling evidence VOID_INSUFFICIENT_EVIDENCE. The separate two-wallet Apple bet used exactly 1+1 wei, settled to the winner and paid a verified two-wei native credit. Production rollout and its live address check remain pending. Nothing was submitted to the Portal.
 
-## Latest v2 diagnostic
-
-[The v2 report](../deploy/consensus-diagnostics.json) records real Nintendo NO / JUDGED_NO, Grammy VOID / VOID_INSUFFICIENT_EVIDENCE and Apple YES / JUDGED_YES. All 14 zero-value diagnostic writes and callbacks finalized successfully. Every ruling has a matching FINAL state read, unchanged frozen rule hash and unchanged evidence URL. Each ruling had three agreeing validators. The exact deployed candidate code matches its local source hash.
-
-The correction restores a substantive NO for documented nonqualifying reports or unnamed/unannounced status. The future-schedule VOID exception requires a specific dated plan for the exact claimed event. Generic development intentions do not qualify. Exact quotations and independently rerun validator judgments are preserved. [Detailed diagnosis, addresses and hashes](CONSENSUS-DIAGNOSIS.md).
-
-The diagnostic is isolated from the canonical Takes configuration and escrow. It cannot settle the original bet or create a public win. The failed v1 Nintendo VOID regression remains in [its archive](../deploy/consensus-diagnostics-v1.json), with its source, address and receipts unchanged. Neither sampled success nor agreeing model narratives establish universal reliability.
-
-## Canonical revision-4 outcomes and funds
-
-| Demonstration | Canonical finalized state |
+| Contract | Revision-5 address |
 | --- | --- |
-| Apple announcement | YES, JUDGED_YES |
-| Nintendo announcement | NO, JUDGED_NO |
-| No submitted evidence | Frozen NO default, DEFAULT_NO_EVIDENCE |
-| Subjective claim | REJECTED before funding |
-| Funded Grammy announcement | Resolver OPEN; escrow MATCHED, two wei held; no accepted ruling |
+| Takes | [0xF1615c3dE4e472c855d5BB7a38151790f13aFCb1](https://explorer-studio.genlayer.com/address/0xF1615c3dE4e472c855d5BB7a38151790f13aFCb1) |
+| TakeEscrow | [0x759FAa1540280A01877b63d680B833101dBfb2D4](https://explorer-studio.genlayer.com/address/0x759FAa1540280A01877b63d680B833101dBfb2D4) |
+| TakeResolver | [0x6df78000eb25a880d1980aA99Bd6859C86deDA93](https://explorer-studio.genlayer.com/address/0x6df78000eb25a880d1980aA99Bd6859C86deDA93) |
+| CalledItRecord | [0xc4d80b678DFAAf1810c7957D13CE4b1316aa6e71](https://explorer-studio.genlayer.com/address/0xc4d80b678DFAAf1810c7957D13CE4b1316aa6e71) |
 
-The original 36 writes and callbacks include 35 finalized successes and [one finalized MAJORITY_DISAGREE](https://explorer-studio.genlayer.com/tx/0xb97d441634f38c048daf936a1569bf41fd1851d3e2dc591baf744f31780003ad). Its unaccepted leader proposal is not a ruling. No canonical model retry, stake transfer or binding change occurred during either diagnostic replay.
+## Real revision-5 replays
 
-Fresh reads before and after v2 show author 6, counterparty 6 and canonical escrow 2 wei, with no claims or payouts. Cumulative deposits remain 22/22 approved wei. These reads prove unchanged funds, not native payout or refund completion. The earlier revision-3 matched bet separately holds two wei; the two revision-2 live takes hold four wei total on their old contracts.
+| Case | Final state | Receipt |
+| --- | --- | --- |
+| official-yes | YES / JUDGED_YES | [Finalized receipt](https://explorer-studio.genlayer.com/tx/0xf7bc3c23e9616da3d07a676d8a000553ba9a315a212fc8e0a0ce3e136e768c32) |
+| rumours-no | NO / JUDGED_NO | [Finalized receipt](https://explorer-studio.genlayer.com/tx/0x4e9259c8606b72358e9cc7cc9826bff7e82b9b67f22501c945a3a7ee280ae815) |
+| no-evidence-default | NO / DEFAULT_NO_EVIDENCE | [Finalized receipt](https://explorer-studio.genlayer.com/tx/0xfeb8ef50f4c20815b799419c095ae7c70b5a1a6cd9332ba4c1d69394b34a22d1) |
+| subjective-rejection | REJECTED | [Finalized receipt](https://explorer-studio.genlayer.com/tx/0x4003f16b2ad71a62ae3d9efab855b3e1b085ecedfa62a0f572fc85da68d29107) |
+| scheduling-void | VOID / VOID_INSUFFICIENT_EVIDENCE | [Finalized receipt](https://explorer-studio.genlayer.com/tx/0xd31e48a7c23e7763dbdae0c5535caa1fc2ded833b39e7cb16afb83345bad755c) |
 
-The original resolver becomes eligible for VOID_TIMEOUT on **23 October 2026 at 22:04:35 Africa/Lagos**, and escrow fallback is one hour later. The [readiness check](../deploy/timeout-recovery.json) sends nothing before eligibility. The owner-approved [one-time follow-up](../deploy/recovery-followup.json) resumes this chat at **22:06 Lagos** to execute the original code-driven timeout, settle and verify both one-wei native refunds, then continue the originally requested publication checks and rollout only after verification passes. It adds no deposits, retries no model judgment and cannot substitute a diagnostic address for the configured resolver.
+All 44 revision-5 writes, native transfers and callbacks finalized successfully, with matching source, frozen-rule and state reads. [Every revision-5 hash](../deploy/r5-hashes.json). The Grammy case uses a new rule and configured resolver on this release; its scheduling evidence yields VOID, not the frozen default. It is not an unreachable-source demonstration.
 
-The two older live takes retain deadlines 29 October and 4 November 2026 at 23:59:59 UTC. They were not migrated or reopened and retain their original immutable failure-default policy. Details remain in [the revision-2 proof](../deploy/releases/v2-proof.json).
+## Matched bet and actual native credit
 
-## Implementation and browser checks
+The owner approved exactly one new wei from each demo wallet, raising cumulative deposits from 22 to 24 wei. Apple take-1 matched two distinct wallets and settled YES. Its payout map gives the author exactly two wei. The claim is PAID after its native child was verified; the losing wallet has no payout.
 
-- The current configured contracts passed 69 direct tests; their source files are unchanged. The new v2 candidate separately passed the same 69 direct tests.
-- All 21 release tests pass, covering exact and one-time timeout refunds, premature execution prevention, failed-claim stopping, durable version archives and bounded HTTP retries with failed-audit preservation.
-- On 20 October, all seven app tests and ESLint passed again. The production build passed, including its TypeScript check. [Readiness record](../deploy/release-readiness.json). Later source changes still require their appropriate final release checks.
-- All four configured contracts passed GenVM lint previously. V2 also passed lint with the explicitly pinned runner; cached catalog warnings are retained. [V2 local check record](../deploy/consensus-local-checks-v2.json).
-- The [source audit](../deploy/source-verification.json) verified all four canonical deployed hashes; subsequent diagnostics did not change those local files or deployed bindings.
+- [Settlement](https://explorer-studio.genlayer.com/tx/0x5a23f02662f622075fc3b5078a5fac5faa75e94dd5334904f7c9182ff4c79594)
+- [Winner claim](https://explorer-studio.genlayer.com/tx/0x18297a4c5b9326d1b43e7bb40c3ec762c1eddb554d31340b05bc82ef7d02ad99)
+- [Native credit](https://explorer-studio.genlayer.com/tx/0xf1e0d16da650ea181bcfb4fa6936bfbbd2a049edeabfdf9a096db226e638ff63)
+- [Credit verification](https://explorer-studio.genlayer.com/tx/0x7fa6113ecf8b605a5a1d0dada52d25fcdf7b305d3c1aa69d2ff76fa62de8f857)
+- [Public record](https://explorer-studio.genlayer.com/tx/0x4cd2d89555b9f1731248a8c2546645d5bd8601c0b2d67dc42ead44d5dde06ea3)
 
-The previous local Read live browser check displayed canonical Apple's final YES, exact quotations and JUDGED_YES with no warnings or errors. Screenshot capture was unavailable in that run; its accessibility state is retained locally. Current mobile visual certification and an interactive browser-extension approval popup remain unverified.
+Exact native balances before the claim: `{"author": "5", "counterparty": "5", "escrow": "2"}`; after: `{"author": "7", "counterparty": "5", "escrow": "0"}`. The author gains two wei, counterparty changes by zero after funding, and escrow loses two. [Balance proof](../deploy/native-balance-proof.json). The record shows one historical win and one loss; unfunded replays do not add wins.
 
-## Link and release scope
+## Implementation checks
 
-The [v2 partial Explorer audit](../deploy/diagnostic-link-audit.json) passed 15/15 checks: candidate API type CONTRACT and all 14 exact finalized transaction identifiers, each returning HTTP 200 through canonical address/transaction routes. The separate earlier canonical-deployment audit passed 40 checks. The [v1 audit](../deploy/diagnostic-link-audit-v1.json) remains failed with nine HTTP 502/503 responses; it was not edited into success. A [separate v1 recheck](../deploy/diagnostic-link-recheck-v1.json) now passes all 15 canonical contract/transaction API links and records the unchanged failed audit's SHA-256. Its Nintendo semantic regression remains failed.
+- 69 contract tests and 31 release tests passed, including exact and once-only refunds, the 24-wei cap, isolated original-release recovery and Explorer hints that never replace actual RPC/native-credit confirmation.
+- All four GenVM lint checks passed with the pinned runner. Cached catalog/newer-runner warnings are retained.
+- AST comparison confirms the promoted judge is exactly v2 and all remaining resolver code is unchanged. Diagnostic printing and the diagnostic docstring are absent.
+- App tests, ESLint, TypeScript and build results: [current local check record](../deploy/r5-local-checks.json).
+- All four actual deployed source hashes match local files and manifest. [Source audit](../deploy/source-verification.json).
 
-The [HTTP readiness audit](../deploy/http-readiness.json) returned 200 for all 13 already-published non-Explorer links, including all three evidence URLs. New local artifacts remain explicitly pending publication. The public site's 200 response confirms availability of revision 2, not deployment of revision 4. The full historical/publication audit remains pending verified recovery and publication.
+Each deployed address is also a separate Portal evidence entry with preferred type GenLayer Explorer Contract. All four direct pages returned HTTP 200; their Explorer APIs returned CONTRACT and the exact requested addresses. The actual RPC chain ID is StudioNet 61999. [Contract evidence check](../deploy/r5-contract-evidence.json).
 
-The [current proof report](../deploy/proof-verification.json) is explicitly passed:false, complete:false. Real VOID_SOURCES_UNREACHABLE is still unproven: the real admitted article fetched successfully. Neither mocked 401/403 tests nor the candidate's readable-insufficient-evidence VOID establishes that network proof. Settlement, native refunds and current production rollout also remain unproven today. [Release evidence](RELEASE.md) and [bounded Portal draft](submission/portal-fields.json) record the actual status.
+## Prior contracts and recovery
 
-## Historical releases
+The [immutable revision-4 proof](../deploy/releases/v4-proof.json) preserves the failed funded Grammy ruling and original addresses. No revision-4 ruling was retried and no original contract was rewired. Its two wei remain on Escrow 0xC5BeB6B171f37f2c7101EDc83eA2905615415e12. The approved follow-up runs on 23 October 2026 at 22:06 Africa/Lagos, after actual eligibility at 22:04:35, using `python scripts/recover_timeout.py --revision-4 --execute`. It reads archived sources and writes only its isolated working journal. It will not replace revision-5 production. [Follow-up](../deploy/recovery-followup.json).
 
-Revision 3's quote-guard and schema failures remain in [its historical report](FAIRNESS-REVISION.md), [archived proof](../deploy/releases/v3-proof.json) and [failed audit](../deploy/releases/v3-proof-verification.json). The [model-output repair](MODEL-OUTPUT-REPAIR.md) was deployed in revision 4 and passed the canonical core rulings; later isolated diagnostics do not erase earlier failures.
+The separate revision-3 matched bet still holds two wei. The two revision-2 live takes keep deadlines 29 October and 4 November at 23:59:59 UTC and their original immutable failure-default policy. They were not migrated. [Earlier release](../deploy/releases/v2-proof.json).
 
-Revision 2's successful 596-check audit is preserved in [its archived report](../deploy/releases/v2-proof-verification.json), with [its production record](../deploy/releases/v2-production-verification.json). Those results apply to revision 2, not this incomplete release.
+## Audit, publication and limits
+
+The [full read-only proof audit](../deploy/proof-verification.json) verifies actual Explorer CONTRACT types, canonical /address/ and /tx/ links, every saved transaction, deployed bytes, finalized states, native credits, exact balances, old held bets and HTTP 200 for other published links. Consult its passed field; a partial audit is not a completed release audit. Production rollout and its live address check remain pending. [Production evidence](../deploy/production-verification.json).
+
+The [Portal draft](submission/portal-fields.json) describes the v2 judge and Grammy VOID and enforces 180/1000/500 characters. Nothing was submitted. Real VOID_SOURCES_UNREACHABLE, the future revision-4 timeout refunds, current mobile visual certification and an interactive browser-extension approval popup remain unproven. Earlier consensus failures and the v1 semantic regression remain preserved.
