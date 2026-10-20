@@ -46,7 +46,7 @@ def browser_post(url,**kwargs):
                 path=ROOT/'.secrets/rpc-times.json'
                 stamps=json.loads(path.read_text()) if path.exists() else []
                 t=time.time();stamps=[v for v in stamps if t-v<3600]
-                allowed=len(stamps)<450 and sum(t-v<60 for v in stamps)<24
+                allowed=len(stamps)<490 and sum(t-v<60 for v in stamps)<24
                 if allowed:path.write_text(json.dumps(stamps+[t]))
             if allowed:break
             print('RPC budget: waiting ten seconds before next request',flush=True)
@@ -129,13 +129,23 @@ def final(c,h,label,seconds=1800):
         r=json.loads(target.read_text())
         if success(r):return r
     for n in range(seconds//10):
-        r=c.provider.make_request('eth_getTransactionByHash',[h])['result']
+        # Explorer is only a wake-up hint. Save/accept exclusively the full RPC
+        # receipt, including native value_credited, once it reports finality.
+        hint={}
+        try:
+            response=provider.requests.get('https://explorer-studio.genlayer.com/api/transactions/'+h,
+                                          headers={'User-Agent':'Mozilla/5.0 CalledIt/1.0'},timeout=10)
+            if response.status_code==200:
+                payload=response.json();candidate=payload.get('transaction',payload)
+                if str(candidate.get('hash','')).lower()==h.lower():hint=candidate
+        except (provider.requests.RequestException,ValueError):pass
+        r=c.provider.make_request('eth_getTransactionByHash',[h])['result'] if hint.get('status')=='FINALIZED' else None
         if r and r.get('status_name',r.get('status')) in ('FINALIZED',7,'7'):
             target.write_text(json.dumps(r,indent=2),encoding='utf8')
             print(label,'FINALIZED_SUCCESS' if success(r) else 'FINALIZED_ERROR',h,flush=True)
             if not success(r):raise RuntimeError('Finalized execution error: '+label)
             return r
-        if n%6==0:print(label,'waiting',r.get('status') if r else 'SUBMITTED',flush=True)
+        if n%6==0:print(label,'waiting',r.get('status') if r else hint.get('status','SUBMITTED'),flush=True)
         time.sleep(10)
     raise RuntimeError('Still pending; resume saved hash '+h)
 

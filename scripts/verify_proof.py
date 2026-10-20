@@ -12,6 +12,7 @@ from genlayer_py.types import TransactionHashVariant
 from chain import browser_post  # Shared transport; no signing account is loaded.
 from pathlib import Path
 from eth_account import Account
+from explorer_cache import load_verified_cache,cached_json
 
 ROOT=Path(__file__).resolve().parent.parent
 p=json.loads((ROOT/'deploy/proof.json').read_text(encoding='utf8'))
@@ -19,6 +20,8 @@ links=json.loads((ROOT/'deploy/links.json').read_text(encoding='utf8'))
 headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'}
 (ROOT/'deploy/proof-verification.json').write_text(json.dumps({'checkedAt':datetime.now(timezone.utc).isoformat(),'passed':False,'readOnly':True,'failures':['Audit has not completed. A network or process failure must not leave a stale green report.']}),encoding='utf8')
 c=create_client(chain=studionet,account=Account.create())
+explorer_cache=load_verified_cache(ROOT,p.get('sourceCommit')) if '--reuse-explorer-audit' in sys.argv else {}
+explorer_cache_hits=0
 failures=[];checks=[]
 def check(ok,message):
     checks.append({'passed':bool(ok),'check':message})
@@ -29,6 +32,11 @@ def check(ok,message):
         (ROOT/'deploy/proof-verification.json').write_text(json.dumps(report,indent=2),encoding='utf8')
         raise SystemExit(1)
 def get_json(url):
+    global explorer_cache_hits
+    cached=cached_json(explorer_cache,url)
+    if cached is not None:
+        explorer_cache_hits+=1
+        return cached
     for attempt in range(3):
         try:
             r=requests.get(url,headers=headers,timeout=60);r.raise_for_status();return r.json()
@@ -201,6 +209,7 @@ unproven=[]
 if p.get('releaseAttempt',0)>=3 and not p.get('unreachableProof',{}).get('proven'):
     unproven.append('The full real blocked-host VOID proof is unproven; actual case: '+p.get('unreachableProof',{}).get('actualCase','pending')+'. Source preflights and the additional access probe are retained. Mocked 401/403 coverage is not live proof.')
 report={'checkedAt':datetime.now(timezone.utc).isoformat(),'passed':not failures,'checks':checks,'failures':failures,'readOnly':True,'unproven':unproven,'sourceCommit':p.get('sourceCommit'),'contractHashes':{name:contract['sha256'] for name,contract in p['contracts'].items()},'receiptVerification':'Live Explorer fields, leader output and quorum bound to saved RPC receipts; direct RPC for native credits, expected failures and missing quorum. Contract source and finalized state are read directly by RPC.'}
+report['explorerPreAudit']={'report':'deploy/r5-explorer-audit.json' if explorer_cache else None,'reusedImmutableFinalRecords':explorer_cache_hits,'maximumAgeSeconds':1800,'integrity':'SHA-256 matched the public pre-audit report; exact URL, hash, FINALIZED status and HTTP 200 required. Missing or stale records fetched live. Native credit and contract state are never cached here.'}
 (ROOT/'deploy/proof-verification.json').write_text(json.dumps(report,indent=2),encoding='utf8')
 print(len(checks),'checks;',len(failures),'failures')
 sys.exit(1 if failures else 0)

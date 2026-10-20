@@ -119,6 +119,11 @@ def main(stage):
             initialize(p)
             return
         assert p['releaseAttempt'] == 5
+        # A state may already be FINAL even if the previous poller stopped
+        # before saving its RPC receipt. Follow every known parent/child first.
+        for label in list(p['transactions']):
+            if label.startswith(PREFIX) and '-child-' not in label:
+                tx(p, label, value=0)
         if stage == 'deploy':
             for name, file in FILES.items():
                 code = (ROOT / 'contracts' / file).read_bytes()
