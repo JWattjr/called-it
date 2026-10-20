@@ -34,6 +34,8 @@ The [v2 partial link audit](../deploy/diagnostic-link-audit.json) passed all 15 
 
 The [earlier v1 audit](../deploy/diagnostic-link-audit-v1.json) remains failed: six checks passed, then nine requests returned HTTP 502/503. It was preserved rather than edited into success. The updated auditor retries the identical URL for transient errors up to three times, then stops. The full release/publication audit remains pending genuine financial recovery.
 
+A [separate 20 October recheck](../deploy/diagnostic-link-recheck-v1.json) passed all 15 v1 contract/transaction API links and records the preserved failed audit's hash. This establishes recovered Explorer availability; the v1 Nintendo semantic regression remains failed.
+
 ## Genuine timeout recovery and release completion
 
 The original resolver becomes eligible for VOID_TIMEOUT on **23 October 2026 at 22:04:35 Africa/Lagos**. The escrow fallback deadline is one hour later. The [readiness report](../deploy/timeout-recovery.json) confirms this deadline; it sends no transaction before eligibility.

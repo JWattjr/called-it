@@ -32,7 +32,7 @@ The two older live takes retain deadlines 29 October and 4 November 2026 at 23:5
 
 - The current configured contracts passed 69 direct tests; their source files are unchanged. The new v2 candidate separately passed the same 69 direct tests.
 - All 21 release tests pass, covering exact and one-time timeout refunds, premature execution prevention, failed-claim stopping, durable version archives and bounded HTTP retries with failed-audit preservation.
-- TypeScript passed. The unchanged app's prior seven app tests, ESLint and production build passed; they must run again as required for the final production release.
+- On 20 October, all seven app tests and ESLint passed again. The production build passed, including its TypeScript check. [Readiness record](../deploy/release-readiness.json). Later source changes still require their appropriate final release checks.
 - All four configured contracts passed GenVM lint previously. V2 also passed lint with the explicitly pinned runner; cached catalog warnings are retained. [V2 local check record](../deploy/consensus-local-checks-v2.json).
 - The [source audit](../deploy/source-verification.json) verified all four canonical deployed hashes; subsequent diagnostics did not change those local files or deployed bindings.
 
@@ -40,7 +40,9 @@ The previous local Read live browser check displayed canonical Apple's final YES
 
 ## Link and release scope
 
-The [v2 partial Explorer audit](../deploy/diagnostic-link-audit.json) passed 15/15 checks: candidate API type CONTRACT and all 14 exact finalized transaction identifiers, each returning HTTP 200 through canonical address/transaction routes. The separate earlier canonical-deployment audit passed 40 checks. The [v1 audit](../deploy/diagnostic-link-audit-v1.json) remains failed with nine HTTP 502/503 responses; it was not edited into success. The full historical/publication HTTP audit remains pending verified recovery and publication.
+The [v2 partial Explorer audit](../deploy/diagnostic-link-audit.json) passed 15/15 checks: candidate API type CONTRACT and all 14 exact finalized transaction identifiers, each returning HTTP 200 through canonical address/transaction routes. The separate earlier canonical-deployment audit passed 40 checks. The [v1 audit](../deploy/diagnostic-link-audit-v1.json) remains failed with nine HTTP 502/503 responses; it was not edited into success. A [separate v1 recheck](../deploy/diagnostic-link-recheck-v1.json) now passes all 15 canonical contract/transaction API links and records the unchanged failed audit's SHA-256. Its Nintendo semantic regression remains failed.
+
+The [HTTP readiness audit](../deploy/http-readiness.json) returned 200 for all 13 already-published non-Explorer links, including all three evidence URLs. New local artifacts remain explicitly pending publication. The public site's 200 response confirms availability of revision 2, not deployment of revision 4. The full historical/publication audit remains pending verified recovery and publication.
 
 The [current proof report](../deploy/proof-verification.json) is explicitly passed:false, complete:false. Real VOID_SOURCES_UNREACHABLE is still unproven: the real admitted article fetched successfully. Neither mocked 401/403 tests nor the candidate's readable-insufficient-evidence VOID establishes that network proof. Settlement, native refunds and current production rollout also remain unproven today. [Release evidence](RELEASE.md) and [bounded Portal draft](submission/portal-fields.json) record the actual status.
 

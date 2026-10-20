@@ -10,6 +10,8 @@ The resolver's model-output handling has been [repaired and tested](docs/MODEL-O
 
 The isolated [v2 diagnostic candidate](docs/CONSENSUS-DIAGNOSIS.md) passed Nintendo NO, Grammy VOID_INSUFFICIENT_EVIDENCE and Apple YES with finalized callbacks and matching reads. Its predecessor's Nintendo regression remains archived. Neither candidate replaces the configured resolver. Original stakes remain intact. The owner-approved 23 October 22:06 Africa/Lagos follow-up will verify the genuine timeout refunds, then continue release checks and publication only after verification passes.
 
+The [20 October readiness checks](deploy/release-readiness.json) passed all seven app tests, ESLint, TypeScript and the production build. A separate historical Explorer recheck passed 15/15 links, and 13 already-published HTTP links returned 200. New artifacts still await publication and a complete audit; these checks do not prove refunds or a production rollout.
+
 | Contract | Revision-4 address |
 | --- | --- |
 | Takes | [0x1F797270d45281Aae3842Bd1f4ccE9eb114b51cA](https://explorer-studio.genlayer.com/address/0x1F797270d45281Aae3842Bd1f4ccE9eb114b51cA) |
