@@ -4,7 +4,7 @@
 
 [Open Called It](https://called-it-genlayer.vercel.app) · [Public repository](https://github.com/JWattjr/called-it) · [Verification record](docs/VERIFICATION.md)
 
-**Revision 5: the v2 judge is promoted into four fresh, fully wired contracts.** Real finalized replays show Apple YES, Nintendo NO, the no-evidence frozen NO default, subjective rejection and Grammy scheduling evidence VOID_INSUFFICIENT_EVIDENCE. The separate two-wallet Apple bet used exactly 1+1 wei, settled to the winner and paid a verified two-wei native credit. Production rollout and its live address check remain pending. Nothing was submitted to the Portal.
+**Revision 5: the v2 judge is promoted into four fresh, fully wired contracts.** Real finalized replays show Apple YES, Nintendo NO, the no-evidence frozen NO default, subjective rejection and Grammy scheduling evidence VOID_INSUFFICIENT_EVIDENCE. The separate two-wallet Apple bet used exactly 1+1 wei, settled to the winner and paid a verified two-wei native credit. Production serves revision 5 and its live API reads the new Takes address. Nothing was submitted to the Portal.
 
 All 69 contract tests and 31 release tests pass; all four contracts pass GenVM lint. The configured resolver uses exactly v2's ordered four-step judge and ARCHIVE_CAPTURE_TIMES_UTC block, with diagnostic output omitted. All fairness branches remain unchanged. [Verification](docs/VERIFICATION.md) Â· [All hashes](docs/RELEASE.md) Â· [Local checks](deploy/r5-local-checks.json).
 

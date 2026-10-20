@@ -33,7 +33,7 @@ def main():
         'Original revision-4 matched bet still holds two wei and has its isolated 23 October 22:06 Lagos timeout recovery. Revision 3 separately holds two wei.',
         'Two earlier funded live takes stay on revision 2 with its original immutable failure-default policy; they were not migrated.',
         'Model judgments and sampled consensus are not universally reliable; earlier failures and exact receipts remain archived.',
-        'An interactive browser-extension approval popup and current mobile visual certification remain unverified.'
+        'An interactive browser-extension approval popup and complete mobile action flows remain unverified. Production feed checks passed at 1440x960 and 390x844.'
     ]
     save(p)
     address=lambda name:link_map['contracts'][name]
@@ -83,7 +83,7 @@ def main():
             '', 'The separate revision-3 matched bet still holds two wei. The two revision-2 live takes keep deadlines 29 October and 4 November at 23:59:59 UTC and their original immutable failure-default policy. They were not migrated. [Earlier release](../deploy/releases/v2-proof.json).','',
             '## Audit, publication and limits','',
             'The [full read-only proof audit](../deploy/proof-verification.json) verifies actual Explorer CONTRACT types, canonical /address/ and /tx/ links, every saved transaction, deployed bytes, finalized states, native credits, exact balances, old held bets and HTTP 200 for other published links. Consult its passed field; a partial audit is not a completed release audit. '+publication+' [Production evidence](../deploy/production-verification.json).','',
-            'The [Portal draft](submission/portal-fields.json) describes the v2 judge and Grammy VOID and enforces 180/1000/500 characters. Nothing was submitted. Real VOID_SOURCES_UNREACHABLE, the future revision-4 timeout refunds, current mobile visual certification and an interactive browser-extension approval popup remain unproven. Earlier consensus failures and the v1 semantic regression remain preserved.']
+            'The [Portal draft](submission/portal-fields.json) describes the v2 judge and Grammy VOID and enforces 180/1000/500 characters. Nothing was submitted. Real VOID_SOURCES_UNREACHABLE, the future revision-4 timeout refunds, complete mobile action flows and an interactive browser-extension approval popup remain unproven. The production feed was checked at 1440x960 and 390x844; the desktop receipt also completed its Read live query and displayed Paid & verified. Earlier consensus failures and the v1 semantic regression remain preserved.']
     (ROOT/'docs/VERIFICATION.md').write_text('\n'.join(lines)+'\n',encoding='utf8')
     print('Packaged revision 5:',len(writes),'finalized transactions; cumulative deposits 24 wei.',flush=True)
 

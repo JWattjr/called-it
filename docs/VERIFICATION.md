@@ -1,6 +1,6 @@
 # Verification record
 
-**Revision 5: the v2 judge is promoted into four fresh, fully wired contracts.** Real finalized replays show Apple YES, Nintendo NO, the no-evidence frozen NO default, subjective rejection and Grammy scheduling evidence VOID_INSUFFICIENT_EVIDENCE. The separate two-wallet Apple bet used exactly 1+1 wei, settled to the winner and paid a verified two-wei native credit. Production rollout and its live address check remain pending. Nothing was submitted to the Portal.
+**Revision 5: the v2 judge is promoted into four fresh, fully wired contracts.** Real finalized replays show Apple YES, Nintendo NO, the no-evidence frozen NO default, subjective rejection and Grammy scheduling evidence VOID_INSUFFICIENT_EVIDENCE. The separate two-wallet Apple bet used exactly 1+1 wei, settled to the winner and paid a verified two-wei native credit. Production serves revision 5 and its live API reads the new Takes address. Nothing was submitted to the Portal.
 
 | Contract | Revision-5 address |
 | --- | --- |
@@ -51,6 +51,6 @@ The separate revision-3 matched bet still holds two wei. The two revision-2 live
 
 ## Audit, publication and limits
 
-The [full read-only proof audit](../deploy/proof-verification.json) verifies actual Explorer CONTRACT types, canonical /address/ and /tx/ links, every saved transaction, deployed bytes, finalized states, native credits, exact balances, old held bets and HTTP 200 for other published links. Consult its passed field; a partial audit is not a completed release audit. Production rollout and its live address check remain pending. [Production evidence](../deploy/production-verification.json).
+The [full read-only proof audit](../deploy/proof-verification.json) verifies actual Explorer CONTRACT types, canonical /address/ and /tx/ links, every saved transaction, deployed bytes, finalized states, native credits, exact balances, old held bets and HTTP 200 for other published links. Consult its passed field; a partial audit is not a completed release audit. Production serves revision 5 and its live API reads the new Takes address. [Production evidence](../deploy/production-verification.json).
 
-The [Portal draft](submission/portal-fields.json) describes the v2 judge and Grammy VOID and enforces 180/1000/500 characters. Nothing was submitted. Real VOID_SOURCES_UNREACHABLE, the future revision-4 timeout refunds, current mobile visual certification and an interactive browser-extension approval popup remain unproven. Earlier consensus failures and the v1 semantic regression remain preserved.
+The [Portal draft](submission/portal-fields.json) describes the v2 judge and Grammy VOID and enforces 180/1000/500 characters. Nothing was submitted. Real VOID_SOURCES_UNREACHABLE, the future revision-4 timeout refunds, complete mobile action flows and an interactive browser-extension approval popup remain unproven. The production feed was checked at 1440x960 and 390x844; the desktop receipt also completed its Read live query and displayed Paid & verified. Earlier consensus failures and the v1 semantic regression remain preserved.
