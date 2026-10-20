@@ -12,8 +12,9 @@ from datetime import datetime, timezone
 from genlayer_py.abi.calldata import decode
 from chain import ROOT, load, save, tx, read, client
 
-PREFIX = 'diagnostic-schedule-v1-'
-CANDIDATE = ROOT / 'diagnostics/consensus_candidate.py'
+VERSION = 2 if '--candidate-v2' in sys.argv else 1
+PREFIX = 'diagnostic-schedule-v' + str(VERSION) + '-'
+CANDIDATE = ROOT / ('diagnostics/consensus_candidate_v2.py' if VERSION == 2 else 'diagnostics/consensus_candidate.py')
 REPORT = ROOT / 'deploy/consensus-diagnostics.json'
 
 
@@ -53,6 +54,24 @@ def snapshot(p):
             'bet': bet, 'resolution': resolution}
 
 
+def prepare_version(p, version):
+    previous = p.get('consensusDiagnostics')
+    if previous and previous.get('version', 1) != version:
+        prior = previous.get('version', 1)
+        assert prior < version, 'Do not replace a newer diagnostic with an older version'
+        archived = ROOT / ('deploy/consensus-diagnostics-v' + str(prior) + '.json')
+        assert not archived.exists(), 'Diagnostic archive already exists; reconcile before replacement'
+        archived.write_text(json.dumps(previous, indent=2) + '\n', encoding='utf8')
+        p.setdefault('previousConsensusDiagnostics', []).append(previous)
+        p['consensusDiagnostics'] = {}
+        audit = ROOT / 'deploy/diagnostic-link-audit.json'
+        if audit.exists():
+            audit_archive = ROOT / ('deploy/diagnostic-link-audit-v' + str(prior) + '.json')
+            assert not audit_archive.exists()
+            audit_archive.write_bytes(audit.read_bytes())
+        save(p)
+
+
 def main():
     p = load()
     assert p['releaseAttempt'] == 4 and sum(p['deposits'].values()) == 22
@@ -60,12 +79,14 @@ def main():
     canonical_source = ROOT / 'contracts' / canonical['source']
     assert hashlib.sha256(canonical_source.read_bytes()).hexdigest() == canonical['sha256']
     digest = hashlib.sha256(CANDIDATE.read_bytes()).hexdigest()
+    prepare_version(p, VERSION)
     diagnostic = p.get('consensusDiagnostics') or {
-        'status': 'IN_PROGRESS', 'candidateSource': 'diagnostics/consensus_candidate.py',
+        'status': 'IN_PROGRESS', 'version': VERSION, 'journalPrefix': PREFIX,
+        'candidateSource': str(CANDIDATE.relative_to(ROOT)).replace('\\', '/'),
         'candidateSha256': digest, 'canonicalResolver': canonical['address'],
         'canonicalResolverSha256': canonical['sha256'], 'canonicalChanged': False,
         'depositBudgetWei': 22, 'newDepositsWei': 0,
-        'authorization': 'Owner said Run it after the diagnosis/unfunded-replay recovery plan.',
+        'authorization': 'Owner said run it asap after the Nintendo regression correction and three unfunded replays plan.' if VERSION == 2 else 'Owner said Run it after the diagnosis/unfunded-replay recovery plan.',
         'recordedFailure': history(), 'cases': {},
         'scope': 'Candidate replay only. Its results cannot settle the configured escrow or update a public record.',
     }
@@ -86,10 +107,11 @@ def main():
 
         # Prespecified hypotheses, starting with the disputed case. A different
         # answer or a failed consensus stops, without running later cases.
-        plans = [('take-5', 'VOID', 'VOID_INSUFFICIENT_EVIDENCE'),
-                 ('take-1', 'YES', 'JUDGED_YES'), ('take-2', 'NO', 'JUDGED_NO')]
+        plans = [('take-2', 'NO', 'JUDGED_NO'),
+                 ('take-5', 'VOID', 'VOID_INSUFFICIENT_EVIDENCE'), ('take-1', 'YES', 'JUDGED_YES')] if VERSION == 2 else [
+                 ('take-5', 'VOID', 'VOID_INSUFFICIENT_EVIDENCE'), ('take-1', 'YES', 'JUDGED_YES'), ('take-2', 'NO', 'JUDGED_NO')]
         if '--grammy-only' in sys.argv:
-            plans = plans[:1]
+            plans = [plan for plan in plans if plan[0] == 'take-5']
         for key, outcome, case in plans:
             if diagnostic['cases'].get(key, {}).get('passed'):
                 continue

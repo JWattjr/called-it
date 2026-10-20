@@ -39,6 +39,11 @@ if p.get('consensusDiagnostics'):
         result=case['resolution']
         lines.append('- '+key+': expected '+case['expectedOutcome']+', actual '+result['outcome']+' / '+result['resolution_case']+'; regression '+('PASS' if case['passed'] else 'FAIL')+'.')
     lines+=['','See [consensus diagnosis](CONSENSUS-DIAGNOSIS.md) and [the diagnostic report](../deploy/consensus-diagnostics.json).']
+if p.get('previousConsensusDiagnostics'):
+    lines+=['','## Earlier diagnostic candidates','']
+    for previous in p['previousConsensusDiagnostics']:
+        version=previous.get('version',1)
+        lines.append('- Version '+str(version)+': '+previous['status']+'. Its original source, rulings and failure remain in [the archived diagnostic](../deploy/consensus-diagnostics-v'+str(version)+'.json).')
 if p.get('recoveryFollowup'):
     lines+=['','## Approved timeout follow-up','',
             'One-time same-chat recovery is scheduled for 23 October 2026 at 22:06 Africa/Lagos, after actual timeout eligibility at 22:04:35. No additional deposits, candidate promotion or Portal submission. See [recovery status](../deploy/timeout-recovery.json).']
@@ -67,6 +72,8 @@ if p.get('releaseStatus','').startswith('STOPPED'):
  portal['description']+=(' Matched proof stopped on consensus disagreement.' if p.get('releaseStatus')=='STOPPED_CONSENSUS_DISAGREEMENT' else ' Candidate failed its Nintendo regression.' if p.get('releaseStatus')=='STOPPED_DIAGNOSTIC_REGRESSION' else ' Live proof stopped on model-output errors.')
 if p.get('releaseStatus','').startswith('AWAITING_DEPOSIT'):
  portal['description']+=' Matched settlement awaits deposit approval.'
+if p.get('releaseStatus')=='AWAITING_TIMEOUT_RECOVERY':
+ portal['description']+=' Original matched ruling failed; refund pending.'
 assert len(portal['oneLiner'])<=180 and len(portal['description'])<=1000 and len(portal['expectedOutcome'])<=500
 (ROOT/'docs/submission/portal-fields.json').write_text(json.dumps(portal,indent=2)+'\n',encoding='utf8')
 print('Generated release report and Portal draft from recorded proof; no Portal submission made.')

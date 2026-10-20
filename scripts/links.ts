@@ -29,9 +29,11 @@ const links = {
       ([name, c]) => [name, explorer("address", c.address)],
     ),
   ),
-  diagnosticContracts: proof.consensusDiagnostics?.address
-    ? { "Unfunded candidate": explorer("address", proof.consensusDiagnostics.address) }
-    : {},
+  diagnosticContracts: Object.fromEntries(
+    [...(proof.previousConsensusDiagnostics ?? []), proof.consensusDiagnostics]
+      .filter((item) => item?.address)
+      .map((item) => [`Unfunded candidate v${item.version ?? 1}`, explorer("address", item.address)]),
+  ),
   legacyContracts: Object.fromEntries(
     Object.entries(
       (proof.legacyLiveTakes?.[0]?.contracts ?? {}) as Record<

@@ -1,4 +1,8 @@
-# Isolated consensus candidate
+# Isolated consensus candidates
+
+Version 2 is `consensus_candidate_v2.py`. It corrects v1's overly restrictive NO criterion: a readable nonqualifying report or explicitly unnamed/unannounced status can support NO, without requiring a completed alternative event. The VOID exception requires a specific dated plan for the exact claimed event inside the window. Generic development intentions do not meet that exception. The frozen rule, quotes, independent validator comparison and all financial code are unchanged.
+
+Run v2 with `python scripts/diagnose_consensus.py --candidate-v2`. It uses a fresh source hash, contract and `diagnostic-schedule-v2-` journal namespace, starting with Nintendo. V1's failed report is retained in `deploy/consensus-diagnostics-v1.json`; its source and receipts remain unchanged. The latest version's actual outcomes are in `deploy/consensus-diagnostics.json`. A passing mocked suite is not a passing real-model replay.
 
 `consensus_candidate.py` is an unfunded diagnostic copy of the revision-4 resolver, linked to the existing Takes contract only to replay its immutable rules and evidence. It is **not** the resolver configured in Takes or TakeEscrow. Its rulings cannot settle a bet, transfer stakes, migrate a take or update a public record.
 
@@ -10,7 +14,7 @@ Run all resolver regression tests against this file with:
 
 ```powershell
 $env:PYTEST_DISABLE_PLUGIN_AUTOLOAD='1'
-$env:CALLED_IT_TEST_RESOLVER='diagnostics/consensus_candidate.py'
+$env:CALLED_IT_TEST_RESOLVER='diagnostics/consensus_candidate_v2.py'
 python -m pytest -p gltest.direct.pytest_plugin tests/direct -q --basetemp=.secrets/pytest-candidate
 ```
 
